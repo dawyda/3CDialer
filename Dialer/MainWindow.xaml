@@ -1,0 +1,92 @@
+﻿<Window x:Name="win_mgt" x:Class="Dialer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="3CDialer - Management Console" MinHeight="550" MinWidth="900"
+        Icon="Assets\3DialerIcon.png"
+        WindowState="Maximized">
+
+    <TabControl>
+        <TabItem Header="Lists" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="47*"></RowDefinition>
+                        <RowDefinition Height="89*"/>
+                        <RowDefinition Height="73*"/>
+                        <RowDefinition Height="28*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="10,10,-158,0" VerticalAlignment="Top" Width="900" Height="75">
+                        <Grid>
+                            <Button Content="Import List" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="165" Margin="10,10,0,0"/>
+                            <TextBlock Margin="204,10,10,27" Padding="5,6,0,0" FontSize="18">No file selected, import list</TextBlock>
+                        </Grid>
+                    </GroupBox>
+                    <Grid Grid.Row="1">
+                        <TabControl Background="LightGray">
+                            <TabItem Header="New List" Width="100" FontSize="16">
+                                <Grid>
+                                    <DataGrid>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="1" Width="120"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="2" Width="100"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="3" Width="100"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="4" Width="80"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="5" Width="80"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="6" Width="80"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="7" Width="80"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="8"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="9"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="10"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="11"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="12"></DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="List Data" Width="100" FontSize="16">
+                                <Grid></Grid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                    <TextBlock HorizontalAlignment="Left" Margin="8,2,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Field Arrangement" VerticalAlignment="Top" Height="22" Width="107"/>
+                    <DataGrid Grid.Row="2" Margin="0,24,412,0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Database Field Name"/>
+                            <DataGridTextColumn Header="Custom Label"/>
+                            <DataGridTextColumn Header="Field Column Position"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Import" FontSize="18" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="3" VerticalAlignment="Top" Width="88" Height="36"/>
+                    <Button Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="116,12,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="36"/>
+                    <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="214,12,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="36"/>
+                </Grid>
+            </Border>
+        </TabItem>
+        <TabItem Header="Service Status" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+        <TabItem Header="Campaigns" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+        <TabItem Header="Teams" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+        <TabItem Header="Settings" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+        <TabItem Header="About" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+    </TabControl>
+
+</Window>
