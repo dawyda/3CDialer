@@ -12,18 +12,29 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="47*"></RowDefinition>
                         <RowDefinition Height="89*"/>
-                        <RowDefinition Height="73*"/>
-                        <RowDefinition Height="28*"/>
+                        <RowDefinition Height="75*"/>
+                        <RowDefinition Height="26*"/>
                     </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="10,10,-158,0" VerticalAlignment="Top" Width="900" Height="75">
+                    <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="10,10,-158,0" VerticalAlignment="Top" Width="900" Height="80">
                         <Grid>
-                            <Button Content="Import List" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="165" Margin="10,10,0,0"/>
-                            <TextBlock Margin="204,10,10,27" Padding="5,6,0,0" FontSize="18">No file selected, import list</TextBlock>
+                            <TextBlock Margin="204,8,10,2.06" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic"/>
+                            <Button HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="170" Margin="10,5,0,0" ToolTip="click to select CSV with numbers to be dialed." Background="#FFDAEAE8" FontWeight="Bold" FontFamily="/Dialer;component/Fonts/#DaunPenh" FontSize="24">
+                            	<Grid Width="153" Height="30">
+                            		<TextBlock HorizontalAlignment="right" Margin="0,3,0,0" TextWrapping="Wrap" Text="Import List" VerticalAlignment="Top" Width="102.133" Height="25"/>
+                            		<Image Source="import.png" HorizontalAlignment="Left" Width="25" Margin="11,0,0,0" />
+                            	</Grid>
+                            </Button>
                         </Grid>
                     </GroupBox>
                     <Grid Grid.Row="1">
                         <TabControl Background="LightGray">
-                            <TabItem Header="New List" Width="100" FontSize="16">
+                            <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
+								<TabItem.Header>
+									<Grid Width="150">
+										<Image Source="new list.png" Width="25" Margin="0.5,0,124.5,0" />
+										<TextBlock Text="New List" Margin="31,1,19,-1" Width="100" />
+									</Grid>
+								</TabItem.Header>
                                 <Grid>
                                     <DataGrid>
                                         <DataGrid.Columns>
@@ -43,28 +54,33 @@
                                     </DataGrid>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="List Data" Width="100" FontSize="16">
-                                <Grid></Grid>
+                            <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
+								<TabItem.Header>
+									<Grid Width="150">
+										<Image Source="list.png" Width="25" Margin="0.5,0,124.5,0" />
+										<TextBlock Text="List Data" Margin="31,1,19,-1" Width="100" />
+									</Grid>
+								</TabItem.Header>
+                                <Grid>
+									<DataGrid>
+										
+									</DataGrid>
+								</Grid>
                             </TabItem>
                         </TabControl>
                     </Grid>
-                    <TextBlock HorizontalAlignment="Left" Margin="8,2,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Field Arrangement" VerticalAlignment="Top" Height="22" Width="107"/>
-                    <DataGrid Grid.Row="2" Margin="0,24,412,0">
+                    <TextBlock HorizontalAlignment="Left" Margin="8,4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Field Arrangement" VerticalAlignment="Top" Height="22" Width="107"/>
+                    <DataGrid Grid.Row="2" Margin="2,27,410,3.001">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Database Field Name"/>
                             <DataGridTextColumn Header="Custom Label"/>
                             <DataGridTextColumn Header="Field Column Position"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="Import" FontSize="18" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="3" VerticalAlignment="Top" Width="88" Height="36"/>
-                    <Button Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="116,12,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="36"/>
-                    <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="214,12,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="36"/>
+                    <Button Content="Import" FontSize="18" HorizontalAlignment="Left" Margin="10,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="88" Height="27" Background="#FFDAEAE8"/>
+                    <Button Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="116,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
+                    <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="214,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
                 </Grid>
-            </Border>
-        </TabItem>
-        <TabItem Header="Service Status" Width="120" GotFocus="onTabFocus">
-            <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC"/>
             </Border>
         </TabItem>
         <TabItem Header="Campaigns" Width="120" GotFocus="onTabFocus">
@@ -73,6 +89,11 @@
             </Border>
         </TabItem>
         <TabItem Header="Teams" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+		<TabItem Header="Users" Width="120" GotFocus="onTabFocus">
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="#F0F9FC"/>
             </Border>
