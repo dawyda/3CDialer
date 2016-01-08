@@ -4,82 +4,106 @@
         Title="3CDialer - Management Console" MinHeight="550" MinWidth="900"
         Icon="Assets\3DialerIcon.png"
         WindowState="Maximized">
+    <Window.Resources>
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\Assets\save.png"/>
+    </Window.Resources>
 
     <TabControl>
         <TabItem Header="Lists" Width="120" GotFocus="onTabFocus">
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="#F0F9FC">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"></RowDefinition>
-                        <RowDefinition Height="89*"/>
-                        <RowDefinition Height="75*"/>
-                        <RowDefinition Height="26*"/>
-                    </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="10,10,-158,0" VerticalAlignment="Top" Width="900" Height="80">
-                        <Grid>
-                            <TextBlock Margin="204,8,10,2.06" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic"/>
-                            <Button HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="170" Margin="10,5,0,0" ToolTip="click to select CSV with numbers to be dialed." Background="#FFDAEAE8" FontWeight="Bold" FontFamily="/Dialer;component/Fonts/#DaunPenh" FontSize="24">
-                            	<Grid Width="153" Height="30">
-                            		<TextBlock HorizontalAlignment="right" Margin="0,3,0,0" TextWrapping="Wrap" Text="Import List" VerticalAlignment="Top" Width="102.133" Height="25"/>
-                            		<Image Source="import.png" HorizontalAlignment="Left" Width="25" Margin="11,0,0,0" />
-                            	</Grid>
-                            </Button>
-                        </Grid>
-                    </GroupBox>
-                    <Grid Grid.Row="1">
-                        <TabControl Background="LightGray">
+                    <Grid>
+                        <TabControl Background="Snow">
                             <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
-								<TabItem.Header>
-									<Grid Width="150">
-										<Image Source="new list.png" Width="25" Margin="0.5,0,124.5,0" />
-										<TextBlock Text="New List" Margin="31,1,19,-1" Width="100" />
-									</Grid>
-								</TabItem.Header>
+                                <TabItem.Header>
+                                    <Grid Width="150">
+                                        <Image Source="new list.png" Width="25" Margin="0.5,0,124.5,0" />
+                                        <TextBlock Text="New List" Margin="31,1,19,-1" Width="100" />
+                                    </Grid>
+                                </TabItem.Header>
                                 <Grid>
-                                    <DataGrid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="108*"/>
+                                        <RowDefinition Height="142*"/>
+                                        <RowDefinition Height="187*"/>
+                                    </Grid.RowDefinitions>
+                                    <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="3,2,0,0" VerticalAlignment="Top" Width="742" Height="104">
+                                        <Grid Margin="0,0,124,0">
+                                            <CheckBox FontSize="13" x:Name="cb_ignoreheaders" Content="Ignore CSV headers" HorizontalAlignment="Left" Margin="10,0,0,51" IsChecked="True" Foreground="#FFEA0E0E" FontWeight="Bold" Width="195"/>
+                                            <TextBlock x:Name="tb_csvfile" Margin="204,32,-12,1" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic" HorizontalAlignment="Left" Width="414"/>
+                                            <Button x:Name="btn_import" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="170" Margin="10,28,0,0" ToolTip="click to select CSV with numbers to be dialed." Background="#FFDAEAE8" FontWeight="Bold" FontFamily="/Dialer;component/Fonts/#DaunPenh" FontSize="24" Click="importBtn_Click">
+                                                <Grid Width="153" Height="30">
+                                                    <TextBlock HorizontalAlignment="right" Margin="0,3,0,0" TextWrapping="Wrap" Text="Import List" VerticalAlignment="Top" Width="102.133" Height="25"/>
+                                                    <Image Source="import.png" HorizontalAlignment="Left" Width="25" Margin="11,0,0,0" />
+                                                </Grid>
+                                            </Button>
+                                        </Grid>
+                                    </GroupBox>
+                                    <DataGrid Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding}" x:Name="dg_import" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="1" Width="120"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="2" Width="100"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="3" Width="100"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="4" Width="80"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="5" Width="80"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="6" Width="80"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="7" Width="80"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="8"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="9"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="10"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="11"></DataGridTextColumn>
-                                            <DataGridTextColumn Header="12"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="1" Width="120" Binding="{Binding Path=1}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="2" Width="100" Binding="{Binding Path=2}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="3" Width="100" Binding="{Binding Path=3}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="4" Width="80" Binding="{Binding Path=4}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="5" Width="80" Binding="{Binding Path=5}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="6" Width="80" Binding="{Binding Path=6}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="7" Width="80" Binding="{Binding Path=7}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="8" Binding="{Binding Path=8}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="9" Binding="{Binding Path=9}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="10" Binding="{Binding Path=10}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="11" Binding="{Binding Path=11}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="12" Binding="{Binding Path=12}"></DataGridTextColumn>
+                                            <DataGridTextColumn Header="13" Binding="{Binding Path=13}"></DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
+                                    <TextBlock HorizontalAlignment="Left" Margin="1,4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Field Arrangement" VerticalAlignment="Top" Height="22" Width="140"/>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="415*"/>
+                                            <ColumnDefinition Width="331*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="153*" />
+                                            <RowDefinition Height="44*"/>
+                                        </Grid.RowDefinitions>
+                                        <DataGrid FontSize="13" ItemsSource="{Binding}" x:Name="dg_arrangement" Margin="2,27,10,3" Grid.Column="0" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Database Field Name" Binding="{Binding Path=fieldName}"/>
+                                                <DataGridTextColumn Header="Custom Label" Binding="{Binding Path=custLabel}"/>
+                                                <DataGridTextColumn Header="Field Column Position" Binding="{Binding Path=fieldPos}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Label FontSize="13" Content="List name:" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="80" Grid.Column="1" Height="36"/>
+                                        <Label FontSize="13" Content="Description:" HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.577" Width="80" Grid.Column="1" Height="30"/>
+                                        <TextBox FontSize="13" x:Name="txt_listName" HorizontalAlignment="Left" Height="23" Margin="85,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="A name to save the list with" Grid.Column="1"/>
+                                        <TextBox FontSize="13" x:Name="txt_listDesc" HorizontalAlignment="Left" Height="72" Margin="85,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" ToolTip="description of the list data (Optional)" Grid.Column="1"/>
+                                        <Button x:Name="btn_save" FontSize="18" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="90" Height="27" Background="#FFDAEAE8">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Margin="0,0,5,0" Width="25" Height="25" Source="{DynamicResource ImageSource1}" HorizontalAlignment="Left" />
+                                                <TextBlock Margin="5,0,0,0" HorizontalAlignment="Right">Save</TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btn_reset" Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="159,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
+                                        <Button x:Name="btn_cancel" Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="291,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
+                                    </Grid>
                                 </Grid>
                             </TabItem>
                             <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
-								<TabItem.Header>
-									<Grid Width="150">
-										<Image Source="list.png" Width="25" Margin="0.5,0,124.5,0" />
-										<TextBlock Text="List Data" Margin="31,1,19,-1" Width="100" />
-									</Grid>
-								</TabItem.Header>
+                                <TabItem.Header>
+                                    <Grid Width="150">
+                                        <Image Source="list.png" Width="25" Margin="0.5,0,124.5,0" />
+                                        <TextBlock Text="List Data" Margin="31,1,19,-1" Width="100" />
+                                    </Grid>
+                                </TabItem.Header>
                                 <Grid>
-									<DataGrid>
-										
-									</DataGrid>
-								</Grid>
+                                    <DataGrid>
+
+                                    </DataGrid>
+                                </Grid>
                             </TabItem>
                         </TabControl>
                     </Grid>
-                    <TextBlock HorizontalAlignment="Left" Margin="8,4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Field Arrangement" VerticalAlignment="Top" Height="22" Width="107"/>
-                    <DataGrid Grid.Row="2" Margin="2,27,410,3.001">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Database Field Name"/>
-                            <DataGridTextColumn Header="Custom Label"/>
-                            <DataGridTextColumn Header="Field Column Position"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button Content="Import" FontSize="18" HorizontalAlignment="Left" Margin="10,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="88" Height="27" Background="#FFDAEAE8"/>
-                    <Button Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="116,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
-                    <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="214,21,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
+
                 </Grid>
             </Border>
         </TabItem>
@@ -93,7 +117,7 @@
                 <Grid Background="#F0F9FC"/>
             </Border>
         </TabItem>
-		<TabItem Header="Users" Width="120" GotFocus="onTabFocus">
+        <TabItem Header="Users" Width="120" GotFocus="onTabFocus">
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="#F0F9FC"/>
             </Border>
