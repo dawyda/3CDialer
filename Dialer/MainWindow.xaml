@@ -9,176 +9,221 @@
         <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\Assets\save.png"/>
     </Window.Resources>
 
-	<TabControl>
-		<TabItem Header="Lists" Width="120" GotFocus="onTabFocus">
-			<Border BorderBrush="Gray" BorderThickness="1">
-				<Grid Background="#F0F9FC">
-					<Grid>
-						<TabControl Background="Snow">
-							<TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
-								<TabItem.Header>
-									<Grid Width="150">
-										<Image Source="new list.png" Width="25" Margin="0.5,0,124.5,0" />
-										<TextBlock Text="New List" Margin="31,1,19,-1" Width="100" />
-									</Grid>
-								</TabItem.Header>
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="108*"/>
-										<RowDefinition Height="142*"/>
-										<RowDefinition Height="187*"/>
-									</Grid.RowDefinitions>
-									<GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="3,2,0,0" VerticalAlignment="Top" Width="742" Height="104">
-										<Grid Margin="0,0,124,0">
-											<CheckBox FontSize="13" x:Name="cb_ignoreheaders" Content="Ignore CSV headers" HorizontalAlignment="Left" Margin="10,0,0,51" IsChecked="True" Foreground="#FFEA0E0E" FontWeight="Bold" Width="195"/>
-											<TextBlock x:Name="tb_csvfile" Margin="204,32,-12,1" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic" HorizontalAlignment="Left" Width="414"/>
-											<Button x:Name="btn_import" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="170" Margin="10,28,0,0" ToolTip="click to select CSV with numbers to be dialed." Background="#FFDAEAE8" FontWeight="Bold" FontFamily="/Dialer;component/Fonts/#DaunPenh" FontSize="24" Click="importBtn_Click">
-												<Grid Width="153" Height="30">
-													<TextBlock HorizontalAlignment="right" Margin="0,3,0,0" TextWrapping="Wrap" Text="Import List" VerticalAlignment="Top" Width="102.133" Height="25"/>
-													<Image Source="import.png" HorizontalAlignment="Left" Width="25" Margin="11,0,0,0" />
-												</Grid>
-											</Button>
-										</Grid>
-									</GroupBox>
-									<DataGrid HorizontalScrollBarVisibility="Auto" Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding}" x:Name="dg_import" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
-										<DataGrid.Columns>
-											<DataGridTextColumn Header="1" Width="120" Binding="{Binding 1}"/>
-											<DataGridTextColumn Header="2" Width="100" Binding="{Binding 2}"/>
-											<DataGridTextColumn Header="3" Width="100" Binding="{Binding 3}"/>
-											<DataGridTextColumn Header="4" Width="100" Binding="{Binding 4}"/>
-											<DataGridTextColumn Header="5" Width="90" Binding="{Binding 5}"/>
-											<DataGridTextColumn Header="6" Width="80" Binding="{Binding 6}"/>
-											<DataGridTextColumn Header="7" Width="90" Binding="{Binding 7}"/>
-											<DataGridTextColumn Header="8" Width="80" Binding="{Binding 8}"/>
-											<DataGridTextColumn Header="9" Width="90" Binding="{Binding 9}"/>
-											<DataGridTextColumn Header="10" Width="80" Binding="{Binding 10}"/>
-											<DataGridTextColumn Header="11" Width="80" Binding="{Binding 11}"/>
-											<DataGridTextColumn Header="12" Width="80" Binding="{Binding 12}"/>
-											<DataGridTextColumn Header="13" Width="80" Binding="{Binding 13}"/>
-										</DataGrid.Columns>
-									</DataGrid>
-	
-									<Grid Grid.Row="2">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="331*"/>
-											<ColumnDefinition Width="415*"/>
-										</Grid.ColumnDefinitions>
-										<Grid.RowDefinitions>
-											<RowDefinition Height="151*" />
-											<RowDefinition Height="36*"/>
-										</Grid.RowDefinitions>
-										<TextBlock Grid.Column="1" TextWrapping="NoWrap" Text="Field Arrangement" Height="22" Width="133" Margin="2,0,280,129"/>
-										<DataGrid FontSize="13" ItemsSource="{Binding}" x:Name="dg_arrangement" Margin="2,25,10,10" Grid.Column="1" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False" Grid.RowSpan="2">
-											<DataGrid.Columns>
-												<DataGridTextColumn Header="Database Field Name" Binding="{Binding fieldName}" FontWeight="Bold" IsReadOnly="True"/>
-												<DataGridTextColumn Header="Custom Label" Binding="{Binding custLabel}"/>
-												<DataGridTextColumn Header="Field Column Position" Binding="{Binding fieldPos}"/>
-											</DataGrid.Columns>
-										</DataGrid>
-										<Label FontSize="13" Content="List name:" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="80" Grid.Column="0" Height="36"/>
-										<Label FontSize="13" Content="Description:" HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.577" Width="80" Grid.Column="0" Height="30"/>
-										<TextBox FontSize="13" x:Name="txt_listName" HorizontalAlignment="Left" Height="23" Margin="85,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="A name to save the list with" Grid.Column="0"/>
-										<TextBox FontSize="13" x:Name="txt_listDesc" HorizontalAlignment="Left" Height="72" Margin="85,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" ToolTip="description of the list data (Optional)" Grid.Column="0"/>
-										<Button x:Name="btn_save" FontSize="18" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="90" Height="27" Background="#FFDAEAE8">
-											<StackPanel Orientation="Horizontal">
-												<Image Margin="0,0,5,0" Width="25" Height="25" Source="{DynamicResource ImageSource1}" HorizontalAlignment="Left" />
-												<TextBlock Margin="5,0,0,0" HorizontalAlignment="Right"><Run Text="Save"/></TextBlock>
-											</StackPanel>
-										</Button>
-										<Button x:Name="btn_reset" Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="139,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
-										<Button x:Name="btn_cancel" Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="245,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
-									</Grid>
-								</Grid>
-							</TabItem>
-							<TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
-								<TabItem.Header>
-									<Grid Width="150">
-										<Image Source="list.png" Width="25" Margin="0.5,0,124.5,0" />
-										<TextBlock Text="List Data" Margin="31,1,19,-1" Width="100" />
-									</Grid>
-								</TabItem.Header>
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="75*"/>
-										<RowDefinition Height="326*"/>
-										<RowDefinition Height="36*"/>
-									</Grid.RowDefinitions>
-									<GroupBox Header="Filter Options" Foreground="Black" FontSize="13" Margin="0,0,0,10">
-										<Grid Width="727">
-											<Label Content="Filter by Campaign:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="125.327"/>
-											<ComboBox HorizontalAlignment="Left" Margin="140.327,10,0,0" VerticalAlignment="Top" Width="223.673" Height="27.29"/>
-										</Grid>
-									</GroupBox>
-									<DataGrid Margin="10,0,10,2.5" Grid.Row="1"/>
-									<Button Content="Reset List" HorizontalAlignment="Left" Height="30" Margin="10,2.5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117"/>
-									<Button Content="Delete List" HorizontalAlignment="Left" Height="30" Margin="175,2.5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117"/>
-								</Grid>
-							</TabItem>
-						</TabControl>
-					</Grid>
+    <TabControl>
+        <TabItem Header="Lists" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC">
+                    <Grid>
+                        <TabControl Background="Snow">
+                            <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
+                                <TabItem.Header>
+                                    <Grid Width="150">
+                                        <Image Source="new list.png" Width="25" Margin="0.5,0,124.5,0" />
+                                        <TextBlock Text="New List" Margin="31,1,19,-1" Width="100" />
+                                    </Grid>
+                                </TabItem.Header>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="108*"/>
+                                        <RowDefinition Height="142*"/>
+                                        <RowDefinition Height="187*"/>
+                                    </Grid.RowDefinitions>
+                                    <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="3,2,0,0" VerticalAlignment="Top" Width="742" Height="104">
+                                        <Grid Margin="0,0,124,0">
+                                            <CheckBox FontSize="13" x:Name="cb_ignoreheaders" Content="Ignore CSV headers" HorizontalAlignment="Left" Margin="10,0,0,51" IsChecked="True" Foreground="#FFEA0E0E" FontWeight="Bold" Width="195"/>
+                                            <TextBlock x:Name="tb_csvfile" Margin="204,32,-12,1" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic" HorizontalAlignment="Left" Width="414"/>
+                                            <Button x:Name="btn_import" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="170" Margin="10,28,0,0" ToolTip="click to select CSV with numbers to be dialed." Background="#FFDAEAE8" FontWeight="Bold" FontFamily="/Dialer;component/Fonts/#DaunPenh" FontSize="24" Click="importBtn_Click">
+                                                <Grid Width="153" Height="30">
+                                                    <TextBlock HorizontalAlignment="right" Margin="0,3,0,0" TextWrapping="Wrap" Text="Import List" VerticalAlignment="Top" Width="102.133" Height="25"/>
+                                                    <Image Source="import.png" HorizontalAlignment="Left" Width="25" Margin="11,0,0,0" />
+                                                </Grid>
+                                            </Button>
+                                        </Grid>
+                                    </GroupBox>
+                                    <DataGrid HorizontalScrollBarVisibility="Auto" Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding}" x:Name="dg_import" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="1" Width="120" Binding="{Binding 1}"/>
+                                            <DataGridTextColumn Header="2" Width="100" Binding="{Binding 2}"/>
+                                            <DataGridTextColumn Header="3" Width="100" Binding="{Binding 3}"/>
+                                            <DataGridTextColumn Header="4" Width="100" Binding="{Binding 4}"/>
+                                            <DataGridTextColumn Header="5" Width="90" Binding="{Binding 5}"/>
+                                            <DataGridTextColumn Header="6" Width="80" Binding="{Binding 6}"/>
+                                            <DataGridTextColumn Header="7" Width="90" Binding="{Binding 7}"/>
+                                            <DataGridTextColumn Header="8" Width="80" Binding="{Binding 8}"/>
+                                            <DataGridTextColumn Header="9" Width="90" Binding="{Binding 9}"/>
+                                            <DataGridTextColumn Header="10" Width="80" Binding="{Binding 10}"/>
+                                            <DataGridTextColumn Header="11" Width="80" Binding="{Binding 11}"/>
+                                            <DataGridTextColumn Header="12" Width="80" Binding="{Binding 12}"/>
+                                            <DataGridTextColumn Header="13" Width="80" Binding="{Binding 13}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
 
-				</Grid>
-			</Border>
-		</TabItem>
-		<TabItem Header="Campaigns" Width="120" GotFocus="onTabFocus">
-			<Border BorderBrush="Gray" BorderThickness="1">
-				<Grid Background="#F0F9FC">
-					<ListBox HorizontalAlignment="Left" Height="370.54" Margin="10,10,0,0" VerticalAlignment="Top" Width="319"/>
-					<Button Content="Add Campaign" HorizontalAlignment="Left" Height="29" Margin="10,406.54,0,0" VerticalAlignment="Top" Width="152"/>
-					<Button Content="Delete Campaign" HorizontalAlignment="Left" Height="29" Margin="178,406.54,0,0" VerticalAlignment="Top" Width="151"/>
-					<Label Content="Campaign Name:" HorizontalAlignment="Left" Height="25.54" Margin="349,10,0,0" VerticalAlignment="Top" Width="120"/>
-					<TextBox HorizontalAlignment="Left" Height="25.54" Margin="484,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="258"/>
-					<Label Content="Description:" HorizontalAlignment="Left" Height="25.54" Margin="349,52,0,0" VerticalAlignment="Top" Width="120"/>
-					<TextBox HorizontalAlignment="Left" Height="157.54" Margin="484,52,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="258"/>
-					<Button Content="Update" HorizontalAlignment="Left" Height="34" Margin="621,222.54,0,0" VerticalAlignment="Top" Width="121"/>
-				</Grid>
-			</Border>
-		</TabItem>
-		<TabItem Header="Teams" Width="120" GotFocus="onTabFocus">
-			<Border BorderBrush="Gray" BorderThickness="1">
-				<Grid Background="#F0F9FC">
-					<ListBox Margin="10,10,0,120" HorizontalAlignment="Left" Width="346"></ListBox>
-					<Button Margin="10,383,576,65" Content="Add Team"/>
-					<Button Margin="198,383,396,65" Content="DeleteTeam"/>
-					<Label Content="Team Name:" HorizontalAlignment="Left" Margin="383,10,0,0" VerticalAlignment="Top" Width="118.993" Height="26.5"/>
-					<TextBox HorizontalAlignment="Left" Height="26.5" Margin="506.993,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="235.007"/>
-					<Label Content="Description:" HorizontalAlignment="Left" Margin="383,52,0,0" VerticalAlignment="Top" Width="118.993" Height="26.5"/>
-					<TextBox HorizontalAlignment="Left" Height="124.5" Margin="506.993,52,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="235.007"/>
-					<Button Content="Update" HorizontalAlignment="Left" Height="26.04" Margin="622,181.5,0,0" VerticalAlignment="Top" Width="120"/>
-				</Grid>
-			</Border>
-		</TabItem>
-		<TabItem Header="Users" Width="120" GotFocus="onTabFocus">
-			<Border BorderBrush="Gray" BorderThickness="1">
-				<Grid Background="#F0F9FC">
-					<ListBox Margin="10,10,0,232.04" HorizontalAlignment="Left" Width="283"/>
-					<Button x:Name="btn_update_user" Content="Create New User" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="283" Height="33"/>
-					<Button x:Name="update_users" Content="Update Users" HorizontalAlignment="Left" Margin="629,289,0,0" VerticalAlignment="Top" Width="113" Height="33"/>
-					<Label Content="First Name:" Margin="411,10,264,0" VerticalAlignment="Top" Height="24"/>
-					<Label Content="Last Name:" HorizontalAlignment="Left" Margin="411,49.04,0,0" VerticalAlignment="Top" Width="77" Height="25.96"/>
-					<Label Content="Password:" HorizontalAlignment="Left" Margin="411,135,0,0" VerticalAlignment="Top" Width="77" Height="26"/>
-					<TextBox Margin="512,10,0,440" HorizontalAlignment="Left" TextWrapping="Wrap" Width="230"/>
-					<TextBox Margin="512,135,0,313.04" HorizontalAlignment="Left" TextWrapping="Wrap" Width="230"/>
-					<TextBox Margin="512,91,0,357.04" HorizontalAlignment="Left" TextWrapping="Wrap" Width="230"/>
-					<Label Content="Username:" HorizontalAlignment="Left" Margin="411,91,0,0" VerticalAlignment="Top" Width="77" Height="26"/>
-					<TextBox Margin="512,49.04,0,399.04" HorizontalAlignment="Left" TextWrapping="Wrap" Width="230"/>
-					<ComboBox HorizontalAlignment="Left" Margin="512,175,0,0" VerticalAlignment="Top" Width="230" Height="25"/>
-					<Label Content="Team:" HorizontalAlignment="Left" Margin="411,175,0,0" VerticalAlignment="Top" Width="77" Height="25"/>
-					<Label Content="Campaign" HorizontalAlignment="Left" Margin="411,217,0,0" VerticalAlignment="Top" Width="77" Height="25"/>
-					<ComboBox HorizontalAlignment="Left" Margin="512,217,0,0" VerticalAlignment="Top" Width="230" Height="25"/>
-				</Grid>
-			</Border>
-		</TabItem>
-		<TabItem Header="Settings" Width="120" GotFocus="onTabFocus">
-			<Border BorderBrush="Gray" BorderThickness="1">
-				<Grid Background="#F0F9FC"/>
-			</Border>
-		</TabItem>
-		<TabItem Header="About" Width="120" GotFocus="onTabFocus">
-			<Border BorderBrush="Gray" BorderThickness="1">
-				<Grid Background="#F0F9FC"/>
-			</Border>
-		</TabItem>
-	</TabControl>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="331*"/>
+                                            <ColumnDefinition Width="415*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="151*" />
+                                            <RowDefinition Height="36*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="1" TextWrapping="NoWrap" Text="Field Arrangement" Height="22" Width="133" Margin="2,0,280,129"/>
+                                        <DataGrid FontSize="13" ItemsSource="{Binding}" x:Name="dg_arrangement" Margin="2,25,10,10" Grid.Column="1" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False" Grid.RowSpan="2">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Database Field Name" Binding="{Binding fieldName}" FontWeight="Bold" IsReadOnly="True"/>
+                                                <DataGridTextColumn Header="Custom Label" Binding="{Binding custLabel}"/>
+                                                <DataGridTextColumn Header="Field Column Position" Binding="{Binding fieldPos}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Label FontSize="13" Content="List name:" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="80" Grid.Column="0" Height="36"/>
+                                        <Label FontSize="13" Content="Description:" HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.577" Width="80" Grid.Column="0" Height="30"/>
+                                        <TextBox FontSize="13" x:Name="txt_listName" HorizontalAlignment="Left" Height="23" Margin="85,27,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="A name to save the list with" Grid.Column="0"/>
+                                        <TextBox FontSize="13" x:Name="txt_listDesc" HorizontalAlignment="Left" Height="72" Margin="85,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" ToolTip="description of the list data (Optional)" Grid.Column="0"/>
+                                        <Button x:Name="btn_save" FontSize="18" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="90" Height="27" Background="#FFDAEAE8">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Margin="0,0,5,0" Width="25" Height="25" Source="{DynamicResource ImageSource1}" HorizontalAlignment="Left" />
+                                                <TextBlock Margin="5,0,0,0" HorizontalAlignment="Right"><Run Text="Save"/></TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btn_reset" Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="139,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
+                                        <Button x:Name="btn_cancel" Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="245,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="27" Background="#FFDAEAE8"/>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
+                                <TabItem.Header>
+                                    <Grid Width="150">
+                                        <Image Source="list.png" Width="25" Margin="0.5,0,124.5,0" />
+                                        <TextBlock Text="List Data" Margin="31,1,19,-1" Width="100" />
+                                    </Grid>
+                                </TabItem.Header>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="75*"/>
+                                        <RowDefinition Height="326*"/>
+                                        <RowDefinition Height="36*"/>
+                                    </Grid.RowDefinitions>
+                                    <GroupBox Header="Filter Options" Foreground="Black" FontSize="13" Margin="0,0,0,10">
+                                        <Grid Width="727">
+                                            <Label Content="Filter by Campaign:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="125.327"/>
+                                            <ComboBox HorizontalAlignment="Left" Margin="140.327,10,0,0" VerticalAlignment="Top" Width="223.673" Height="27.29"/>
+                                        </Grid>
+                                    </GroupBox>
+                                    <DataGrid Margin="10,0,10,2.5" Grid.Row="1"/>
+                                    <Button Content="Reset List" HorizontalAlignment="Left" Height="30" Margin="10,2.5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117"/>
+                                    <Button Content="Delete List" HorizontalAlignment="Left" Height="30" Margin="175,2.5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117"/>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+
+                </Grid>
+            </Border>
+        </TabItem>
+        <TabItem Header="Campaigns" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC">
+                    <ListBox HorizontalAlignment="Left" Height="370.54" Margin="10,10,0,0" VerticalAlignment="Top" Width="319"/>
+                    <Button Content="Add Campaign" HorizontalAlignment="Left" Height="29" Margin="10,406.54,0,0" VerticalAlignment="Top" Width="152"/>
+                    <Button Content="Delete Campaign" HorizontalAlignment="Left" Height="29" Margin="178,406.54,0,0" VerticalAlignment="Top" Width="151"/>
+                    <Label Content="Campaign Name:" HorizontalAlignment="Left" Height="25.54" Margin="349,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <TextBox HorizontalAlignment="Left" Height="25.54" Margin="484,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="258"/>
+                    <Label Content="Description:" HorizontalAlignment="Left" Height="25.54" Margin="349,52,0,0" VerticalAlignment="Top" Width="120"/>
+                    <TextBox HorizontalAlignment="Left" Height="157.54" Margin="484,52,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="258"/>
+                    <Button Content="Update" HorizontalAlignment="Left" Height="34" Margin="621,222.54,0,0" VerticalAlignment="Top" Width="121"/>
+                </Grid>
+            </Border>
+        </TabItem>
+        <TabItem Header="Teams" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC">
+                	<Grid.RowDefinitions>
+                		<RowDefinition Height="366*"/>
+                		<RowDefinition Height="53*"/>
+                		<RowDefinition Height="55*"/>
+                	</Grid.RowDefinitions>
+                	<Grid.ColumnDefinitions>
+                		<ColumnDefinition Width="365*"/>
+                		<ColumnDefinition Width="387*"/>
+                	</Grid.ColumnDefinitions>
+                    <ListBox Margin="10,10.02,0,12.52" HorizontalAlignment="Left" Width="346"/>
+                    <Button HorizontalAlignment="Left" Margin="10,16.982,189,11.021" Content="Add Team" Grid.Row="1" Width="166" Height="25"/>
+                    <Button HorizontalAlignment="Left" Margin="198,16.46,9,10.5" Content="DeleteTeam" Grid.Row="1" Width="158" Height="25"/>
+                    <Label Content="Team Name:" HorizontalAlignment="Left" Margin="18,10,0,0" VerticalAlignment="Top" Width="118.993" Height="26.5" Grid.Column="1"/>
+                    <TextBox HorizontalAlignment="Left" Height="26.5" Margin="141.993,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="235.007" Grid.Column="1"/>
+                    <Label Content="Description:" HorizontalAlignment="Left" Margin="18,52,0,0" VerticalAlignment="Top" Width="118.993" Height="26.5" Grid.Column="1"/>
+                    <TextBox HorizontalAlignment="Left" Height="124.5" Margin="141.993,52,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="235.007" Grid.Column="1"/>
+                    <Button Content="Update" HorizontalAlignment="Left" Height="26.04" Margin="257,188.5,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+                </Grid>
+            </Border>
+        </TabItem>
+        <TabItem Header="Users" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC">
+                	<Grid.ColumnDefinitions>
+                		<ColumnDefinition Width="313*"/>
+                		<ColumnDefinition Width="439*"/>
+                	</Grid.ColumnDefinitions>
+                	<ListBox HorizontalAlignment="Left" Height="402.54" Margin="10,10,0,0" VerticalAlignment="Top" Width="293"/>
+                	<Button Content="Add" HorizontalAlignment="Left" Margin="10,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96"/>
+                	<Label Content="Full Name:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
+                	<TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177.007"/>
+                	<Label Content="Username:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,49,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
+                	<TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,49,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177.007"/>
+                	<Label Content="Password:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,88,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
+                	<TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,88,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177.007"/>
+                	<Label Content="Role:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,129,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
+                	<ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,129,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
+                	<Label Content="Team:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,170,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
+                	<ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,170,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
+                	<Label Content="Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,211,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
+                	<ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,211,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
+                	<Button Content="Update User" Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,263.54,0,0" VerticalAlignment="Top" Width="177.007" Height="30.96"/>
+                	<Button Content="Remove Selected" HorizontalAlignment="Left" Margin="175,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96"/>
+					
+                </Grid>
+            </Border>
+        </TabItem>
+        <TabItem Header="Settings" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC">
+                	<Grid.RowDefinitions>
+                		<RowDefinition Height="24*"/>
+                		<RowDefinition Height="30*"/>
+                		<RowDefinition Height="25*"/>
+                	</Grid.RowDefinitions>
+                	<GroupBox Grid.Row="0" Header="Database Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Width="752" Height="139.5">
+                		<Grid HorizontalAlignment="Left" Height="116.54" VerticalAlignment="Top" Width="740">
+                			<Label Content="Server IP Address:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54"/>
+                			<Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54" Margin="0,30,0,0"/>
+                			<Label Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54" Margin="0,60,0,0"/>
+                			<TextBox Text="192.168.1.1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Height="24.54" Margin="115.993,0,0,0" FontSize="13.1" />
+                			<TextBox Text="root" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Height="24.54" Margin="115.993,30,0,0" FontSize="13.1" />
+                			<PasswordBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Height="24.54" Margin="115.993,61,0,0" Password="toor" FontSize="13.1" />
+                			<TextBox IsReadOnly="True" Text="The Database Should be Named 3cdialer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240.993" Height="24.54" Margin="0,90,0,0" FontSize="13.1" />
+						</Grid>
+                	</GroupBox>
+                	<GroupBox Header="Services and Network" HorizontalAlignment="Left" Margin="0,0.488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="752" Height="179.527">
+                		<Grid>
+                			<Label Content="Dialing service:" Margin="10,13.283,640,113.284"/>
+							<Button Content="Start Service" Margin="105,13.283,520,113.283" Height="30" />
+							<TextBlock Margin="241,18.283,279,118.284" Text="Dialing Service is stopped. Click to start." Height="20" />
+							<Label Content="Bind to Interface IP:" Margin="10,64.283,611,62.284"/>
+							<ComboBox Text="Is not open" SelectedIndex="0" Margin="134,64.283,398,62.284" Height="25">
+								<ComboBoxItem Name="cbi1">Select Local NIC to Bind to</ComboBoxItem>
+							</ComboBox>
+							<Label Content="Port to Listen:" Margin="10,99.283,611,27.284" Height="30" />
+							<TextBox Text="15500" Margin="134,104.283,520,31.284" />
+						</Grid>
+					</GroupBox>
+                </Grid>
+            </Border>
+        </TabItem>
+        <TabItem Header="About" Width="120" GotFocus="onTabFocus">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <Grid Background="#F0F9FC"/>
+            </Border>
+        </TabItem>
+    </TabControl>
 
 </Window>
