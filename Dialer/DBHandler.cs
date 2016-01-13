@@ -1,0 +1,301 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MySql.Data.MySqlClient;
+using System.Data;
+using System.Threading;
+
+/**
+ *This class will handle the DB stuff and funcs
+ *
+ * */
+namespace Dialer
+{
+    class DBHandler
+    {
+        private MySqlConnection conn;
+        public DBHandler()
+        {
+            conn = new MySqlConnection("SERVER=localhost;DATABASE=3cdialer;UID=root;PASSWORD=toor;");
+        }
+
+        private bool OpenConn()
+        {
+            try
+            {
+                conn.Open();
+                return true;
+            }
+            catch(MySqlException e)
+            {
+                Logger.LogDBError(e.Message);
+                return false;
+            }
+        }
+
+        public Dictionary<string, int> getAllCallLists()
+        {
+            Dictionary<string, int> listDict = new Dictionary<string, int>();
+            if (OpenConn() == true)
+            {
+                string query = "SELECT * FROM call_lists_view;";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    listDict.Add(Convert.ToString(reader[0]),Convert.ToInt32(reader[1]));
+                }
+                conn.Close();
+                return listDict;
+            }
+            else
+            {
+                Logger.LogError("Failed to fetch lists in list tab.");
+                listDict.Add("Error: No lists fetched", -1);
+                return listDict;
+            }
+        }
+
+        public DataTable getCallListbyListID(int listID)
+        {
+            DataTable dt = new DataTable("listById");
+            for (int i = 0; i < 14; i++)
+            {
+                DataColumn dc = new DataColumn("header" + i, typeof(string));
+                dt.Columns.Add(dc);
+            }
+            string query = "SELECT CONCAT(fname,' ',lname) AS fullname,tel1,tel2,status,language,country,custom1,custom2,custom3,custom4,custom5,custom6,custom7 FROM call_list_data WHERE calllistID = " + listID + " ORDER BY id LIMIT 0, 1000;";
+            if(OpenConn() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                
+                while(reader.Read())
+                {
+                    DataRow dr = dt.NewRow();
+                    dr[0] = reader[0].ToString();
+                    dr[1] = reader[1].ToString();
+                    dr[2] = reader[2].ToString();
+                    dr[3] = reader[3].ToString();
+                    dr[4] = reader[4].ToString();
+                    dr[5] = reader[5].ToString();
+                    dr[6] = reader[6].ToString();
+                    dr[7] = reader[7].ToString();
+                    dr[8] = reader[8].ToString();
+                    dr[9] = reader[9].ToString();
+                    dr[10] = reader[10].ToString();
+                    dr[11] = reader[11].ToString();
+                    dr[12] = reader[12].ToString();
+                    dt.Rows.Add(dr);
+                }
+            }
+            conn.Close();
+            return dt;
+        }
+
+        public List<CallList> getCallListbyCampaignName(string campaign)
+        {
+            int campaignID = getCampaignID(campaign);
+            Thread.Sleep(10);
+            List<CallList> cList = new List<CallList>();
+            if (OpenConn() == true)
+            {
+                string query = "SELECT name, campaignID FROM call_lists WHERE campaignID = " + campaignID + ";";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    CallList c = new CallList();
+                    c.ListName = Convert.ToString(reader[0]);
+                    c.ListID = Convert.ToInt32(reader[1]);
+                    cList.Add(c);
+                }
+                conn.Close();
+                return cList;
+            }
+            else
+            {
+                Logger.LogError("Failed to fetch lists in list tab.");
+                cList.Add(new CallList(){ListName = "Error: No lists fetched",ListID = -1});
+                return cList;
+            }
+        }
+
+        public bool DeleteCallList(string listName)
+        {
+            if(OpenConn()==true)
+            {
+                string query = "DELETE FROM call_lists WHERE name = '" + listName + "';";
+                MySqlCommand cmd = new MySqlCommand(query,conn);
+                int res = cmd.ExecuteNonQuery();
+                if (res != 0)
+                {
+                    conn.Close();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool AddList(List<Call> list, string name, string desc = "", string campaign = "")
+        {
+            int campaignID = getCampaignID(campaign);
+            if (campaignID == 0)
+            {
+                Logger.LogDBError("Failed to get campaign ID!!");
+                return false;
+            }
+
+            if (OpenConn() == true)
+            {
+                try
+                {
+                    string query = "INSERT INTO call_lists(name,descr,campaignID) VALUES('" + name + "','" + desc + "'," + campaignID + ");";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    long last_insert_id = cmd.LastInsertedId;
+                    query = "";
+                    foreach (var call in list)
+                    {
+                        query += "INSERT INTO call_list_data (calllistID,fname,lname,tel1,tel2,status,language,country,custom1,custom2,custom3,custom4,custom5,custom6,custom7) VALUES (" + last_insert_id + ",'" +
+                            call.fname + "','" +
+                            call.lname + "','" +
+                            call.tel1 + "','" +
+                            call.tel2 + "','" +
+                            call.status + "','" +
+                            call.lang + "','" +
+                            call.country + "','" +
+                            call.custom1 + "','" +
+                            call.custom2 + "','" +
+                            call.custom3 + "','" +
+                            call.custom4 + "','" +
+                            call.custom5 + "','" +
+                            call.custom6 + "','" +
+                            call.custom7 + "');";
+                    }
+                    cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Logger.LogDBError(e.Message);
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        private int getCampaignID(string campaign)
+        {
+            if(OpenConn() == true)
+            {
+                string query = "SELECT id FROM campaigns WHERE name = '" + campaign + "';";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                object i = 0;
+                while (reader.Read())
+                {
+                    i = reader[0];
+                }
+                conn.Close();
+                return Convert.ToInt32(i);
+            }
+            return 0;
+        }
+
+        public List<string> GetCampaignsAsList()
+        {
+            List<string> campaignList = new List<string>();
+            string query = "SELECT name FROM campaigns ORDER BY id ASC";
+            if (OpenConn() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    campaignList.Add(reader["name"].ToString());
+                }
+                conn.Close();
+                return campaignList;
+            }
+            else
+            {
+                campaignList.Add("Could not connect to DB");
+                return campaignList;
+            }
+        }
+
+        internal List<Team> GetAllTeams()
+        {
+            List<Team> teams = new List<Team>();
+            if (OpenConn() == true)
+            {
+                string query = "SELECT id,name,descr FROM teams ORDER BY name ASC LIMIT 0,40;";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    teams.Add(new Team(reader["id"].ToString(),reader["name"].ToString(),reader["descr"].ToString()));
+                }
+                conn.Close();
+            }
+            else
+            {
+                teams.Add(new Team(
+                        //{
+                            "-1",
+                            "DB Load Failed",
+                            "This is an error. Restart Application and Services."
+                        ));
+                Logger.LogDBError("Could not load teams list from DB ");
+            }
+            return teams;
+        }
+
+        //team deletion
+        internal bool DeleteTeamByName(string teamName)
+        {
+            if (OpenConn() == true)
+            {
+                string query = "DELETE FROM TEAMS WHERE name = '"+teamName+"';";
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message);
+                }
+            }
+            return false;
+        }
+
+        internal bool addTeam(Team team)
+        {
+            if (OpenConn() == true)
+            {
+                try
+                {
+                    string query = "INSERT INTO teams (name,descr) VALUES('" + team.Name + "','" + team.Descr + "');";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message);
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+}

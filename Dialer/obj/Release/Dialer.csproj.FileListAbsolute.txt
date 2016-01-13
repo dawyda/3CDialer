@@ -1,0 +1,16 @@
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.exe
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\MySql.Data.dll
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\MainWindow.baml
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\MainWindow.g.cs
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\App.g.cs
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer_MarkupCompile.cache
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.g.resources
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.Properties.Resources.resources
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.csproj.GenerateResource.Cache
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.exe
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.exe.manifest
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.application
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.exe.manifest
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.application
