@@ -7,20 +7,22 @@ namespace Dialer
 {
     public class Campaign:ViewModelEntity
     {
-        protected int id;
+        protected string id;
         protected string name;
         protected string descr;
-        protected int teamId;
+        protected string teamId;
+        protected string teamName;
 
-        public Campaign(int id, string name, string descr, int teamId) 
+        public Campaign(string id, string name, string descr, string teamId, string teamName) 
         {
             this.id = id;
             this.name = name;
             this.descr = descr;
             this.teamId = teamId;
+            this.teamName = teamName;
         }
 
-        public int Id 
+        public string Id 
         {
             get { return id; }
             set
@@ -56,7 +58,7 @@ namespace Dialer
                 }
             }
         }
-        public int TeamID
+        public string TeamID
         {
             get { return teamId; }
             set
@@ -65,6 +67,19 @@ namespace Dialer
                 {
                     teamId = value;
                     NotifyPropertyChanged("TeamID");
+                }
+            }
+        }
+
+        public string TeamName
+        {
+            get { return teamName; }
+            set
+            {
+                if (teamId != value)
+                {
+                    teamId = value;
+                    NotifyPropertyChanged("TeamName");
                 }
             }
         }

@@ -5,6 +5,7 @@ using System.Text;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Threading;
+using System.Diagnostics;
 
 /**
  *This class will handle the DB stuff and funcs
@@ -66,6 +67,7 @@ namespace Dialer
                 dt.Columns.Add(dc);
             }
             string query = "SELECT CONCAT(fname,' ',lname) AS fullname,tel1,tel2,status,language,country,custom1,custom2,custom3,custom4,custom5,custom6,custom7 FROM call_list_data WHERE calllistID = " + listID + " ORDER BY id LIMIT 0, 1000;";
+            Trace.WriteLine(query);
             if(OpenConn() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -75,6 +77,7 @@ namespace Dialer
                 {
                     DataRow dr = dt.NewRow();
                     dr[0] = reader[0].ToString();
+                    Trace.WriteLine(reader[0].ToString());
                     dr[1] = reader[1].ToString();
                     dr[2] = reader[2].ToString();
                     dr[3] = reader[3].ToString();
@@ -101,7 +104,7 @@ namespace Dialer
             List<CallList> cList = new List<CallList>();
             if (OpenConn() == true)
             {
-                string query = "SELECT name, campaignID FROM call_lists WHERE campaignID = " + campaignID + ";";
+                string query = "SELECT name, id FROM call_lists WHERE campaignID = " + campaignID + ";";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -229,6 +232,43 @@ namespace Dialer
             }
         }
 
+        internal List<Campaign> GetAllCampaigns()
+        {
+            List<Campaign> campaigns = new List<Campaign>();
+            if (OpenConn() == true)
+            {
+                try
+                {
+                    string query = "SELECT c.id,c.name,c.descr,c.teamID,t.name AS teamName FROM campaigns AS c " +
+                    "INNER JOIN teams AS t ON c.teamID = t.id LIMIT 0,50;";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        campaigns.Add(new Campaign(reader["id"].ToString(), reader["name"].ToString(), reader["descr"].ToString(), reader["teamID"].ToString(), reader["teamName"].ToString()));
+                    }
+                    conn.Close();
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            else
+            {
+                campaigns.Add(new Campaign(
+                    //{
+                            "-1",
+                            "DB Load Failed",
+                            "This is an error. Restart Application and Services.",
+                            "-1",
+                            "None"
+                        ));
+                Logger.LogDBError("Could not load teams list from DB ");
+            }
+            return campaigns;
+        }
+
         internal List<Team> GetAllTeams()
         {
             List<Team> teams = new List<Team>();
@@ -251,7 +291,7 @@ namespace Dialer
                             "DB Load Failed",
                             "This is an error. Restart Application and Services."
                         ));
-                Logger.LogDBError("Could not load teams list from DB ");
+                Logger.LogDBError("Could not load teams list from DB " + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
             return teams;
         }
@@ -271,10 +311,29 @@ namespace Dialer
                 }
                 catch (MySqlException e)
                 {
-                    Logger.LogDBError(e.Message);
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
                 }
             }
             return false;
+        }
+
+        //will get another use for it later.
+        internal string GetCampaignNameFromID(string id)
+        {
+            string cname = "Failed to fetch";
+            if (OpenConn() == true)
+            {
+                string query = "SELECT name FROM teams WHERE id="+id+";";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    cname = reader["name"].ToString();
+                }
+                conn.Close();
+                return cname;
+            }
+            return cname;
         }
 
         internal bool addTeam(Team team)
@@ -291,11 +350,95 @@ namespace Dialer
                 }
                 catch (MySqlException e)
                 {
-                    Logger.LogDBError(e.Message);
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
                     return false;
                 }
             }
             return false;
+        }
+
+        internal System.Collections.IEnumerable GetAllTeamsAsList()
+        {
+            List<string> teams = new List<string>();
+            if (OpenConn() == true)
+            {
+                MySqlDataReader reader = new MySqlCommand("SELECT name FROM teams;", conn).ExecuteReader();
+                while (reader.Read())
+                {
+                    teams.Add(reader[0].ToString());
+                }
+                conn.Close();
+            }
+            else
+            {
+                teams.Add("Failed to fetch teams see log");
+            }
+            return teams;
+        }
+
+        internal bool DeleteCampaignByName(string campaignName)
+        {
+            if (OpenConn() == true)
+            {
+                string query = "DELETE FROM campaigns WHERE name = '" + campaignName + "';";
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            return false;
+        }
+        internal bool AddCampaign(Campaign campaign, string tName)
+        {
+            if (OpenConn() == true)
+            {
+                string query = "INSERT INTO campaigns (name,descr,teamID) SELECT '" + campaign.Name + "','" + campaign.Descr + "',id FROM teams WHERE name = '" + tName + "';";
+                try
+                {
+                    Trace.WriteLine(campaign.TeamName);
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            return false;
+        }
+
+        //users stuff will be put here
+        internal List<User> GetAllUsers()
+        {
+            string query = "SELECT u.id,u.username,u.name,u.password,r.name AS role,c.name AS campaign FROM users u " +
+                "INNER JOIN roles r ON u.roleID = r.id " +
+                "INNER JOIN campaigns c ON u.campaignID = c.id;";//limit to be added based on license.
+            List<User> users = new List<User>();
+            if (OpenConn() == true)
+            {
+                MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader();
+                while (reader.Read())
+                {
+                    users.Add(new User(reader["name"].ToString(),
+                        reader["username"].ToString(),
+                        reader["password"].ToString(),
+                        reader["role"].ToString(),
+                        reader["campaign"].ToString(),
+                        reader["id"].ToString()
+                        ));
+                }
+            }
+            users.Add(new User("User fetch failed"));
+            return users;
         }
     }
 }

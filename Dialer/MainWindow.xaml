@@ -11,10 +11,10 @@
         <BitmapImage x:Key="ImageSource2" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\refresh.png"/>
         <BitmapImage x:Key="ImageSource3" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\Assets\\list_delete.png"/>
     </Window.Resources>
-    <Window.DataContext>
-        <local:TeamViewModel x:Name="TeamViewModel"/>
-    </Window.DataContext>
 
+    <Window.DataContext>
+        <local:DialerViewModel x:Name="DialerViewModel" />
+    </Window.DataContext>
     <TabControl>
         <TabItem Header="Lists" Width="120" GotFocus="onTabFocus">
             <Border BorderBrush="Gray" BorderThickness="1">
@@ -167,24 +167,25 @@
         <TabItem Header="Campaigns" Width="120" GotFocus="onTabFocus">
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="#F0F9FC">
-
-                    <Button Content="Add Campaign" HorizontalAlignment="Left" Height="29" Margin="10,406.54,0,0" VerticalAlignment="Top" Width="152"/>
-                    <Button Content="Delete Campaign" HorizontalAlignment="Left" Height="29" Margin="263,407,0,0" VerticalAlignment="Top" Width="151"/>
+                    <ListBox ItemsSource="{Binding Campaigns}" SelectedItem="{Binding SelectedCampaign}" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="366" Height="370"/>
+                    <Button x:Name="btn_AddCampaign" Content="Add Campaign" HorizontalAlignment="Left" Height="29" Margin="10,406.54,0,0" VerticalAlignment="Top" Width="152" Click="BtnAddCampaign_Click"/>
+                    <Button x:Name="btn_DelCampaign" Content="Delete Campaign" HorizontalAlignment="Left" Height="29" Margin="217,407,0,0" VerticalAlignment="Top" Width="149" Click="Btn_DelCampaign_Click"/>
                     <Label Content="Campaign Name:" HorizontalAlignment="Left" Height="26" Margin="419,10,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox HorizontalAlignment="Left" Height="26" Margin="532,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+                    <TextBox x:Name="txt_CampaignName" HorizontalAlignment="Left" Text="{Binding SelectedCampaign.Name}" Height="26" Margin="532,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
                     <Label Content="Description:" HorizontalAlignment="Left" Height="26" Margin="419,52,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox HorizontalAlignment="Left" Height="77" Margin="532,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
-                    <Button Content="Update" HorizontalAlignment="Left" Height="34" Margin="621,228,0,0" VerticalAlignment="Top" Width="121"/>
-                    <Label Content="Team:" HorizontalAlignment="Left" Height="26" Margin="419,148,0,0" VerticalAlignment="Top" Width="100"/>
-                    <ComboBox x:Name="cb_campaignTeam" HorizontalAlignment="Left" Margin="532,148,0,0" VerticalAlignment="Top" Width="210" Height="26"/>
-                    <ListView HorizontalAlignment="Left" Height="392" VerticalAlignment="Top" Width="409" Margin="10,0,0,0">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Campaign Name" Width="200"/>
-                                <GridViewColumn Header="Team Name" Width="200"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <TextBox x:Name="txt_CampaignDescr" Text="{Binding SelectedCampaign.Descr}" HorizontalAlignment="Left" Height="77" Margin="532,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+                    <Button x:Name="btn_CampaignUpdate" Content="Apply Changes" HorizontalAlignment="Left" Height="34" Margin="621,228,0,0" VerticalAlignment="Top" Width="121" Click="Btn_CampaignUpdate_Click"/>
+                    <Label Content="Change Team:" HorizontalAlignment="Left" Height="26" Margin="419,179,0,0" VerticalAlignment="Top" Width="100"/>
+                    <ComboBox x:Name="cb_campaignTeam" HorizontalAlignment="Left" Margin="532,179,0,0" VerticalAlignment="Top" Width="210" Height="26" SelectionChanged="cb_campaignTeam_SelectionChanged"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="419,228,0,0" TextWrapping="Wrap" Text="Click Update to Add/Update campaigns" VerticalAlignment="Top" Width="183" Height="34" Foreground="#FFB60707"/>
+                    <Label Content="In Team:" HorizontalAlignment="Left" Height="26" Margin="419,141,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="txt_CampaignTeam" Text="{Binding SelectedCampaign.TeamName}" HorizontalAlignment="Left" Height="26" Margin="532,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+                    <Button HorizontalAlignment="Right" Width="120" Margin="0,298,10,151" Height="25" Click="Button_Click" ToolTip="Refresh lists from DB">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{DynamicResource ImageSource2}" Width="22" Height="22" Margin="0,1,5,0" />
+                            <TextBlock Margin="5,2,5,0">Refresh Data</TextBlock>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
         </TabItem>
@@ -207,14 +208,20 @@
                     <TextBox x:Name="txt_teamName" Text="{Binding SelectedTeam.Name}" HorizontalAlignment="Left" Height="26.5" Margin="141.993,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235.007" Grid.Column="1"/>
                     <Label Content="Description:" HorizontalAlignment="Left" Margin="18,52,0,0" VerticalAlignment="Top" Width="118.993" Height="26.5" Grid.Column="1"/>
                     <TextBox x:Name="txt_teamDescr" Text="{Binding SelectedTeam.Descr}" HorizontalAlignment="Left" Height="124.5" Margin="141.993,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235.007" Grid.Column="1"/>
-                    <Button x:Name="btn_UpdateTeam" Content="Update" HorizontalAlignment="Left" Height="26.04" Margin="257,188.5,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" ToolTip="Apply changes" Click="Btn_UpdateTeam_Click"/>
+                    <Button x:Name="btn_UpdateTeam" Content="Apply Changes" HorizontalAlignment="Left" Height="26.04" Margin="257,188.5,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" ToolTip="Apply changes" Click="Btn_UpdateTeam_Click"/>
                     <Label Content="After adding/changing click update." Grid.Column="1" HorizontalAlignment="Left" Margin="18,188,0,0" VerticalAlignment="Top" Height="27" Width="201" Foreground="#FF0144A4"/>
                 </Grid>
             </Border>
         </TabItem>
         <TabItem Header="Users" Width="120" GotFocus="onTabFocus">
             <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC">
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB7F9F9" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="313*"/>
                         <ColumnDefinition Width="439*"/>
@@ -222,19 +229,19 @@
                     <ListBox HorizontalAlignment="Left" Height="402.54" Margin="10,10,0,0" VerticalAlignment="Top" Width="293"/>
                     <Button Content="Add" HorizontalAlignment="Left" Margin="10,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96"/>
                     <Label Content="Full Name:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177.007"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
                     <Label Content="Username:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,49,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,49,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177.007"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
                     <Label Content="Password:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,88,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,88,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="177.007"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
                     <Label Content="Role:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,129,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
                     <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,129,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
-                    <Label Content="Team:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,170,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,170,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
-                    <Label Content="Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,211,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,211,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
-                    <Button Content="Update User" Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,263.54,0,0" VerticalAlignment="Top" Width="177.007" Height="30.96"/>
+                    <Label Content="Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,207,0,0" VerticalAlignment="Top" Width="99" Height="26"/>
+                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="162,207,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
+                    <Button Content="Apply Changes" Grid.Column="1" HorizontalAlignment="Left" Margin="162,250,0,0" VerticalAlignment="Top" Width="177" Height="30" ToolTip="Save changes to DB"/>
                     <Button Content="Remove Selected" HorizontalAlignment="Left" Margin="175,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96"/>
+                    <Label Content="Current Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="46,168,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="162,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
 
                 </Grid>
             </Border>

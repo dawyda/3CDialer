@@ -90,9 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CampaignViewModel.cs" />
     <Compile Include="Team.cs" />
-    <Compile Include="TeamViewModel.cs" />
+    <Compile Include="DialerViewModel.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="ViewModelEntity.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

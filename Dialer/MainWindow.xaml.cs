@@ -44,13 +44,24 @@ namespace Dialer
             }
             import_campaign.SelectedIndex = 0;
             getListsForListDataTab();
-            initializeCampaignsTab();
+            initCampaignsTab();
             initTeamsTab();
+            initUsersTab();
         }
 
-        private void initializeCampaignsTab()
+        private void initUsersTab()
         {
-            //set the combo box values
+            //create it viewmodel
+        }
+
+        private void initCampaignsTab()
+        {
+            foreach(Campaign campaign in database.GetAllCampaigns())
+            {
+                DialerViewModel.Campaigns.Add(campaign);
+            }
+            DialerViewModel.SelectedCampaign = DialerViewModel.Campaigns[0];
+            cb_campaignTeam.ItemsSource = database.GetAllTeamsAsList();
         }
 
         private void getListsForListDataTab()
@@ -267,14 +278,17 @@ namespace Dialer
             Dictionary<string, int> listDict = (Dictionary<string, int>)lv_lists.DataContext;
 
             int ListID = listDict.ElementAt(lv_lists.SelectedIndex).Value;
+            Trace.WriteLine(ListID);
             DataTable ldt = database.getCallListbyListID(ListID);
             dg_listData.DataContext = ldt;
+            //Trace.WriteLine(ldt.Rows[0][2]);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //refresh stuff
             getListsForListDataTab();
+            initCampaignsTab();
         }
         
         //when the list data combox box filter by campaigns is clicked
@@ -287,6 +301,10 @@ namespace Dialer
                 dict.Add(c.ListName, c.ListID);
             }
             lv_lists.DataContext = dict;
+            foreach (var item in dict)
+            {
+                Trace.WriteLine(item.Key+", "+item.Value);
+            }
         }
 
         //this function resets the import list tab fields to defaults.
@@ -342,17 +360,17 @@ namespace Dialer
             //get lists from DB
             foreach (Team team in database.GetAllTeams())
             {
-                TeamViewModel.Teams.Add(team);
+                DialerViewModel.Teams.Add(team);
             }
-            TeamViewModel.SelectedTeam = TeamViewModel.Teams[0];
+            DialerViewModel.SelectedTeam = DialerViewModel.Teams[0];
         }
 
         //add team clicked event handler
         private void TeamAdd_Click(object sender, RoutedEventArgs e)
         {
             Team team = new Team("", "New Team", "");
-            TeamViewModel.Teams.Add(team);
-            TeamViewModel.SelectedTeam = team;
+            DialerViewModel.Teams.Add(team);
+            DialerViewModel.SelectedTeam = team;
             txt_teamName.SelectAll();
             txt_teamName.Focus();
             addingNew = true;
@@ -360,13 +378,15 @@ namespace Dialer
 
         private void RefreshAllTabs()
         {
-            initializeCampaignsTab();
+            DialerViewModel.Campaigns.Clear();
+            DialerViewModel.Teams.Clear();
+            initCampaignsTab();
             initTeamsTab();
         }
 
         private void Btn_UpdateTeam_Click(object sender, RoutedEventArgs e)
         {
-            Team team = TeamViewModel.SelectedTeam;
+            Team team = DialerViewModel.SelectedTeam;
             if (addingNew)
             {
                 if (database.addTeam(team))
@@ -384,7 +404,7 @@ namespace Dialer
 
         private void BtnDelTeam_Click(object sender, RoutedEventArgs e)
         {
-            Team team = TeamViewModel.SelectedTeam;
+            Team team = DialerViewModel.SelectedTeam;
             //Don't delete default team.
             if (team.Name == "Default Team")
             {
@@ -393,14 +413,74 @@ namespace Dialer
             }
             if (database.DeleteTeamByName(team.Name))
             {
-                TeamViewModel.SelectedTeam = TeamViewModel.Teams[0];
-                TeamViewModel.Teams.Remove(team);
+                DialerViewModel.SelectedTeam = DialerViewModel.Teams[0];
+                DialerViewModel.Teams.Remove(team);
+                MessageBox.Show("Deleted");
             }
             else
             {
                 MessageBox.Show("Failed");
                 Logger.LogError("Team deletion failed");
             }
+        }
+
+        private void BtnAddCampaign_Click(object sender, RoutedEventArgs e)
+        {
+            Campaign campaign = new Campaign("0","New Campaign","","1","Default Team");
+            DialerViewModel.Campaigns.Add(campaign);
+            DialerViewModel.SelectedCampaign = campaign;
+            txt_CampaignName.Focus();
+            addingNew = true;
+        }
+
+        private void Btn_DelCampaign_Click(object sender, RoutedEventArgs e)
+        {
+            Campaign campaign = DialerViewModel.SelectedCampaign;
+            //Don't delete default team.
+            if (campaign.Name == "Default Campaign")
+            {
+                MessageBox.Show("Cannot delete default Campaign", "Campaign Delete", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (database.DeleteCampaignByName(campaign.Name))
+            {
+                DialerViewModel.SelectedCampaign = DialerViewModel.Campaigns[0];
+                DialerViewModel.Campaigns.Remove(campaign);
+                MessageBox.Show("Deleted");
+            }
+            else
+            {
+                MessageBox.Show("Failed");
+                Logger.LogError("Campaign deletion failed");
+            }
+        }
+
+        private void Btn_CampaignUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Campaign campaign = DialerViewModel.SelectedCampaign;
+            string tName = cb_campaignTeam.SelectedValue.ToString();
+            if (addingNew)
+            {
+                if (database.AddCampaign(campaign, tName))
+                {
+                    MessageBox.Show("Campaign Added", "Teams");
+                }
+                else
+                {
+                    Logger.LogError("Campaign add failed for :" + campaign.Name);
+                    MessageBox.Show("Failed", "Teams");
+                }
+                addingNew = false;
+            }
+            else
+            {
+
+            }
+        }
+
+        private void cb_campaignTeam_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //DialerViewModel.SelectedCampaign.TeamName = cb_campaignTeam.SelectedValue.ToString();
         }
     }
 }
