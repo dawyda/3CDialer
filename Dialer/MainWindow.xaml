@@ -226,22 +226,24 @@
                         <ColumnDefinition Width="313*"/>
                         <ColumnDefinition Width="439*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox HorizontalAlignment="Left" Height="402.54" Margin="10,10,0,0" VerticalAlignment="Top" Width="293"/>
-                    <Button Content="Add" HorizontalAlignment="Left" Margin="10,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96"/>
+                    <ListBox ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}" DisplayMemberPath="Name" HorizontalAlignment="Left" Height="402.54" Margin="10,10,0,0" VerticalAlignment="Top" Width="293"/>
+                    <Button x:Name="btnUserAdd" Content="Add" HorizontalAlignment="Left" Margin="10,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96" Click="btnUserAdd_Click"/>
                     <Label Content="Full Name:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
+                    <TextBox Grid.Column="1" Text="{Binding SelectedUser.Name}" HorizontalAlignment="Left" Height="25.5" Margin="161.993,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
                     <Label Content="Username:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,49,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
+                    <TextBox Grid.Column="1" Text="{Binding SelectedUser.Username}" HorizontalAlignment="Left" Height="25.5" Margin="161.993,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
                     <Label Content="Password:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,88,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="25.5" Margin="161.993,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
-                    <Label Content="Role:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,129,0,0" VerticalAlignment="Top" Width="98.993" Height="25.5"/>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="161.993,129,0,0" VerticalAlignment="Top" Width="177.007" Height="25.5"/>
-                    <Label Content="Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,207,0,0" VerticalAlignment="Top" Width="99" Height="26"/>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="162,207,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
-                    <Button Content="Apply Changes" Grid.Column="1" HorizontalAlignment="Left" Margin="162,250,0,0" VerticalAlignment="Top" Width="177" Height="30" ToolTip="Save changes to DB"/>
-                    <Button Content="Remove Selected" HorizontalAlignment="Left" Margin="175,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96"/>
-                    <Label Content="Current Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="46,168,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="162,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
+                    <TextBox Grid.Column="1" Text="{Binding SelectedUser.Password}" HorizontalAlignment="Left" Height="25.5" Margin="161.993,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177.007"/>
+                    <Label Content="Role:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,170,0,0" VerticalAlignment="Top" Width="99" Height="26"/>
+                    <ComboBox x:Name="cb_roles" Grid.Column="1" HorizontalAlignment="Left" Margin="162,170,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
+                    <Label Content="Change Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="46,252,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
+                    <ComboBox x:Name="cb_userCampaign" Grid.Column="1" HorizontalAlignment="Left" Margin="162,252,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
+                    <Button x:Name="btnUpdateUsers" Content="Apply Changes" Grid.Column="1" HorizontalAlignment="Left" Margin="162,295,0,0" VerticalAlignment="Top" Width="177" Height="30" ToolTip="Save changes to DB" Click="btnUpdateUsers_Click"/>
+                    <Button x:Name="btnUserDel" Content="Remove Selected" HorizontalAlignment="Left" Margin="175,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96" Click="btnUserDel_Click"/>
+                    <Label Content="Current Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="46,213,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
+                    <TextBox IsReadOnly="True" Grid.Column="1" Text="{Binding SelectedUser.Campaign}" HorizontalAlignment="Left" Height="26" Margin="162,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
+                    <Label Content="Current Role:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,129,0,0" VerticalAlignment="Top" Width="99" Height="25"/>
+                    <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding SelectedUser.Role}" HorizontalAlignment="Left" Height="26" Margin="162,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="178"/>
 
                 </Grid>
             </Border>

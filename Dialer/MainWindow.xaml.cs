@@ -49,13 +49,24 @@ namespace Dialer
             initUsersTab();
         }
 
+        //USER TAB CODE HERE
         private void initUsersTab()
         {
-            //create it viewmodel
+            DialerViewModel.Users.Clear();
+            List<User> users = database.GetAllUsers();
+            if(users.Count < 1) users.Add(new User("No Users. Click Below to Add."));
+            foreach (User user in users)
+            {
+                DialerViewModel.Users.Add(user);
+            }
+            DialerViewModel.SelectedUser = DialerViewModel.Users[0];
+            cb_roles.ItemsSource = database.GetRolesAsString();
+            cb_userCampaign.ItemsSource = database.GetCampaignsAsList();
         }
 
         private void initCampaignsTab()
         {
+            DialerViewModel.Campaigns.Clear();
             foreach(Campaign campaign in database.GetAllCampaigns())
             {
                 DialerViewModel.Campaigns.Add(campaign);
@@ -357,6 +368,7 @@ namespace Dialer
 
         private void initTeamsTab()
         {
+            DialerViewModel.Teams.Clear();
             //get lists from DB
             foreach (Team team in database.GetAllTeams())
             {
@@ -481,6 +493,52 @@ namespace Dialer
         private void cb_campaignTeam_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //DialerViewModel.SelectedCampaign.TeamName = cb_campaignTeam.SelectedValue.ToString();
+        }
+
+        private void btnUserAdd_Click(object sender, RoutedEventArgs e)
+        {
+            User user = new User("New User");
+            DialerViewModel.Users.Add(user);
+            DialerViewModel.SelectedUser = user;
+            addingNew = true;
+        }
+
+        private void btnUserDel_Click(object sender, RoutedEventArgs e)
+        {
+            if (DialerViewModel.SelectedUser.Name != "Default User")
+            {
+                var res = MessageBox.Show("Are you sure you want to remove the user?", "Remove user", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (res == MessageBoxResult.Yes)
+                {
+                    if (database.DeleteUser(DialerViewModel.SelectedUser.Name))
+                    {
+                        User user = DialerViewModel.SelectedUser;
+                        DialerViewModel.SelectedUser = DialerViewModel.Users[0];
+                        DialerViewModel.Users.Remove(user);
+                        MessageBox.Show("User deleted", "Delete User");
+                        return;
+                    }
+                }
+                return;
+            }
+            MessageBox.Show("Cannot delete default user!","User Delete");
+        }
+
+        private void btnUpdateUsers_Click(object sender, RoutedEventArgs e)
+        {
+            if (addingNew)
+            {
+                if (database.AddUser(DialerViewModel.SelectedUser,cb_userCampaign.SelectedValue.ToString(),cb_roles.SelectedValue.ToString()))
+                {
+                    MessageBox.Show("User added");
+                    return;
+                }
+                MessageBox.Show("User add failed!","User Add",MessageBoxButton.OK,MessageBoxImage.Error);
+                return;
+            }
+            else
+            {
+            }
         }
     }
 }

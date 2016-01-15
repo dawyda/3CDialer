@@ -421,24 +421,106 @@ namespace Dialer
         {
             string query = "SELECT u.id,u.username,u.name,u.password,r.name AS role,c.name AS campaign FROM users u " +
                 "INNER JOIN roles r ON u.roleID = r.id " +
-                "INNER JOIN campaigns c ON u.campaignID = c.id;";//limit to be added based on license.
+                "INNER JOIN campaigns c ON u.campaignID = c.id "+
+                "WHERE u.id <> 1;";//limit to be added based on license.
             List<User> users = new List<User>();
             if (OpenConn() == true)
             {
-                MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader();
-                while (reader.Read())
+                try
                 {
-                    users.Add(new User(reader["name"].ToString(),
-                        reader["username"].ToString(),
-                        reader["password"].ToString(),
-                        reader["role"].ToString(),
-                        reader["campaign"].ToString(),
-                        reader["id"].ToString()
-                        ));
+                    MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader();
+                    while (reader.Read())
+                    {
+                        users.Add(new User(reader["name"].ToString(),
+                            reader["username"].ToString(),
+                            reader["password"].ToString(),
+                            reader["role"].ToString(),
+                            reader["campaign"].ToString(),
+                            reader["id"].ToString()
+                            ));
+                    }
+                    conn.Close();
+                }
+                catch (Exception e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                    users.Add(new User("User fetch failed"));
                 }
             }
-            users.Add(new User("User fetch failed"));
+            else
+            {
+                users.Add(new User("User fetch failed"));
+            }
             return users;
+        }
+
+        internal List<string> GetRolesAsString()
+        {
+            List<string> roles = new List<string>();
+            if(OpenConn() == true)
+            {
+                try
+                {
+                    MySqlDataReader reader = new MySqlCommand("SELECT name FROM roles;", conn).ExecuteReader();
+                    while (reader.Read())
+                    {
+                        roles.Add(reader["name"].ToString());
+                    }
+                    conn.Close();
+                }
+                catch (Exception e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                    roles.Add("User fetch failed");
+                }
+            }
+            return roles;
+        }
+        internal bool DeleteUser(string name)
+        {
+            string query = "DELETE FROM users WHERE name = '" + name + "';";
+            bool deleted = false;
+            if (OpenConn() == true)
+            {
+                try
+                {
+                    new MySqlCommand(query, conn).ExecuteNonQuery();
+                    deleted = true;
+                    conn.Close();
+                }
+                catch(MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            return deleted;
+        }
+        internal bool AddUser(User user, string campaign, string role)
+        {
+            bool added = false;
+            user.Campaign = campaign;
+            user.Role = role;
+            int cid = getCampaignID(user.Campaign);
+            if(OpenConn() != added)
+            {
+                try
+                {
+                    string query = "INSERT INTO users (username,name,password,campaignID,roleID) SELECT '" + user.Username + "','" + user.Name + "','" + user.Password + "'," + cid + ",r.id FROM roles AS r " +
+                        "WHERE r.name = '" + user.Role + "';";
+                    int ins = new MySqlCommand(query, conn).ExecuteNonQuery();
+                    if (ins != 0)
+                    {
+                        added = true;
+                    }
+                    else { Logger.LogDBError("User add failed : " + System.Reflection.MethodBase.GetCurrentMethod().Name); }
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            conn.Close();
+            return added;
         }
     }
 }

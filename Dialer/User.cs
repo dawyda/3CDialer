@@ -13,7 +13,7 @@ namespace Dialer
         protected string password;
         protected string role;
         protected string campaign;
-        private string p;
+        internal string PrevName;
 
         public User(string name, string username, string password, string role, string campaign,string id)
         {
@@ -23,6 +23,7 @@ namespace Dialer
             this.role = role;
             this.campaign = campaign;
             this.id = id;
+            this.PrevName = this.name;
         }
 
         public User(string name)
