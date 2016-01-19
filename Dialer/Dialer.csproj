@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Settings.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="DialerViewModel.cs" />
     <Compile Include="User.cs" />
