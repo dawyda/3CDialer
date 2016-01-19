@@ -394,6 +394,7 @@ namespace Dialer
             DialerViewModel.Teams.Clear();
             initCampaignsTab();
             initTeamsTab();
+            initUsersTab();
         }
 
         private void Btn_UpdateTeam_Click(object sender, RoutedEventArgs e)
@@ -411,7 +412,13 @@ namespace Dialer
                     MessageBox.Show("Failed", "Teams");
                 }
                 addingNew = false;
+                initTeamsTab();
             }
+            else
+            {
+                MessageBox.Show("To update a team, delete and add new team instead", "Teams update");
+            }
+            e.Handled = true;
         }
 
         private void BtnDelTeam_Click(object sender, RoutedEventArgs e)
@@ -423,7 +430,7 @@ namespace Dialer
                 MessageBox.Show("Cannot delete default team", "Team Delete", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            if (database.DeleteTeamByName(team.Name))
+            if (database.DeleteTeamByName(team.Name,team.Id))
             {
                 DialerViewModel.SelectedTeam = DialerViewModel.Teams[0];
                 DialerViewModel.Teams.Remove(team);
@@ -449,6 +456,7 @@ namespace Dialer
         {
             Campaign campaign = DialerViewModel.SelectedCampaign;
             //Don't delete default team.
+            //also  later add code for preventing deletion while service is running.
             if (campaign.Name == "Default Campaign")
             {
                 MessageBox.Show("Cannot delete default Campaign", "Campaign Delete", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -475,18 +483,20 @@ namespace Dialer
             {
                 if (database.AddCampaign(campaign, tName))
                 {
-                    MessageBox.Show("Campaign Added", "Teams");
+                    MessageBox.Show("Campaign Added", "Campaigns");
                 }
                 else
                 {
                     Logger.LogError("Campaign add failed for :" + campaign.Name);
-                    MessageBox.Show("Failed", "Teams");
+                    MessageBox.Show("Failed!", "Campaigns Error");
                 }
                 addingNew = false;
             }
             else
             {
-
+                database.DeleteCampaignByID(DialerViewModel.SelectedCampaign.Id);
+                database.AddCampaign(DialerViewModel.SelectedCampaign, cb_campaignTeam.SelectedValue.ToString());
+                MessageBox.Show("Campaign Updated", "Campaigns");
             }
         }
 
@@ -497,7 +507,7 @@ namespace Dialer
 
         private void btnUserAdd_Click(object sender, RoutedEventArgs e)
         {
-            User user = new User("New User");
+            User user = new User("New User","newuser","","User","Default Campaign","0");
             DialerViewModel.Users.Add(user);
             DialerViewModel.SelectedUser = user;
             addingNew = true;
@@ -528,16 +538,37 @@ namespace Dialer
         {
             if (addingNew)
             {
-                if (database.AddUser(DialerViewModel.SelectedUser,cb_userCampaign.SelectedValue.ToString(),cb_roles.SelectedValue.ToString()))
+                if (cb_roles.SelectedIndex == -1 || cb_userCampaign.SelectedIndex == -1)
                 {
-                    MessageBox.Show("User added");
+                    MessageBox.Show("Select role and campaign","User add error",MessageBoxButton.OK,MessageBoxImage.Error);
                     return;
                 }
-                MessageBox.Show("User add failed!","User Add",MessageBoxButton.OK,MessageBoxImage.Error);
-                return;
+                if (database.AddUser(DialerViewModel.SelectedUser, cb_userCampaign.SelectedValue.ToString(), cb_roles.SelectedValue.ToString()))
+                {
+                    MessageBox.Show("User added");
+                    addingNew = false;
+                    initUsersTab();
+                }
+                else
+                {
+                    MessageBox.Show("User add failed!", "User Add", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Logger.LogError("User addition failed");
+                    return;
+                }
             }
             else
             {
+                //this means user has just edited an item in users list.
+                if (cb_roles.SelectedIndex == -1 || cb_userCampaign.SelectedIndex == -1)
+                {
+                    cb_userCampaign.SelectedItem = DialerViewModel.SelectedUser.Campaign;
+                    cb_roles.SelectedItem = DialerViewModel.SelectedUser.Role;
+                }
+                database.DeleteUserbyID(DialerViewModel.SelectedUser.Id);
+                database.AddUser(DialerViewModel.SelectedUser, cb_userCampaign.SelectedValue.ToString(), cb_roles.SelectedValue.ToString());
+                MessageBox.Show("User updated");
+                initUsersTab();
+                return;
             }
         }
     }

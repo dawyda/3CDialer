@@ -295,11 +295,11 @@ namespace Dialer
         }
 
         //team deletion
-        internal bool DeleteTeamByName(string teamName)
+        internal bool DeleteTeamByName(string teamName,string id)
         {
             if (OpenConn() == true)
             {
-                string query = "DELETE FROM TEAMS WHERE name = '"+teamName+"';";
+                string query = "DELETE FROM TEAMS WHERE name = '"+teamName+"'; UPDATE campaigns SET teamID = 1 WHERE teamID = " + id + ";";
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -379,6 +379,25 @@ namespace Dialer
             if (OpenConn() == true)
             {
                 string query = "DELETE FROM campaigns WHERE name = '" + campaignName + "';";
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return true;
+                }
+                catch (MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            return false;
+        }
+        internal bool DeleteCampaignByID(string id)
+        {
+            if (OpenConn() == true)
+            {
+                string query = "DELETE FROM campaigns WHERE id = " + id + ";";
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -487,6 +506,25 @@ namespace Dialer
                     conn.Close();
                 }
                 catch(MySqlException e)
+                {
+                    Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
+                }
+            }
+            return deleted;
+        }
+        internal bool DeleteUserbyID(string id)
+        {
+            string query = "DELETE FROM users WHERE id = " + id + ";";
+            bool deleted = false;
+            if (OpenConn() == true)
+            {
+                try
+                {
+                    new MySqlCommand(query, conn).ExecuteNonQuery();
+                    deleted = true;
+                    conn.Close();
+                }
+                catch (MySqlException e)
                 {
                     Logger.LogDBError(e.Message + " :" + System.Reflection.MethodBase.GetCurrentMethod().Name);
                 }

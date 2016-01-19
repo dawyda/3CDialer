@@ -18,12 +18,12 @@
     </Window.DataContext>
     <TabControl>
         <TabItem GotFocus="onTabFocus" ToolTip="Lists">
-			<TabItem.Header>
-				<Grid Width="90">
-					<Image Width="25" Source="lists-head.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
-					<TextBlock Text="Lists" Width="41"  HorizontalAlignment="Right" Margin="0,4,17,0"/>
-				</Grid>
-			</TabItem.Header>
+            <TabItem.Header>
+                <Grid Width="90">
+                    <Image Width="25" Source="lists-head.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Text="Lists" Width="41"  HorizontalAlignment="Right" Margin="0,4,17,0"/>
+                </Grid>
+            </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid>
                     <Grid.Background>
@@ -178,12 +178,12 @@
             </Border>
         </TabItem>
         <TabItem GotFocus="onTabFocus" ToolTip="Campaigns">
-			<TabItem.Header>
-				<Grid Width="90.5">
-					<Image Width="25" Source="{DynamicResource campaignIcon}" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0"/>
-					<TextBlock Text="Campaigns" Width="63.5"  HorizontalAlignment="Right" Margin="0,4,0,-4"/>
-				</Grid>
-			</TabItem.Header>
+            <TabItem.Header>
+                <Grid Width="90.5">
+                    <Image Width="25" Source="{DynamicResource campaignIcon}" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0"/>
+                    <TextBlock Text="Campaigns" Width="63.5"  HorizontalAlignment="Right" Margin="0,4,0,-4"/>
+                </Grid>
+            </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid>
                     <Grid.Background>
@@ -205,7 +205,7 @@
                     <TextBlock HorizontalAlignment="Left" Margin="419,228,0,0" TextWrapping="Wrap" Text="Click Update to Add/Update campaigns" VerticalAlignment="Top" Width="183" Height="34" Foreground="#FFB60707"/>
                     <Label Content="In Team:" HorizontalAlignment="Left" Height="26" Margin="419,141,0,0" VerticalAlignment="Top" Width="100"/>
                     <TextBox x:Name="txt_CampaignTeam" Text="{Binding SelectedCampaign.TeamName}" HorizontalAlignment="Left" Height="26" Margin="532,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
-                    <Button HorizontalAlignment="Right" Width="120" Margin="0,298,10,151" Height="25" Click="Button_Click" ToolTip="Refresh lists from DB">
+                    <Button HorizontalAlignment="Left" Width="120" Margin="621,277,0,157" Click="Button_Click" ToolTip="Refresh lists from DB">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{DynamicResource ImageSource2}" Width="22" Height="22" Margin="0,1,5,0" />
                             <TextBlock Margin="5,2,5,0">Refresh Data</TextBlock>
@@ -215,12 +215,12 @@
             </Border>
         </TabItem>
         <TabItem GotFocus="onTabFocus" ToolTip="Teams">
-			<TabItem.Header>
-				<Grid Width="90.5">
-					<Image Width="25" Source="team.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0"/>
-					<TextBlock Text="Teams" Width="41.5"  HorizontalAlignment="Right" Margin="0,6,14,4"/>
-				</Grid>
-			</TabItem.Header>
+            <TabItem.Header>
+                <Grid Width="90.5">
+                    <Image Width="25" Source="team.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0"/>
+                    <TextBlock Text="Teams" Width="41.5"  HorizontalAlignment="Right" Margin="0,6,14,4"/>
+                </Grid>
+            </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid>
                     <Grid.Background>
@@ -239,7 +239,7 @@
                         <ColumnDefinition Width="387*"/>
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="lb_teams" ItemsSource="{Binding Teams}" SelectedItem="{Binding SelectedTeam}" DisplayMemberPath="Name" Margin="10,10.02,0,12.52" HorizontalAlignment="Left" Width="346" />
-                    <Button x:Name="btn_addTeam" HorizontalAlignment="Left" Margin="10,16.982,189,11.021" Content="Add Team" Grid.Row="1" Width="166" Height="25" Click="TeamAdd_Click" ToolTip="add new team"/>
+                    <Button x:Name="btn_addTeam" HorizontalAlignment="Left" Margin="10,17,0,11" Content="Add Team" Grid.Row="1" Width="166" Click="TeamAdd_Click" ToolTip="add new team"/>
                     <Button x:Name="btn_delTeam" HorizontalAlignment="Left" Margin="198,16.46,9,10.5" Content="DeleteTeam" Grid.Row="1" Width="158" Height="25" ToolTip="delete selected" Click="BtnDelTeam_Click"/>
                     <Label Content="Team Name:" HorizontalAlignment="Left" Margin="18,10,0,0" VerticalAlignment="Top" Width="118.993" Height="26.5" Grid.Column="1"/>
                     <TextBox x:Name="txt_teamName" Text="{Binding SelectedTeam.Name}" HorizontalAlignment="Left" Height="26.5" Margin="141.993,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235.007" Grid.Column="1"/>
@@ -251,12 +251,12 @@
             </Border>
         </TabItem>
         <TabItem GotFocus="onTabFocus" ToolTip="Users">
-			<TabItem.Header>
-				<Grid Width="90">
-					<Image Width="25" Source="user.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
-					<TextBlock Text="Users" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
-				</Grid>
-			</TabItem.Header>
+            <TabItem.Header>
+                <Grid Width="90">
+                    <Image Width="25" Source="user.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Text="Users" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
+                </Grid>
+            </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid>
                     <Grid.Background>
@@ -292,12 +292,12 @@
             </Border>
         </TabItem>
         <TabItem GotFocus="onTabFocus" ToolTip="Settings">
-			<TabItem.Header>
-				<Grid Width="90">
-					<Image Width="25" Source="settings.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
-					<TextBlock Text="Settings" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
-				</Grid>
-			</TabItem.Header>
+            <TabItem.Header>
+                <Grid Width="90">
+                    <Image Width="25" Source="settings.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Text="Settings" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
+                </Grid>
+            </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid>
                     <Grid.Background>
@@ -341,12 +341,12 @@
             </Border>
         </TabItem>
         <TabItem GotFocus="onTabFocus" ToolTip="About">
-			<TabItem.Header>
-				<Grid Width="90">
-					<Image Width="25" Source="about.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
-					<TextBlock Text="About" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
-				</Grid>
-			</TabItem.Header>
+            <TabItem.Header>
+                <Grid Width="90">
+                    <Image Width="25" Source="about.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+                    <TextBlock Text="About" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
+                </Grid>
+            </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="#F0F9FC"/>
             </Border>
