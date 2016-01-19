@@ -16,9 +16,16 @@ namespace Dialer
     class DBHandler
     {
         private MySqlConnection conn;
-        public DBHandler()
+        public DBHandler(string connectionString)
         {
-            conn = new MySqlConnection("SERVER=localhost;DATABASE=3cdialer;UID=root;PASSWORD=toor;");
+            try
+            {
+                conn = new MySqlConnection(connectionString);
+            }
+            catch (Exception e)
+            {
+                Logger.LogDBError(e.Message + ": Could not connect to DB ");
+            }
         }
 
         private bool OpenConn()

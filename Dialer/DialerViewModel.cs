@@ -19,6 +19,21 @@ namespace Dialer
         //users
         protected ObservableCollection<User> users = new ObservableCollection<User>();
         protected User selectedUser = null;
+        //settings
+        protected SettingsController settingsctrl = new SettingsController();
+
+        public SettingsController SettingsCtrl
+        {
+            get { return settingsctrl; }
+            set
+            {
+                if (settingsctrl != value)
+                {
+                    settingsctrl = value;
+                    NotifyPropertyChanged("SettingsCtrl");
+                }
+            }
+        }
 
         public ObservableCollection<Team> Teams
         {

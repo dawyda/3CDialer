@@ -17,6 +17,7 @@ using System.Data.OleDb;
 using System.Data;
 using System.Diagnostics;
 using System.Threading;
+using System.Net;
 
 namespace Dialer
 {
@@ -35,7 +36,12 @@ namespace Dialer
         public MainWindow()
         {
             InitializeComponent();
-            database  = new DBHandler();
+            string connstr = "SERVER=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.Value +
+                ";PORT=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.port +
+                ";DATABASE=" + DialerViewModel.SettingsCtrl.Settings.DBserver.dbname +
+                ";UID=" + DialerViewModel.SettingsCtrl.Settings.DBserver.user +
+                ";PASSWORD=" + DialerViewModel.SettingsCtrl.Settings.DBserver.password + ";";
+            database  = new DBHandler(connstr);
             dgArrangementValues();
             import_campaign.Items.Add("Select Campaign for List");
             foreach(var item in database.GetCampaignsAsList())
@@ -47,6 +53,16 @@ namespace Dialer
             initCampaignsTab();
             initTeamsTab();
             initUsersTab();
+            initSettingsTab();
+        }
+
+        private void initSettingsTab()
+        {
+            IPAddress[] host = Dns.GetHostAddresses(Dns.GetHostName());
+            foreach(IPAddress address in host)
+            {
+                if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) cb_ipaddr.Items.Add(address.ToString());
+            }
         }
 
         //USER TAB CODE HERE
@@ -570,6 +586,20 @@ namespace Dialer
                 initUsersTab();
                 return;
             }
+        }
+
+        //Apply settings button is clicked
+        private void Btn_ApplySettings_Click(object sender, RoutedEventArgs e)
+        {
+            if (DialerViewModel.SettingsCtrl.SaveSettings())
+            {
+                MessageBox.Show("Settings updated", "Settings");
+            }
+            else
+            {
+                MessageBox.Show("Settings update failed!", "Settings",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+            e.Handled = true;
         }
     }
 }
