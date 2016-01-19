@@ -142,6 +142,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="about.png" />
     <Resource Include="Assets\3DialerIcon.png" />
     <BlendEmbeddedFont Include="Fonts\daunpenh.ttf">
       <IsSystemFont>True</IsSystemFont>
@@ -150,7 +151,11 @@
     </BlendEmbeddedFont>
     <Resource Include="import.png" />
     <Resource Include="list.png" />
+    <Resource Include="lists-head.png" />
     <Resource Include="new list.png" />
+    <Resource Include="settings.png" />
+    <Resource Include="team.png" />
+    <Resource Include="user.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

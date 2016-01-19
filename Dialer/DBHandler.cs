@@ -67,7 +67,6 @@ namespace Dialer
                 dt.Columns.Add(dc);
             }
             string query = "SELECT CONCAT(fname,' ',lname) AS fullname,tel1,tel2,status,language,country,custom1,custom2,custom3,custom4,custom5,custom6,custom7 FROM call_list_data WHERE calllistID = " + listID + " ORDER BY id LIMIT 0, 1000;";
-            Trace.WriteLine(query);
             if(OpenConn() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -77,7 +76,6 @@ namespace Dialer
                 {
                     DataRow dr = dt.NewRow();
                     dr[0] = reader[0].ToString();
-                    Trace.WriteLine(reader[0].ToString());
                     dr[1] = reader[1].ToString();
                     dr[2] = reader[2].ToString();
                     dr[3] = reader[3].ToString();

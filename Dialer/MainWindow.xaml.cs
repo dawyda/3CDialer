@@ -111,7 +111,7 @@ namespace Dialer
         private void onTabFocus(object sender, RoutedEventArgs e)
         {
             TabItem ti = (TabItem)sender;
-            win_mgt.Title = "3CDialer - Management Console - " + ti.Header;
+            win_mgt.Title = "3CDialer - Management Console - " + ti.ToolTip;
         }
 
         private void importBtn_Click(object sender, RoutedEventArgs e)

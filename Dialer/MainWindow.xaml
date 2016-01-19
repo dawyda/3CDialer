@@ -10,15 +10,28 @@
         <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\Assets\save.png"/>
         <BitmapImage x:Key="ImageSource2" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\refresh.png"/>
         <BitmapImage x:Key="ImageSource3" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\Assets\\list_delete.png"/>
+        <BitmapImage x:Key="campaignIcon" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:/Users/Manager/Documents/Visual Studio 2012/Projects/3CDialer/Dialer/Assets/Campaign.png"/>
     </Window.Resources>
 
     <Window.DataContext>
         <local:DialerViewModel x:Name="DialerViewModel" />
     </Window.DataContext>
     <TabControl>
-        <TabItem Header="Lists" Width="120" GotFocus="onTabFocus">
+        <TabItem GotFocus="onTabFocus" ToolTip="Lists">
+			<TabItem.Header>
+				<Grid Width="90">
+					<Image Width="25" Source="lists-head.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+					<TextBlock Text="Lists" Width="41"  HorizontalAlignment="Right" Margin="0,4,17,0"/>
+				</Grid>
+			</TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC">
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB7F9F9" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid>
                         <TabControl Background="Snow">
                             <TabItem Width="150" FontSize="16" Foreground="#FF1E55CD">
@@ -164,9 +177,21 @@
                 </Grid>
             </Border>
         </TabItem>
-        <TabItem Header="Campaigns" Width="120" GotFocus="onTabFocus">
+        <TabItem GotFocus="onTabFocus" ToolTip="Campaigns">
+			<TabItem.Header>
+				<Grid Width="90.5">
+					<Image Width="25" Source="{DynamicResource campaignIcon}" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0"/>
+					<TextBlock Text="Campaigns" Width="63.5"  HorizontalAlignment="Right" Margin="0,4,0,-4"/>
+				</Grid>
+			</TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC">
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB7F9F9" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <ListBox ItemsSource="{Binding Campaigns}" SelectedItem="{Binding SelectedCampaign}" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="366" Height="370"/>
                     <Button x:Name="btn_AddCampaign" Content="Add Campaign" HorizontalAlignment="Left" Height="29" Margin="10,406.54,0,0" VerticalAlignment="Top" Width="152" Click="BtnAddCampaign_Click"/>
                     <Button x:Name="btn_DelCampaign" Content="Delete Campaign" HorizontalAlignment="Left" Height="29" Margin="217,407,0,0" VerticalAlignment="Top" Width="149" Click="Btn_DelCampaign_Click"/>
@@ -189,9 +214,21 @@
                 </Grid>
             </Border>
         </TabItem>
-        <TabItem Header="Teams" Width="120" GotFocus="onTabFocus">
+        <TabItem GotFocus="onTabFocus" ToolTip="Teams">
+			<TabItem.Header>
+				<Grid Width="90.5">
+					<Image Width="25" Source="team.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0"/>
+					<TextBlock Text="Teams" Width="41.5"  HorizontalAlignment="Right" Margin="0,6,14,4"/>
+				</Grid>
+			</TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC">
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB7F9F9" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="366*"/>
                         <RowDefinition Height="53*"/>
@@ -213,7 +250,13 @@
                 </Grid>
             </Border>
         </TabItem>
-        <TabItem Header="Users" Width="120" GotFocus="onTabFocus">
+        <TabItem GotFocus="onTabFocus" ToolTip="Users">
+			<TabItem.Header>
+				<Grid Width="90">
+					<Image Width="25" Source="user.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+					<TextBlock Text="Users" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
+				</Grid>
+			</TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid>
                     <Grid.Background>
@@ -248,9 +291,21 @@
                 </Grid>
             </Border>
         </TabItem>
-        <TabItem Header="Settings" Width="120" GotFocus="onTabFocus">
+        <TabItem GotFocus="onTabFocus" ToolTip="Settings">
+			<TabItem.Header>
+				<Grid Width="90">
+					<Image Width="25" Source="settings.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+					<TextBlock Text="Settings" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
+				</Grid>
+			</TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC">
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB7F9F9" Offset="0"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="24*"/>
                         <RowDefinition Height="30*"/>
@@ -285,7 +340,13 @@
                 </Grid>
             </Border>
         </TabItem>
-        <TabItem Header="About" Width="120" GotFocus="onTabFocus">
+        <TabItem GotFocus="onTabFocus" ToolTip="About">
+			<TabItem.Header>
+				<Grid Width="90">
+					<Image Width="25" Source="about.png" Height="25" HorizontalAlignment="Left" Margin="1.5,0,0,0" VerticalAlignment="Top"/>
+					<TextBlock Text="About" Width="48"  HorizontalAlignment="Right" Margin="0,4,10,0"/>
+				</Grid>
+			</TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
                 <Grid Background="#F0F9FC"/>
             </Border>
