@@ -463,7 +463,7 @@ namespace Dialer
 
         private void BtnAddCampaign_Click(object sender, RoutedEventArgs e)
         {
-            Campaign campaign = new Campaign("0","New Campaign","","1","Default Team");
+            Campaign campaign = new Campaign("0","New Campaign","","1","Default Team","Enter script here...");
             DialerViewModel.Campaigns.Add(campaign);
             DialerViewModel.SelectedCampaign = campaign;
             txt_CampaignName.Focus();

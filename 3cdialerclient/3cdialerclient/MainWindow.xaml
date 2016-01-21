@@ -1,0 +1,22 @@
+﻿<Window x:Class="_cdialerclient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Agent Login" Height="240" Width="320" ResizeMode="NoResize" Background="#FFECDABB" ToolTip="login" WindowStartupLocation="CenterScreen">
+	<Window.Resources>
+		<Storyboard x:Key="OnMouseEnter1"/>
+	</Window.Resources>
+    <Grid>
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition Width="89*"/>
+    		<ColumnDefinition Width="225*"/>
+    	</Grid.ColumnDefinitions>
+    	<Label Content="Username:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
+    	<Label Content="Password:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
+    	<TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Cursor="IBeam"/>
+    	<Button x:Name="btnLogin" Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Width="80" Background="#FFBBDDF5" Height="23" Click="btnLogin_Click"/>
+    	<Button x:Name="btnCancelLogin" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="135,89,0,0" VerticalAlignment="Top" Width="80" Background="#FFBCDFF7" Height="23" Click="btnCancelLogin_Click"/>
+    	<Button x:Name="btnLoginSettings" Content="Settings" Grid.Column="1" HorizontalAlignment="Left" Margin="135,181.04,0,0" VerticalAlignment="Top" Width="80" Background="White" Foreground="#FF0748D3" FontSize="10.667" Height="20"/>
+    	<PasswordBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="205" Height="25"/>
+        
+    </Grid>
+</Window>

@@ -197,20 +197,22 @@
                     <Button x:Name="btn_DelCampaign" Content="Delete Campaign" HorizontalAlignment="Left" Height="29" Margin="217,407,0,0" VerticalAlignment="Top" Width="149" Click="Btn_DelCampaign_Click"/>
                     <Label Content="Campaign Name:" HorizontalAlignment="Left" Height="26" Margin="419,10,0,0" VerticalAlignment="Top" Width="100"/>
                     <TextBox x:Name="txt_CampaignName" HorizontalAlignment="Left" Text="{Binding SelectedCampaign.Name}" Height="26" Margin="532,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
-                    <Label Content="Description:" HorizontalAlignment="Left" Height="26" Margin="419,52,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="txt_CampaignDescr" Text="{Binding SelectedCampaign.Descr}" HorizontalAlignment="Left" Height="77" Margin="532,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
-                    <Button x:Name="btn_CampaignUpdate" Content="Apply Changes" HorizontalAlignment="Left" Height="34" Margin="621,228,0,0" VerticalAlignment="Top" Width="121" Click="Btn_CampaignUpdate_Click"/>
-                    <Label Content="Change Team:" HorizontalAlignment="Left" Height="26" Margin="419,179,0,0" VerticalAlignment="Top" Width="100"/>
-                    <ComboBox x:Name="cb_campaignTeam" HorizontalAlignment="Left" Margin="532,179,0,0" VerticalAlignment="Top" Width="210" Height="26" SelectionChanged="cb_campaignTeam_SelectionChanged"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="419,228,0,0" TextWrapping="Wrap" Text="Click Update to Add/Update campaigns" VerticalAlignment="Top" Width="183" Height="34" Foreground="#FFB60707"/>
-                    <Label Content="In Team:" HorizontalAlignment="Left" Height="26" Margin="419,141,0,0" VerticalAlignment="Top" Width="100"/>
-                    <TextBox x:Name="txt_CampaignTeam" Text="{Binding SelectedCampaign.TeamName}" HorizontalAlignment="Left" Height="26" Margin="532,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
-                    <Button HorizontalAlignment="Left" Width="120" Margin="621,277,0,157" Click="Button_Click" ToolTip="Refresh lists from DB" Height="30">
+                    <Label Content="Description:" HorizontalAlignment="Left" Height="26" Margin="419,48,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="txt_CampaignDescr" Text="{Binding SelectedCampaign.Descr}" HorizontalAlignment="Left" Height="55" Margin="532,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+                    <Button x:Name="btn_CampaignUpdate" Content="Apply Changes" HorizontalAlignment="Left" Height="30" Margin="621,338,0,0" VerticalAlignment="Top" Width="121" Click="Btn_CampaignUpdate_Click"/>
+                    <Label Content="Change Team:" HorizontalAlignment="Left" Height="26" Margin="419,153,0,0" VerticalAlignment="Top" Width="100"/>
+                    <ComboBox x:Name="cb_campaignTeam" HorizontalAlignment="Left" Margin="532,153,0,0" VerticalAlignment="Top" Width="210" Height="26" SelectionChanged="cb_campaignTeam_SelectionChanged"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="419,338,0,0" TextWrapping="Wrap" Text="Click Update to Add/Update campaigns" VerticalAlignment="Top" Width="183" Height="34" Foreground="#FFB60707"/>
+                    <Label Content="In Team:" HorizontalAlignment="Left" Height="26" Margin="419,115,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="txt_CampaignTeam" Text="{Binding SelectedCampaign.TeamName}" HorizontalAlignment="Left" Height="26" Margin="532,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
+                    <Button HorizontalAlignment="Left" Width="120" Margin="621,378,0,56" Click="Button_Click" ToolTip="Refresh lists from DB" Height="30">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{DynamicResource ImageSource2}" Width="22" Height="22" Margin="0,1,5,0" />
                             <TextBlock Margin="5,2,5,0">Refresh Data</TextBlock>
                         </StackPanel>
                     </Button>
+                    <Label Content="Campaign Script:" HorizontalAlignment="Left" Margin="419,192,0,0" VerticalAlignment="Top" Width="100"/>
+                    <TextBox x:Name="txt_campaignScript" Text="{Binding SelectedCampaign.Script}" HorizontalAlignment="Left" Height="135" Margin="532,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209"/>
                 </Grid>
             </Border>
         </TabItem>

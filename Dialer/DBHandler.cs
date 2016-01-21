@@ -39,6 +39,7 @@ namespace Dialer
             }
             catch (Exception e)
             {
+                Logger.LogDBError(e.ToString());
                 return false;
             }
         }
@@ -259,13 +260,13 @@ namespace Dialer
             {
                 try
                 {
-                    string query = "SELECT c.id,c.name,c.descr,c.teamID,t.name AS teamName FROM campaigns AS c " +
+                    string query = "SELECT c.id,c.name,c.descr,c.teamID,c.script,t.name AS teamName FROM campaigns AS c " +
                     "INNER JOIN teams AS t ON c.teamID = t.id LIMIT 0,50;";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        campaigns.Add(new Campaign(reader["id"].ToString(), reader["name"].ToString(), reader["descr"].ToString(), reader["teamID"].ToString(), reader["teamName"].ToString()));
+                        campaigns.Add(new Campaign(reader["id"].ToString(), reader["name"].ToString(), reader["descr"].ToString(), reader["teamID"].ToString(), reader["teamName"].ToString(), reader["script"].ToString()));
                     }
                     conn.Close();
                 }
@@ -282,7 +283,8 @@ namespace Dialer
                             "DB Load Failed",
                             "This is an error. Restart Application and Services.",
                             "-1",
-                            "None"
+                            "None",
+                            ""
                         ));
                 Logger.LogDBError("Could not load teams list from DB ");
             }
@@ -438,7 +440,7 @@ namespace Dialer
         {
             if (OpenConn() == true)
             {
-                string query = "INSERT INTO campaigns (name,descr,teamID) SELECT '" + campaign.Name + "','" + campaign.Descr + "',id FROM teams WHERE name = '" + tName + "';";
+                string query = "INSERT INTO campaigns (name,descr,script,teamID) SELECT '" + campaign.Name + "','"+ campaign.Script +"','" + campaign.Descr + "',id FROM teams WHERE name = '" + tName + "';";
                 try
                 {
                     Trace.WriteLine(campaign.TeamName);

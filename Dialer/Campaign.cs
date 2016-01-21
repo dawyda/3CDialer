@@ -12,14 +12,16 @@ namespace Dialer
         protected string descr;
         protected string teamId;
         protected string teamName;
+        protected string script;
 
-        public Campaign(string id, string name, string descr, string teamId, string teamName) 
+        public Campaign(string id, string name, string descr, string teamId, string teamName,string script) 
         {
             this.id = id;
             this.name = name;
             this.descr = descr;
             this.teamId = teamId;
             this.teamName = teamName;
+            this.script = script;
         }
 
         public string Id 
@@ -31,6 +33,19 @@ namespace Dialer
                 {
                     id = value;
                     NotifyPropertyChanged("Id");
+                }
+            }
+        }
+
+        public string Script
+        {
+            get { return script; }
+            set
+            {
+                if (script != value)
+                {
+                    script = value;
+                    NotifyPropertyChanged("Script");
                 }
             }
         }
