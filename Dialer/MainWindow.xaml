@@ -313,15 +313,16 @@
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="0" Header="Database Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Width="752" Height="140" Grid.RowSpan="2">
                         <Grid HorizontalAlignment="Left" Height="116.54" VerticalAlignment="Top" Width="740">
-                            <Label Content="Server IP Address:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54"/>
+                            <Label Content="Server IP/hostname:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54"/>
                             <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54" Margin="0,30,0,0"/>
                             <Label Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110.993" Height="24.54" Margin="0,60,0,0"/>
                             <TextBox Text="{Binding SettingsCtrl.Settings.DBserver.IP.Value}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Height="20" Margin="116,5,0,0" />
                             <TextBox Text="{Binding SettingsCtrl.Settings.DBserver.user}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Height="20" Margin="116,35,0,0" />
                             <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="96" Height="20" Margin="116,64,0,0" Text="{Binding SettingsCtrl.Settings.DBserver.password}" />
-                            <TextBox IsReadOnly="True" Text="{Binding SettingsCtrl.Settings.DBserver.dbname}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="251" Height="20" Margin="0,90,0,0" Foreground="#FF0069C1" />
+                            <TextBox IsReadOnly="True" Text="{Binding SettingsCtrl.Settings.DBserver.dbname}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="212" Height="20" Margin="0,90,0,0" Foreground="#FF0069C1" />
                             <Label Content="Port:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Height="25" Margin="259,0,0,0"/>
                             <TextBox Text="{Binding SettingsCtrl.Settings.DBserver.IP.port}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Height="20" Margin="296,5,0,0" />
+                            <Button Content="Test Connection" HorizontalAlignment="Left" Margin="235,85,0,0" VerticalAlignment="Top" Width="101" Height="25" Click="BtnTestConn_Click"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Services and Network" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="752" Height="181">

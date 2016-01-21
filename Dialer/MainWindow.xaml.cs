@@ -78,6 +78,8 @@ namespace Dialer
             DialerViewModel.SelectedUser = DialerViewModel.Users[0];
             cb_roles.ItemsSource = database.GetRolesAsString();
             cb_userCampaign.ItemsSource = database.GetCampaignsAsList();
+            cb_userCampaign.SelectedIndex = 0;
+            cb_roles.SelectedIndex = 0;
         }
 
         private void initCampaignsTab()
@@ -523,7 +525,7 @@ namespace Dialer
 
         private void btnUserAdd_Click(object sender, RoutedEventArgs e)
         {
-            User user = new User("New User","newuser","","User","Default Campaign","0");
+            User user = new User("New User","newuser" + new Random().Next(10011,11111),"","User","Default Campaign","0");
             DialerViewModel.Users.Add(user);
             DialerViewModel.SelectedUser = user;
             addingNew = true;
@@ -600,6 +602,23 @@ namespace Dialer
                 MessageBox.Show("Settings update failed!", "Settings",MessageBoxButton.OK,MessageBoxImage.Error);
             }
             e.Handled = true;
+        }
+
+        private void BtnTestConn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	string connstr = "SERVER=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.Value +
+                ";PORT=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.port +
+                ";DATABASE=" + DialerViewModel.SettingsCtrl.Settings.DBserver.dbname +
+                ";UID=" + DialerViewModel.SettingsCtrl.Settings.DBserver.user +
+                ";PASSWORD=" + DialerViewModel.SettingsCtrl.Settings.DBserver.password + ";";
+            if (DBHandler.TestConnectionString(connstr))
+            {
+                MessageBox.Show("Test Sucessfull!","SUCCESS",MessageBoxButton.OK,MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Test Failed!", "FAILED", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

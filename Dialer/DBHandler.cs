@@ -28,6 +28,21 @@ namespace Dialer
             }
         }
 
+        internal static bool TestConnectionString(string str)
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(str);
+                conn.Open();
+                conn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         private bool OpenConn()
         {
             try
