@@ -17,11 +17,13 @@ namespace _cdialerclient
 	/// </summary>
 	public partial class AgentWindow : Window
 	{
-		public AgentWindow()
+        public ServerHandler serverHandler;
+		public AgentWindow(ServerHandler serverHandler)
 		{
 			this.InitializeComponent();
 			AddKeyShortcuts();
 			// Insert code required on object creation below this point.
+            this.serverHandler = serverHandler;
 		}
 		protected void AddKeyShortcuts()
 		{
@@ -31,5 +33,10 @@ namespace _cdialerclient
 			lv_shortList.Items.Add(new {KShort = "Space bar", Function = "End call"});
 			lv_shortList.Items.Add(new {KShort = "Space bar", Function = "End call"});
 		}
+
+        private void menu_exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 	}
 }

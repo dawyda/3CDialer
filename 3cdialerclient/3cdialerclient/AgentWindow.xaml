@@ -4,84 +4,84 @@
 	x:Class="_cdialerclient.AgentWindow"
 	x:Name="Window"
 	Title="AgentWindow"
-	Width="600" Height="450" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
+	Width="660" Height="495" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
 
-	<Grid x:Name="LayoutRoot">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="19*"/>
-			<RowDefinition Height="25*"/>
-			<RowDefinition Height="377*"/>
-		</Grid.RowDefinitions>
-		<Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="594" Grid.Row="1">
-			<MenuItem Header="_File" Height="25" Margin="0,0,5,0">
-				<MenuItem Header="_Logout" HorizontalAlignment="Left" Width="125"/>
-				<MenuItem Header="_Exit" HorizontalAlignment="Left" Width="125"/>
-			</MenuItem>
-			<MenuItem Header="_Settings" Margin="0,0,5,0"/>
-			<MenuItem Header="_About" Margin="0,0,5,0"/>
-		</Menu>
-		<Grid HorizontalAlignment="Left" Height="377" Grid.Row="2" VerticalAlignment="Top" Width="594">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="5*"/>
-				<ColumnDefinition Width="4*"/>
-			</Grid.ColumnDefinitions>
-			<Grid Grid.Column="1" HorizontalAlignment="Left" Height="311" VerticalAlignment="Top" Width="264" Background="White">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="107*"/>
-					<RowDefinition Height="177*"/>
-					<RowDefinition Height="27*"/>
-				</Grid.RowDefinitions>
-				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="  Script" VerticalAlignment="Top" Width="264" Height="23.96" Background="Black" Foreground="White" Padding="0,2,0,0"/>
-				<TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="Sample script..." Margin="0,23.96,0,0" Foreground="Blue" FontSize="14"/>
-				<TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="  Shortcuts" VerticalAlignment="Top" Width="264" Height="26.96" Background="Black" Foreground="#FFFDFD04" Padding="0,3,0,0"/>
-				<ListView Name="lv_shortList" HorizontalAlignment="Left" Height="150.04" Margin="0,26.96,0,0" Grid.Row="1" VerticalAlignment="Top" Width="264" Background="#FFE8E8E8">
-					<ListView.ItemContainerStyle>
-						<Style TargetType="{x:Type ListViewItem}">
-							<Setter Property="BorderBrush" Value="DarkGray" />
-							<Setter Property="BorderThickness" Value="1,1,1,1" />
-						</Style>
-					</ListView.ItemContainerStyle>
-					<ListView.View>
-						<GridView>
-							<GridViewColumn DisplayMemberBinding="{Binding KShort}" Header="Key Shortcut" Width="125"/>
-							<GridViewColumn DisplayMemberBinding="{Binding Function}" Header="Function" Width="126"/>
-						</GridView>
-					</ListView.View>
-				</ListView>
-			</Grid>
-			<Grid HorizontalAlignment="Left" Height="377" VerticalAlignment="Top" Width="320">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="304*"/>
-					<RowDefinition Height="73*"/>
-				</Grid.RowDefinitions>
-				<Button HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="53">
-					<StackPanel Orientation="Vertical">
-						<Image VerticalAlignment="Top" Source="ip-phone-hold-icon-key.png" Width="30"/>
-						<TextBlock FontWeight="Bold" Foreground="Blue" Text="Hold Call"/>
-					</StackPanel>
-				</Button>
-				<Button HorizontalAlignment="Left" Margin="96,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="53">
-					<StackPanel Orientation="Vertical">
-						<Image VerticalAlignment="Top" Source="end_call.png" Width="30"/>
-						<TextBlock Text="End Call" FontWeight="Bold" Foreground="Red"/>
-					</StackPanel>
-				</Button>
-				<Button HorizontalAlignment="Left" Margin="182,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" Height="53">
-					<StackPanel Orientation="Vertical">
-						<Image VerticalAlignment="Top" Source="Refresh.ico" Width="30"/>
-						<TextBlock Text="Refresh" FontWeight="Bold" Foreground="Green"/>
-					</StackPanel>
-				</Button>
-				<ListView HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Width="320">
-					<ListView.View>
-						<GridView>
-							<GridViewColumn Header="Dial Card" Width="312"/>
-						</GridView>
-					</ListView.View>
-				</ListView>
-			</Grid>
-			<TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="0,354,0,0" TextWrapping="Wrap" Text="Logged in as ADMIN" VerticalAlignment="Top" Width="264" Height="23" Background="#FF063F6E" Foreground="#FF14F0D2" FontFamily="Verdana" FontSize="12.667" Padding="3,3,0,0"/>
-		</Grid>
-		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Campaign - Demo" VerticalAlignment="Top" Height="19" Width="594" Background="#FF252424" Foreground="White"/>
-	</Grid>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="423*"/>
+        </Grid.RowDefinitions>
+        <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="654" Grid.Row="1" Grid.RowSpan="2">
+            <MenuItem Header="_File" Height="25" Margin="0,0,5,0">
+                <MenuItem Header="_Logout" HorizontalAlignment="Left" Width="125"/>
+                <MenuItem Header="_Exit" Click="menu_exit_Click" HorizontalAlignment="Left" Width="125"/>
+            </MenuItem>
+            <MenuItem Header="_Settings" Margin="0,0,5,0"/>
+            <MenuItem Header="_About" Margin="0,0,5,0"/>
+        </Menu>
+        <Grid HorizontalAlignment="Left" Height="423" Grid.Row="2" VerticalAlignment="Top" Width="654">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Height="400.297" VerticalAlignment="Top" Width="290.667" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="169*"/>
+                    <RowDefinition Height="177*"/>
+                    <RowDefinition Height="55*"/>
+                </Grid.RowDefinitions>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="  Script" VerticalAlignment="Top" Width="290.667" Height="23.96" Background="Black" Foreground="#FFF7EE33" Padding="0,2,0,0"/>
+                <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="Sample script..." Margin="0,23.96,0,0" Foreground="Blue" FontSize="14" IsReadOnly="True"/>
+                <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="  Shortcuts" VerticalAlignment="Top" Width="290.667" Height="26.96" Background="Black" Foreground="#FFFDFD04" Padding="0,3,0,0"/>
+                <ListView Name="lv_shortList" HorizontalAlignment="Left" Height="150" Margin="0,27,-0.333,0" Grid.Row="1" VerticalAlignment="Top" Width="291" Background="#FFE8E8E8">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="BorderBrush" Value="DarkGray" />
+                            <Setter Property="BorderThickness" Value="1,1,1,1" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding KShort}" Header="Key Shortcut" Width="140"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Function}" Header="Function" Width="144"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Grid HorizontalAlignment="Left" Height="423.297" VerticalAlignment="Top" Width="363.333" Margin="0,0,0,-0.297">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="115*"/>
+                    <RowDefinition Height="26*"/>
+                </Grid.RowDefinitions>
+                <Button HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" Height="61.051">
+                    <StackPanel Orientation="Vertical">
+                        <Image VerticalAlignment="Top" Source="ip-phone-hold-icon-key.png" Width="35" Height="35"/>
+                        <TextBlock FontWeight="Bold" Foreground="Blue" Text="Hold Call" FontSize="12.667"/>
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Left" Margin="96,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" Height="61.051">
+                    <StackPanel Orientation="Vertical">
+                        <Image VerticalAlignment="Top" Source="end_call.png" Width="35" Height="35"/>
+                        <TextBlock Text="End Call" FontWeight="Bold" Foreground="Red" FontSize="12.667"/>
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Left" Margin="182,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" Height="61.051">
+                    <StackPanel Orientation="Vertical">
+                        <Image VerticalAlignment="Top" Source="Refresh.ico" Width="35"/>
+                        <TextBlock Text="Refresh" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
+                    </StackPanel>
+                </Button>
+                <ListView HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Dial Card" Width="355"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="0,400.297,0,-0.297" TextWrapping="Wrap" Text="Logged in as ADMIN" VerticalAlignment="Top" Width="290.667" Height="23" Background="#FF05345B" Foreground="#FF14F0D2" FontFamily="Verdana" FontSize="12.667" Padding="3,3,0,0"/>
+        </Grid>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Campaign - Demo" VerticalAlignment="Top" Height="19" Width="654" Background="#FF252424" Foreground="White"/>
+    </Grid>
 </Window>

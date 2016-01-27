@@ -1,0 +1,28 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="_cdialerclient.Settings"
+	x:Name="Window"
+	Title="3CDialer Client Settings"
+	Width="450" Height="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid x:Name="LayoutRoot" Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="128*"/>
+            <RowDefinition Height="93*"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Server settings" VerticalAlignment="Top" Width="442" Height="20.96" Background="#FF3A3A3A" Foreground="#FFC9C5C5" FontWeight="Bold" FontStyle="Italic" Padding="0,2,0,0"/>
+        <Label Content="Server Name/IP:" HorizontalAlignment="Left" Margin="10,25.96,0,0" VerticalAlignment="Top" Width="114" FontSize="13.333" Height="27.733"/>
+        <TextBox x:Name="txt_ip" HorizontalAlignment="Left" Height="25.96" Margin="138,25.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" Padding="5,3,5,0"/>
+        <Label Content="Server Port:" HorizontalAlignment="Left" Margin="10,65.96,0,0" VerticalAlignment="Top" Width="114" FontSize="13.333" Height="27.733"/>
+        <TextBox x:Name="txt_port" HorizontalAlignment="Left" Height="25.96" Margin="138,65.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" Padding="5,3,5,0"/>
+        <Label Content="Server Retries:" HorizontalAlignment="Left" Margin="10,9.999,0,0" VerticalAlignment="Top" Width="114" FontSize="13.333" Grid.Row="1" Height="27.733"/>
+        <TextBox x:Name="txt_retry" HorizontalAlignment="Left" Height="25.96" Margin="138,10,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="24" Padding="5,3,5,0" Grid.Row="1" ToolTip="no of time to retry data send to sever"/>
+        <Button x:Name="btn_saveSettings" Content="_Apply" HorizontalAlignment="Left" Margin="10,36.808,0,0" Grid.Row="2" VerticalAlignment="Top" Width="65" Height="26.96" FontSize="13.333" Click="btn_saveSettings_Click"/>
+        <Button x:Name="btnCancelSettings" Content="_Cancel" HorizontalAlignment="Left" Margin="97,36.808,0,0" Grid.Row="2" VerticalAlignment="Top" Width="65" Height="27" FontSize="13.333" Click="btnCancelSettings_Click" IsDefault="True" IsCancel="True"/>
+        <Label Content="Agent Extension:" HorizontalAlignment="Left" Margin="10,50.999,0,0" VerticalAlignment="Top" Width="114" FontSize="13.333" Grid.Row="1" Height="27.733"/>
+        <TextBox x:Name="txt_extension" HorizontalAlignment="Left" Height="27.733" Margin="138,50.999,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="57" Padding="5,3,5,0" Grid.Row="1" ToolTip="Agent's extension on PBX"/>
+        <TextBlock x:Name="tb_SetStatus" HorizontalAlignment="Left" Margin="0,77.04,0,0" Grid.Row="2" TextWrapping="Wrap" Text="saved!!" VerticalAlignment="Top" Width="444" Background="#FF343333" Foreground="#FFE4D00A"/>
+        <Button x:Name="btnSettingsClose" Content="Close" HorizontalAlignment="Left" Margin="186,36.808,0,0" Grid.Row="2" VerticalAlignment="Top" Width="71" Height="26.96" Click="btnSettingsClose_Click"/>
+    </Grid>
+</Window>
