@@ -48,44 +48,57 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+				<Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Height="25.051" Grid.Row="2" Margin="166.667,19.853,0,0">
+                    <StackPanel Orientation="Horizontal" Width="104">
+                        <Image Source="Refresh.ico" Margin="0,0,10,0"/>
+                        <TextBlock Text="Refresh data" FontWeight="Bold" Foreground="#FF1D1D1B" FontSize="11" Width="72.783" Height="16.051"/>
+                    </StackPanel>
+                </Button>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="423.297" VerticalAlignment="Top" Width="363.333" Margin="0,0,0,-0.297">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="115*"/>
                     <RowDefinition Height="26*"/>
                 </Grid.RowDefinitions>
-                <Button HorizontalAlignment="Left" Margin="7,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="59" Height="61.051">
+                <Button x:Name="btn_hold" HorizontalAlignment="Left" Margin="14,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="ip-phone-hold-icon-key.png" Width="35" Height="35"/>
                         <TextBlock FontWeight="Bold" Foreground="#FF098CC9" Text="Hold Call" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Left" Margin="76,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="59" Height="61.051">
+                <Button x:Name="btn_end" HorizontalAlignment="Left" Margin="99,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="end_call.png" Width="35" Height="35"/>
                         <TextBlock Text="End Call" FontWeight="Bold" Foreground="Red" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Left" Margin="146,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="59" Height="61.051">
-                    <StackPanel Orientation="Vertical">
-                        <Image VerticalAlignment="Top" Source="Refresh.ico" Width="35"/>
-                        <TextBlock Text="Refresh" FontWeight="Bold" Foreground="#FF1D1D1B" FontSize="12.667"/>
-                    </StackPanel>
-                </Button>
-                <ListView x:Name="lv_dialcard" HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2">
+                <ListView x:Name="lv_dialcard" HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2" SelectionMode="Single">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Dial Card" Width="355"/>
+                            <GridViewColumn Header="Dial Card" Width="355">
+								<GridViewColumn.CellTemplate>
+									<DataTemplate>
+										<StackPanel Orientation="Horizontal" Height="30" Background="F7FDFF00">
+											<Border BorderBrush="LightGray" BorderThickness="1">
+											<TextBlock Width="200" Text="{Binding label}"/>
+											</Border>
+											<Border BorderBrush="LightGray" BorderThickness="1">
+											<TextBlock Width="155" Text="{Binding val}"/>
+											</Border>
+										</StackPanel>
+									</DataTemplate>
+								</GridViewColumn.CellTemplate>
+							</GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button HorizontalAlignment="Left" Margin="215,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="66" Height="61.051">
+                <Button x:Name="btn_Startcalls" HorizontalAlignment="Left" Margin="183,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="61.051" Click="StartCalls">
                 	<StackPanel Orientation="Vertical">
                 		<Image VerticalAlignment="Top" Source="call-start.png" Width="35"/>
                 		<TextBlock Text="Start Calls" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
                 	</StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Left" Margin="291,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="67.333" Height="61.051">
+                <Button x:Name="btn_Stopcalls" HorizontalAlignment="Left" Margin="273,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71.333" Height="61.051" Click="StopCalls" IsEnabled="False">
                 	<StackPanel Orientation="Vertical">
                 		<Image VerticalAlignment="Top" Source="call-stop.png" Width="35"/>
                 		<TextBlock Text="Stop Calls" FontWeight="Bold" Foreground="#FFFB0B00" FontSize="12.667"/>

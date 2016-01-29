@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("3CDialerService")]
+[assembly: AssemblyTitle("DialerService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("3CDialerService")]
+[assembly: AssemblyProduct("DialerService")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("74d44b87-43e0-4cb3-b5e4-944db744cf46")]
+[assembly: Guid("adb414ca-259b-4889-90c5-4255b57203cd")]
 
 // Version information for an assembly consists of the following four values:
 //

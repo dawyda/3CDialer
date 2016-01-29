@@ -1,4 +1,0 @@
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3CDialerService\bin\Debug\3CDialerService.exe
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3CDialerService\bin\Debug\3CDialerService.pdb
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3CDialerService\obj\Debug\3CDialerService.exe
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3CDialerService\obj\Debug\3CDialerService.pdb

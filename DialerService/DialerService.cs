@@ -7,11 +7,11 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 
-namespace _3CDialerService
+namespace DialerService
 {
-    public partial class Service1 : ServiceBase
+    public partial class DialerService : ServiceBase
     {
-        public Service1()
+        public DialerService()
         {
             InitializeComponent();
         }
@@ -22,6 +22,11 @@ namespace _3CDialerService
 
         protected override void OnStop()
         {
+        }
+
+        protected override void OnShutdown()
+        {
+            
         }
     }
 }

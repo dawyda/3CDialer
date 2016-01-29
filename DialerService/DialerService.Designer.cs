@@ -1,6 +1,6 @@
-﻿namespace _3CDialerService
+﻿namespace DialerService
 {
-    partial class Service1
+    partial class DialerService
     {
         /// <summary> 
         /// Required designer variable.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 
-namespace _3CDialerService
+namespace DialerService
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace _3CDialerService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new Service1() 
+                new DialerService() 
             };
             ServiceBase.Run(ServicesToRun);
         }

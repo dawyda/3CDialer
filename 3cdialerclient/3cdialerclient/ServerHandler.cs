@@ -15,8 +15,10 @@ namespace _cdialerclient
         protected ServerSocket server;
         internal string userCampaign;
         internal List<Call> calls;
+        internal Call CurrentCall;
         private string token;
         private string userid;
+        internal bool endReached;
         
         public ServerHandler() {
             server = new ServerSocket();        
@@ -47,12 +49,16 @@ namespace _cdialerclient
         public bool RequestCallList()
         {
             bool requested = false;
+            endReached = false;
             ListRequest lr = new ListRequest();
             lr.Method = "GetCallList";
             lr.Session = new session() { Userid = this.userid, Token = this.token };
             lr.Args.Ext = ClientSettingsHandler.GetSettings().Extension;
             if(server.GET(GetXMLString(lr)))
             {
+                calls = ((CallListXML)GetObjectfromXML(server.responseXml,typeof(CallListXML))).Args.Calls.ToList<Call>();
+                //set current call;
+                CurrentCall = calls[0];
                 requested = true;
             }
             return requested;

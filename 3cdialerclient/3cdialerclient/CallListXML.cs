@@ -21,7 +21,7 @@ namespace _cdialerclient
     public class CallArgs
     {
         [XmlElement("calllist")]
-        public Call[] calls { get; set; }
+        public Call[] Calls { get; set; }
     }
 
     [XmlRoot("call")]
@@ -35,8 +35,6 @@ namespace _cdialerclient
         public string tel1 { get; set; }
         [XmlElement("tel2")]
         public string tel2 { get; set; }
-        [XmlElement("status")]
-        public string status { get; set; }
         [XmlElement("lang")]
         public string lang { get; set; }
         [XmlElement("country")]
