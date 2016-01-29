@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using Dialer;
 
 namespace DialerService
 {
