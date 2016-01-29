@@ -25,9 +25,8 @@ namespace _cdialerclient
         {
             InitializeComponent();
             //if first run
-            if (File.Exists("\\\\?\\" + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\3CdialerClient\\settings.xml"))
-            {}
-            else
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\3CdialerClient\settings.xml";
+            if (!File.Exists(path))
             {
                 Settings.FirstRun();
             }
@@ -37,6 +36,17 @@ namespace _cdialerclient
         private void btnLogin_Click(object sender, System.Windows.RoutedEventArgs e)
         {
         	//get login then send credentials via socket to server with method name as login
+            string user = txt_username.Text;
+            string password = txt_password.Password;
+            tb_error.Text = "Wrong username or password.";
+            tb_error.Visibility = System.Windows.Visibility.Hidden;
+
+            if (user == "" || password == "")
+            {
+                tb_error.Text = "No blanks allowed. Fill in details.";
+                tb_error.Visibility = System.Windows.Visibility.Visible;
+                return;
+            }
             bool success = serverHandler.Login(txt_username.Text, txt_password.Password);
             if (!success)
             {

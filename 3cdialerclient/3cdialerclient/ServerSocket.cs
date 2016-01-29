@@ -12,6 +12,7 @@ namespace _cdialerclient
     public class ServerSocket
     {
         public string responseXml;
+
         public ServerSocket() 
         {
             responseXml = "";
@@ -80,7 +81,7 @@ namespace _cdialerclient
             return datasent;
         }
         //does login and sets session
-        internal bool SendLogins(string loginString)
+        internal bool GET(string loginString)
         {
             if (SendtoServer(loginString))
             {

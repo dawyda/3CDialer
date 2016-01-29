@@ -18,12 +18,14 @@ namespace _cdialerclient
 	public partial class AgentWindow : Window
 	{
         public ServerHandler serverHandler;
+        bool listRequested = false;
 		public AgentWindow(ServerHandler serverHandler)
 		{
 			this.InitializeComponent();
 			AddKeyShortcuts();
 			// Insert code required on object creation below this point.
             this.serverHandler = serverHandler;
+            listRequested = serverHandler.RequestCallList();
 		}
 		protected void AddKeyShortcuts()
 		{

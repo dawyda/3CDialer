@@ -42,7 +42,7 @@ namespace _cdialerclient
         [XmlElement("method")]
         public string Method { get; set; }
         [XmlElement("args")]
-        public args RespArgs { get; set; }
+        public RespArgs args { get; set; }
     }
 
     [XmlRoot("args")]
@@ -54,5 +54,7 @@ namespace _cdialerclient
         public string Userid { get; set; }
         [XmlElement("token")]
         public string Token { get; set; }
+        [XmlElement("campaign")]
+        public string Campaign { get; set; }
     }
 }

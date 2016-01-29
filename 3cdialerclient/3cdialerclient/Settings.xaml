@@ -22,7 +22,7 @@
         <Button x:Name="btnCancelSettings" Content="_Cancel" HorizontalAlignment="Left" Margin="97,36.808,0,0" Grid.Row="2" VerticalAlignment="Top" Width="65" Height="27" FontSize="13.333" Click="btnCancelSettings_Click" IsDefault="True" IsCancel="True"/>
         <Label Content="Agent Extension:" HorizontalAlignment="Left" Margin="10,50.999,0,0" VerticalAlignment="Top" Width="114" FontSize="13.333" Grid.Row="1" Height="27.733"/>
         <TextBox x:Name="txt_extension" HorizontalAlignment="Left" Height="27.733" Margin="138,50.999,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="57" Padding="5,3,5,0" Grid.Row="1" ToolTip="Agent's extension on PBX"/>
-        <TextBlock x:Name="tb_SetStatus" HorizontalAlignment="Left" Margin="0,77.04,0,0" Grid.Row="2" TextWrapping="Wrap" Text="saved!!" VerticalAlignment="Top" Width="444" Background="#FF343333" Foreground="#FFE4D00A"/>
+        <TextBlock x:Name="tb_SetStatus" HorizontalAlignment="Left" Margin="0,77.04,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="444" Background="#FF343333" Foreground="#FFE4D00A"/>
         <Button x:Name="btnSettingsClose" Content="Close" HorizontalAlignment="Left" Margin="186,36.808,0,0" Grid.Row="2" VerticalAlignment="Top" Width="71" Height="26.96" Click="btnSettingsClose_Click"/>
     </Grid>
 </Window>

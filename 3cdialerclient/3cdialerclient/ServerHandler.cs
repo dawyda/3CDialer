@@ -13,6 +13,10 @@ namespace _cdialerclient
     public class ServerHandler
     {
         protected ServerSocket server;
+        internal string userCampaign;
+        internal List<Call> calls;
+        private string token;
+        private string userid;
         
         public ServerHandler() {
             server = new ServerSocket();        
@@ -24,14 +28,37 @@ namespace _cdialerclient
             logins.Method = "Login";
             logins.Session = new session() { Userid = string.Empty, Token= string.Empty};
             logins.Args = new args() { Username = username, Password = password};
-            if(server.SendLogins(GetXMLString(logins)))
+            if(server.GET(GetXMLString(logins)))
             {
                 //get login response instance
                 LoginResponse response = (LoginResponse) GetObjectfromXML(server.responseXml,typeof(LoginResponse));
-                logged = true;
+                if (response.args.Response == true)
+                {
+                    userid = response.args.Userid;
+                    token = response.args.Token;
+                    userCampaign = response.args.Campaign;
+                    logged = true;
+                }
             }
             return logged;
         }
+
+        //request call list
+        public bool RequestCallList()
+        {
+            bool requested = false;
+            ListRequest lr = new ListRequest();
+            lr.Method = "GetCallList";
+            lr.Session = new session() { Userid = this.userid, Token = this.token };
+            lr.Args.Ext = ClientSettingsHandler.GetSettings().Extension;
+            if(server.GET(GetXMLString(lr)))
+            {
+                requested = true;
+            }
+            return requested;
+        }
+
+        //general funcs
         private string GetXMLString<T>(T arg)
         {
             StringWriter sw = new StringWriter();

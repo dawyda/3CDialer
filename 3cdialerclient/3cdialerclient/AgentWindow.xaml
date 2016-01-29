@@ -54,31 +54,43 @@
                     <RowDefinition Height="115*"/>
                     <RowDefinition Height="26*"/>
                 </Grid.RowDefinitions>
-                <Button HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" Height="61.051">
+                <Button HorizontalAlignment="Left" Margin="7,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="59" Height="61.051">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="ip-phone-hold-icon-key.png" Width="35" Height="35"/>
-                        <TextBlock FontWeight="Bold" Foreground="Blue" Text="Hold Call" FontSize="12.667"/>
+                        <TextBlock FontWeight="Bold" Foreground="#FF098CC9" Text="Hold Call" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Left" Margin="96,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" Height="61.051">
+                <Button HorizontalAlignment="Left" Margin="76,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="59" Height="61.051">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="end_call.png" Width="35" Height="35"/>
                         <TextBlock Text="End Call" FontWeight="Bold" Foreground="Red" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <Button HorizontalAlignment="Left" Margin="182,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="70" Height="61.051">
+                <Button HorizontalAlignment="Left" Margin="146,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="59" Height="61.051">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="Refresh.ico" Width="35"/>
-                        <TextBlock Text="Refresh" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
+                        <TextBlock Text="Refresh" FontWeight="Bold" Foreground="#FF1D1D1B" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <ListView HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2">
+                <ListView x:Name="lv_dialcard" HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Dial Card" Width="355"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
+                <Button HorizontalAlignment="Left" Margin="215,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="66" Height="61.051">
+                	<StackPanel Orientation="Vertical">
+                		<Image VerticalAlignment="Top" Source="call-start.png" Width="35"/>
+                		<TextBlock Text="Start Calls" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
+                	</StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Left" Margin="291,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="67.333" Height="61.051">
+                	<StackPanel Orientation="Vertical">
+                		<Image VerticalAlignment="Top" Source="call-stop.png" Width="35"/>
+                		<TextBlock Text="Stop Calls" FontWeight="Bold" Foreground="#FFFB0B00" FontSize="12.667"/>
+                	</StackPanel>
+                </Button>
             </Grid>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="0,400.297,0,-0.297" TextWrapping="Wrap" Text="Logged in as ADMIN" VerticalAlignment="Top" Width="290.667" Height="23" Background="#FF05345B" Foreground="#FF14F0D2" FontFamily="Verdana" FontSize="12.667" Padding="3,3,0,0"/>
         </Grid>

@@ -53,8 +53,10 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="CallListXML.cs" />
     <Compile Include="ClientSettings.cs" />
     <Compile Include="ClientSettingsHandler.cs" />
+    <Compile Include="ListRequest.cs" />
     <Compile Include="ServerHandler.cs" />
     <Compile Include="ServerSocket.cs" />
     <Compile Include="Settings.xaml.cs">
@@ -75,7 +77,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LoginMethod.cs" />
     <Compile Include="LoginXML.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -111,6 +112,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="call-start.png" />
+    <Resource Include="call-stop.png" />
     <Resource Include="end_call.png" />
     <Resource Include="ip-phone-hold-icon-key.png" />
     <Resource Include="Refresh.ico" />
