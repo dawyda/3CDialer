@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace _cdialerclient
+namespace DialerService
 {
     [XmlRoot("3cdialerclient",Namespace="",IsNullable=true)]
     public class LoginXML

@@ -27,5 +27,17 @@ namespace Dialer
             sr.WriteLine("{0}: {1}", DateTime.Now.ToLongTimeString(), msg);
             sr.Close();
         }
+        public static void LogSocket(string msg)
+        {
+            StreamWriter sr = File.AppendText(@"C:\ProgramData\3CDialer\SocketLog.txt");
+            sr.WriteLine("{0}: {1}", DateTime.Now.ToLongTimeString(), msg);
+            sr.Close();
+        }
+        public static void Log(string msg)
+        {
+            StreamWriter sr = File.AppendText(@"C:\ProgramData\3CDialer\GeneralLog.txt");
+            sr.WriteLine("{0}: {1}", DateTime.Now.ToLongTimeString(), msg);
+            sr.Close();
+        }
     }
 }

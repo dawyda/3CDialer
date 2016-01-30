@@ -30,7 +30,7 @@ namespace _cdialerclient
             logins.Method = "Login";
             logins.Session = new session() { Userid = string.Empty, Token= string.Empty};
             logins.Args = new args() { Username = username, Password = password};
-            if(server.GET(GetXMLString(logins)))
+            if(server.GET("L:" + GetXMLString(logins)))
             {
                 //get login response instance
                 LoginResponse response = (LoginResponse) GetObjectfromXML(server.responseXml,typeof(LoginResponse));
@@ -54,7 +54,8 @@ namespace _cdialerclient
             lr.Method = "GetCallList";
             lr.Session = new session() { Userid = this.userid, Token = this.token };
             lr.Args.Ext = ClientSettingsHandler.GetSettings().Extension;
-            if(server.GET(GetXMLString(lr)))
+			lr.Args.Campaign = this.userCampaign;
+            if(server.GET("C:" + GetXMLString(lr)))
             {
                 calls = ((CallListXML)GetObjectfromXML(server.responseXml,typeof(CallListXML))).Args.Calls.ToList<Call>();
                 //set current call;

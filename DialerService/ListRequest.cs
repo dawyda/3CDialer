@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using DialerService;
 
 namespace _cdialerclient
 {
@@ -22,7 +23,7 @@ namespace _cdialerclient
     {
         [XmlElement("ext")]
         public string Ext { get; set; }
-		[XmlElement("campaign")]
-		public string Campaign { get; set; }
+        [XmlElement("campaign")]
+        public string Campaign { get; set; }
     }
 }
