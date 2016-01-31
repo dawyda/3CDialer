@@ -13,8 +13,8 @@
     	</Grid.ColumnDefinitions>
     	<Label Content="Username:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
     	<Label Content="Password:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
-    	<TextBox x:Name="txt_username" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Cursor="IBeam"/>
-    	<PasswordBox x:Name="txt_password" Grid.Column="1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="205" Height="25"/>
+    	<TextBox x:Name="txt_username" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Cursor="IBeam" Padding="5,2,0,0"/>
+    	<PasswordBox x:Name="txt_password" Grid.Column="1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="205" Height="25" Padding="5,3,0,0"/>
 		<Button x:Name="btnLogin" Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Width="80" Background="#FFBBDDF5" Height="23" Click="btnLogin_Click" IsDefault="True"/>
     	<Button x:Name="btnCancelLogin" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="135,105,0,0" VerticalAlignment="Top" Width="80" Background="#FFBCDFF7" Height="23" Click="btnCancelLogin_Click"/>
     	<Button x:Name="btnLoginSettings" Content="Settings" Grid.Column="1" HorizontalAlignment="Left" Margin="135,181.04,0,0" VerticalAlignment="Top" Width="80" Background="White" Foreground="#FF0748D3" FontSize="10.667" Height="20" Click="ShowSettings"/>

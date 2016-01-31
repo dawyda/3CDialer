@@ -7,7 +7,7 @@ using DialerService;
 
 namespace _cdialerclient
 {
-    [XmlRoot("3cdialerclient")]
+    [XmlRoot("request")]
     public class ListRequest
     {
         [XmlElement("method")]

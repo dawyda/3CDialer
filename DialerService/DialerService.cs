@@ -12,29 +12,35 @@ namespace DialerService
 {
     public partial class DialerService : ServiceBase
     {
-        Server server;
         public DialerService()
         {
             InitializeComponent();
-            server = new Server();
         }
 
         protected override void OnStart(string[] args)
         {
+            try
+            {
+                Server server = new Server();
+                server.StartListening();
+            }
+            catch (Exception e)
+            {
+                Logger.Log(string.Format("Dialer service Exception occured at {0}: {1}", DateTime.Now.ToShortTimeString(),e.Message + " \nMore:" + e.InnerException));
+            }
             Logger.Log(string.Format("Dialer service started at: {0}",DateTime.Now.ToShortTimeString()));
-            server.StartListening();
         }
 
         protected override void OnStop()
         {
             Logger.Log(string.Format("Dialer service stopped at: {0}", DateTime.Now.ToShortTimeString()));
-            server.StopListening();
+            //server.StopListening();
         }
 
         protected override void OnShutdown()
         {
             Logger.Log(string.Format("Dialer service shutdown at: {0}", DateTime.Now.ToShortTimeString()));
-            server.StopListening();   
+            //server.StopListening();   
         }
     }
 }

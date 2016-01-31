@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.IO;
 using _cdialerclient;
+using System.Xml;
 
 namespace DialerService
 {
@@ -35,13 +36,12 @@ namespace DialerService
         private string GetCalls(string xml)
         {
             ListRequest listReq = GetObjectfromXML(xml, typeof(ListRequest)) as ListRequest;
-            CallListXML clx = null;
+            CallListXML clx = new CallListXML();
             //check session
             if(dbhandler.SessionCheck(listReq.Session.Token))
             {
                 clx = dbhandler.GetCallList(listReq.Args.Campaign, listReq.Session.Userid);
-                clx.Session.Userid = listReq.Session.Userid;
-                clx.Session.Token = listReq.Session.Token;
+                clx.Session = new session() { Userid = listReq.Session.Userid, Token = listReq.Session.Token};
             }
 
             return GetXMLString(clx);
@@ -57,16 +57,25 @@ namespace DialerService
         private string GetXMLString<T>(T arg)
         {
             StringWriter sw = new StringWriter();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.NewLineHandling = NewLineHandling.None;
+            settings.Indent = false;
+            settings.OmitXmlDeclaration = true;
+            sw.NewLine = "";
+            XmlWriter xw = XmlWriter.Create(sw,settings);
             System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(arg.GetType());
             System.Xml.Serialization.XmlSerializerNamespaces ns = new System.Xml.Serialization.XmlSerializerNamespaces();
             ns.Add("", "");
-            xs.Serialize(sw, arg, ns);
-            System.Diagnostics.Trace.WriteLine(sw.ToString());
+            xs.Serialize(xw, arg, ns);
             return sw.ToString();
         }
 
         private Object GetObjectfromXML(string xmlString, Type t)
         {
+            using (StreamWriter swr = File.AppendText(@"xmler.txt"))
+            {
+                swr.WriteLine(xmlString);
+            }
             StringReader sw = new StringReader(xmlString);
             System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(t);
             return xs.Deserialize(sw);

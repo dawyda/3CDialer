@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace _cdialerclient
 {
-    [XmlRoot("3cdialerserver")]
+    [XmlRoot("dialerserver")]
     public class CallListXML
     {
         [XmlElement("session")]

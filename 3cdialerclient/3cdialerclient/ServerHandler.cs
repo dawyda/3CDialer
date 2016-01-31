@@ -19,6 +19,7 @@ namespace _cdialerclient
         private string token;
         private string userid;
         internal bool endReached;
+        //string error = "";
         
         public ServerHandler() {
             server = new ServerSocket();        
@@ -53,8 +54,7 @@ namespace _cdialerclient
             ListRequest lr = new ListRequest();
             lr.Method = "GetCallList";
             lr.Session = new session() { Userid = this.userid, Token = this.token };
-            lr.Args.Ext = ClientSettingsHandler.GetSettings().Extension;
-			lr.Args.Campaign = this.userCampaign;
+            lr.Args = new ReqArgs() { Ext = ClientSettingsHandler.GetSettings().Extension, Campaign = this.userCampaign};
             if(server.GET("C:" + GetXMLString(lr)))
             {
                 calls = ((CallListXML)GetObjectfromXML(server.responseXml,typeof(CallListXML))).Args.Calls.ToList<Call>();

@@ -3,7 +3,6 @@ C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Debug
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Debug\Dialer.exe
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Debug\Dialer.pdb
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Debug\MySql.Data.dll
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.csprojResolveAssemblyReference.cache
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\MainWindow.g.cs
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\App.g.cs
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\GeneratedInternalTypeHelper.g.cs

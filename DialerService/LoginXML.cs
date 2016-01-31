@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace DialerService
 {
-    [XmlRoot("3cdialerclient",Namespace="",IsNullable=true)]
+    [XmlRoot("request")]
     public class LoginXML
     {
         [XmlElement("method")]
@@ -60,5 +60,7 @@ namespace DialerService
         public string Script { get; set; }
 		[XmlElement("name")]
         public string Name { get; set; }
+        //[XmlElement("error")]
+        //public string Error { get; set; }
     }
 }

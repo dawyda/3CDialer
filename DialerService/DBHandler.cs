@@ -33,11 +33,15 @@ namespace DialerService
                 Logger.LogError(e.Message + ": " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
 
-            string connectionString = "SERVER=" + settings.DBserver.IP +
+            string connectionString = "SERVER=" + settings.DBserver.IP.Value +
                ";PORT=" + settings.DBserver.IP.port +
                ";DATABASE=" + settings.DBserver.dbname +
                ";UID=" + settings.DBserver.user +
-               ";PASSWORD=" + settings.DBserver.password + ";";
+               ";PASSWORD=" + settings.DBserver.password + ";Allow User Variables=false;";
+            //using(StreamWriter swr  = File.AppendText(@"gutz.txt"))
+            //{
+            //    swr.WriteLine(connectionString);
+            //}
 
             try
             {
@@ -57,6 +61,7 @@ namespace DialerService
 
             LoginResponse lr = new LoginResponse();
             lr.Method = "LoginResponse";
+            RespArgs args = new RespArgs();
             if (Open())
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -64,26 +69,31 @@ namespace DialerService
                 if (reader.HasRows)
                 {
                     //login success
-                    lr.args.Response = true;
-                    lr.args.Token = Hash(DateTime.Now.ToLongTimeString());
-                    tokens.Add(lr.args.Token);
+                    args.Token = Hash(DateTime.Now.ToLongTimeString());
+                    args.Response = true;
+                    //lr.args = new RespArgs() { Response = true,s};
+                    //lr.args.Token = Hash(DateTime.Now.ToLongTimeString());
+                    tokens.Add(args.Token);
                     while (reader.Read())
                     {
-                        lr.args.Userid = reader["id"].ToString();
-                        lr.args.Name = reader["name"].ToString();
-                        lr.args.Campaign = reader["campaign"].ToString();
-                        lr.args.Script = reader["script"].ToString();
+                        args.Userid = reader["id"].ToString();
+                        args.Name = reader["name"].ToString();
+                        args.Campaign = reader["campaign"].ToString();
+                        args.Script = reader["script"].ToString();
                     }
-                    if (!AddSession(lr.args.Userid))
+                    reader.Close();
+                    if (!AddSession(args.Userid))
                     {
-                        //add error tag in response xml. User will logou then log in again.
+                        ClearSessionError(args.Userid);
+                        AddSession(args.Userid);
                     }
                 }
                 else
                 {
-                    lr.args.Response = false;
+                    args.Response = false;
                 }
             }
+            lr.args = args;
 
             Close();
             return lr;
@@ -92,64 +102,88 @@ namespace DialerService
         internal CallListXML GetCallList(string campaign, string userid)
         {
             CallListXML clx = new CallListXML();
-            int calls_per_user = 0;
-            string query = "SELECT @calls := (select count(cd.id) from call_list_data as cd " +
-                    "INNER JOIN call_lists as cl ON cd.calllistID = cl.id " +
-                    "INNER JOIN campaigns as c ON c.id = cl.campaignID " +
-                    "WHERE c.name = '" + campaign + "' AND cd.status = 'NEW'); " +
-                    "SELECT @users := (select count(u.id) FROM users as u " +
-                    "INNER JOIN campaigns as c ON u.campaignId = c.id); " +
-                    "SELECT @calls/@users as calls_per_user;";
+            double callsinlist = 1;
+            double users = 1;
+            double calls_per_user = 1;
+            string query = "Select ( select count(cd.id) from call_list_data as cd " +
+"INNER JOIN call_lists as cl ON cd.calllistID = cl.id "+
+"INNER JOIN campaigns as c ON c.id = cl.campaignID "+
+"WHERE c.name = '"+ campaign +"' AND cd.status = 'NEW') as calls, "+
+"( select count(u.id) FROM users as u "+
+"INNER JOIN campaigns as c ON u.campaignId = c.id) as users;";
             if(Open()){
                 MySqlDataReader reader = new MySqlCommand(query,conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    calls_per_user = Convert.ToInt32(reader[0]);
+                    callsinlist = Convert.ToDouble(reader["calls"]);
+                    users = Convert.ToDouble(reader["users"]);
                 }
                 List<int> ids = new List<int>();
                 List<Call> calls = new List<Call>();
-                if (calls_per_user > 0)
+                if (callsinlist > 0)
                 {
-                    query = "SELECT c.id, CONCAT(c.fname,' ',c.lname) as name, c.tel1,c.tel2,c.language,c.country,c.custom1,c.custom2,c.custom3,"+
-                        "c.custom4,c.custom5,c.custom6,c.custom7 from call_list_data as c " + 
-                        "INNER JOIN call_lists as cl ON c.calllistID = cl.id "+
-                        "INNER JOIN campaigns as cc ON cc.id = cl.campaignID "+
-                        "WHERE cc.name = '"+ campaign +"' AND c.status = 'NEW' ORDER BY c.id ASC LIMIT 0," + calls_per_user +";";
-                    reader = new MySqlCommand(query, conn).ExecuteReader();
-                    
-                    while(reader.Read())
+                    calls_per_user = Math.Ceiling(callsinlist / users);
+
+                    if (calls_per_user > 0)
                     {
-                        calls.Add(new Call() { 
-                            id = Convert.ToInt32(reader["id"]),
-                            name = reader["name"].ToString(),
-                            tel1 = reader["tel1"].ToString(),
-                            tel2 = reader["tel2"].ToString(),
-                            lang = reader["language"].ToString(),
-                            country = reader["country"].ToString(),
-                            custom1 = reader["custom1"].ToString(),
-                            custom2 = reader["custom2"].ToString(),
-                            custom3 = reader["custom3"].ToString(),
-                            custom4 = reader["custom4"].ToString(),
-                            custom5 = reader["custom5"].ToString(),
-                            custom6 = reader["custom6"].ToString(),
-                            custom7 = reader["custom7"].ToString()
-                        });
-                        ids.Add(Convert.ToInt32(reader["id"]));
+                        query = "SELECT c.id, CONCAT(c.fname,' ',c.lname) as name, c.tel1,c.tel2,c.language,c.country,c.custom1,c.custom2,c.custom3," +
+                            "c.custom4,c.custom5,c.custom6,c.custom7 from call_list_data as c " +
+                            "INNER JOIN call_lists as cl ON c.calllistID = cl.id " +
+                            "INNER JOIN campaigns as cc ON cc.id = cl.campaignID " +
+                            "WHERE cc.name = '" + campaign + "' AND c.status = 'NEW' ORDER BY c.id ASC LIMIT 0," + calls_per_user + ";";
+                        reader.Close();
+                        reader = new MySqlCommand(query, conn).ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            calls.Add(new Call()
+                            {
+                                id = Convert.ToInt32(reader["id"]),
+                                name = reader["name"].ToString(),
+                                tel1 = reader["tel1"].ToString(),
+                                tel2 = reader["tel2"].ToString(),
+                                lang = reader["language"].ToString(),
+                                country = reader["country"].ToString(),
+                                custom1 = reader["custom1"].ToString(),
+                                custom2 = reader["custom2"].ToString(),
+                                custom3 = reader["custom3"].ToString(),
+                                custom4 = reader["custom4"].ToString(),
+                                custom5 = reader["custom5"].ToString(),
+                                custom6 = reader["custom6"].ToString(),
+                                custom7 = reader["custom7"].ToString()
+                            });
+                            ids.Add(Convert.ToInt32(reader["id"]));
+                        }
                     }
                 }
-                PendingReceipt p = new PendingReceipt() { userid = userid,IDs= ids};
+                else
+                {
+                    //no calls in list;
+                }
+                PendingReceipt p = new PendingReceipt() { userid = userid, IDs = ids };
                 receiptsPending.Add(p);
-                clx.Args.Calls = calls.ToArray();
+                clx.Args = new CallArgs() { Calls = calls.ToArray()};
             }
             clx.Method = "SetCallList";
-            
+            Close();
             return clx;
         }
 
         private bool AddSession(string id)
         {
             MySqlCommand cmd = new MySqlCommand("INSERT into sessions(userid) VALUES(" + id + ");",conn);
-            int res = cmd.ExecuteNonQuery();
+            int res = 0;
+            try
+            {
+                res = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException me)
+            {
+                if (me.Number == 1062)
+                {
+                    Logger.LogDBError(DateTime.Now.ToLongTimeString() + ": Duplicate session for userid " + id);
+                }
+            }
             if (!( res> 0))
             {
                 Logger.LogDBError("Failed to add user session ? opened earlier.");
@@ -158,9 +192,26 @@ namespace DialerService
             return true;
         }
 
-        internal bool Open()
+        private void ClearSessionError(string id)
         {
-           
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM sessions WHERE userid = "+ id + ";", conn);
+            int res = 0;
+            try
+            {
+                res = cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException me)
+            {
+                Logger.LogDBError(DateTime.Now.ToLongTimeString() + ": " +me.Message);
+            }
+            if (!(res > 0))
+            {
+                Logger.LogDBError("Failed to clear session opened earlier.");
+            }
+        }
+
+        internal bool Open()
+        { 
             try
             {
                 conn.Open();

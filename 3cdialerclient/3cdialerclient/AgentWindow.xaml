@@ -73,22 +73,41 @@
                     </StackPanel>
                 </Button>
                 <ListView x:Name="lv_dialcard" HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2" SelectionMode="Single">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected"
+                         Value="True">
+                                    <Setter Property="Background"
+                            Value="{x:Null}" />
+                                    <Setter Property="BorderBrush"
+                            Value="{x:Null}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.Background>
+                		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                			<GradientStop Color="#FFFDFDFD" Offset="0"/>
+                			<GradientStop Color="#FFFDFDFD" Offset="1"/>
+                		</LinearGradientBrush>
+                	</ListView.Background>
                     <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Dial Card" Width="355">
-								<GridViewColumn.CellTemplate>
-									<DataTemplate>
-										<StackPanel Orientation="Horizontal" Height="30" Background="F7FDFF00">
-											<Border BorderBrush="LightGray" BorderThickness="1">
-											<TextBlock Width="200" Text="{Binding label}"/>
-											</Border>
-											<Border BorderBrush="LightGray" BorderThickness="1">
-											<TextBlock Width="155" Text="{Binding val}"/>
-											</Border>
-										</StackPanel>
-									</DataTemplate>
-								</GridViewColumn.CellTemplate>
-							</GridViewColumn>
+                        <GridView SelectiveScrollingGrid.SelectiveScrollingOrientation="Both">
+                            <GridViewColumn Header="DialCard:" Width="353">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border BorderBrush="LightBlue" BorderThickness="0,0,0,1" >
+                                                <TextBlock Focusable="False" Height="20" Text="{Binding label}" Width="150" Foreground="Blue" Cursor="Hand" FontFamily="Arial" FontSize="12" />
+                                            </Border>
+                                            <Border BorderBrush="LightBlue" BorderThickness="1,0,0,1" >
+                                                <TextBlock Width="201" Focusable="False" Height="20" Text="{Binding val}" Foreground="Black" Cursor="Hand" FontFamily="Arial" FontSize="12" Padding="5,0,0,0" />
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

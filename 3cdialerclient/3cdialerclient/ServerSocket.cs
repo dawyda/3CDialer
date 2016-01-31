@@ -34,10 +34,20 @@ namespace _cdialerclient
     //            string ip = ClientSettingsHandler.GetSettings().Server.ip;
     //            if(Regex.IsMatch(ip, "(2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?")) {
     //// the string is an IP
-                IPAddress ipAddress = IPAddress.Parse(ClientSettingsHandler.GetSettings().Server.ip);
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, Convert.ToInt32(ClientSettingsHandler.GetSettings().Server.port));
+                Socket sender = null;
+                IPAddress ipAddress = null;
+                IPEndPoint remoteEP = null;
+                try
+                {
+                    ipAddress = IPAddress.Parse(ClientSettingsHandler.GetSettings().Server.ip);
+                    remoteEP = new IPEndPoint(ipAddress, Convert.ToInt32(ClientSettingsHandler.GetSettings().Server.port));
 
-                Socket sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                }
+                catch (Exception e)
+                {
+                    Logger.Log(e.Message + ": " + e.InnerException);
+                }
 
                 // Connect the socket to the remote endpoint. Catch any errors.
                 //this could be moved in the background later via a thread.
@@ -62,21 +72,21 @@ namespace _cdialerclient
                 }
                 catch (ArgumentNullException ane)
                 {
-                    Trace.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    Logger.Log(ane.Message + ": " + ane.InnerException);
                 }
                 catch (SocketException se)
                 {
-                    Trace.WriteLine("SocketException : {0}", se.ToString());
+                    Logger.Log(se.Message + ": " + se.InnerException);
                 }
                 catch (Exception e)
                 {
-                    Trace.WriteLine("Unexpected exception : {0}", e.ToString());
+                    Logger.Log(e.Message + ": " + e.InnerException);
                 }
 
             }
             catch (Exception e)
             {
-                Trace.WriteLine(e.ToString());
+                Logger.Log(e.Message + ": " + e.InnerException);
             }
             return datasent;
         }

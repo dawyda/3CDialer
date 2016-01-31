@@ -38,7 +38,15 @@ namespace _cdialerclient
         {
             if (!serverHandler.endReached)
             {
-                lv_dialcard.ItemsSource = DialCard.Create(serverHandler.CurrentCall);
+                try
+                {
+                    List<DialCardItem> listdc = DialCard.Create(serverHandler.CurrentCall);
+                    lv_dialcard.ItemsSource = listdc;
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
             }
             else
             {

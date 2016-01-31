@@ -58,6 +58,7 @@
     <Compile Include="ClientSettingsHandler.cs" />
     <Compile Include="DialCard.cs" />
     <Compile Include="ListRequest.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="ServerHandler.cs" />
     <Compile Include="ServerSocket.cs" />
     <Compile Include="Settings.xaml.cs">

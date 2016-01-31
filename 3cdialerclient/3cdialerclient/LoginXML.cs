@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace _cdialerclient
 {
-    [XmlRoot("3cdialerclient",Namespace="",IsNullable=true)]
+    [XmlRoot("request")]
     public class LoginXML
     {
         [XmlElement("method")]
@@ -36,7 +36,7 @@ namespace _cdialerclient
     /**
      * Section for login response; 
      */
-    [XmlRoot("3cdialerserver")]
+    [XmlRoot("dialerserver")]
     public class LoginResponse
     {
         [XmlElement("method")]

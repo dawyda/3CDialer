@@ -31,6 +31,7 @@ namespace _cdialerclient
                 Settings.FirstRun();
             }
             serverHandler = new ServerHandler();
+            txt_username.Focus();
         }
 
         private void btnLogin_Click(object sender, System.Windows.RoutedEventArgs e)

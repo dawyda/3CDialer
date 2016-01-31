@@ -25,8 +25,26 @@ namespace DialerService
         IPEndPoint localEndPoint;
         public Server() 
         {
-            localEndPoint = new IPEndPoint(IPAddress.Any, 11000);
-            listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Settings settings = null;
+            try
+            {
+                System.IO.StreamReader sr = new System.IO.StreamReader(@"C:\ProgramData\3CDialer\settings.xml");
+                System.Xml.Serialization.XmlSerializer xmsr = new System.Xml.Serialization.XmlSerializer(typeof(Settings));
+                settings = (Settings)xmsr.Deserialize(sr);
+                sr.Close();
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.Message + ": " + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+            try
+            {
+                localEndPoint = new IPEndPoint(IPAddress.Parse(settings.Service.bindip), Convert.ToInt32(settings.Service.bindport));
+                listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            }
+            catch(Exception e){
+                Logger.LogError(e.Message + ": " + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         public void StartListening()
@@ -42,17 +60,15 @@ namespace DialerService
                 while (true)
                 {
                     allDone.Reset();
-                    Console.WriteLine("Waiting for a connection...");
+                    Logger.LogSocket(DateTime.Now.ToShortDateString() + " inside start listening.");
                     listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
                     allDone.WaitOne();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Logger.LogSocket(DateTime.Now.ToShortDateString() + " socket creation failed/binding failed. " + e.Message);
             }
-            Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
         }
 
         private void AcceptCallback(IAsyncResult ar)
@@ -79,8 +95,8 @@ namespace DialerService
                 content = state.sb.ToString();
                 if(content.IndexOf("<br>") > -1){
                     //xml string sent read to end.
-                    string resp = methods.Execute(content);
-                    Thread.Sleep(20);
+                    string resp = methods.Execute(content.Substring(0, (content.Length - 4)));
+                    Thread.Sleep(5);
                     Send(handler,resp);
                 }
                 else{
@@ -107,13 +123,14 @@ namespace DialerService
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Logger.LogSocket(DateTime.Now.ToShortDateString() + ": " + e.Message);
             }
         }
 
         internal void StopListening()
         {
             listener.Close();
+            Logger.LogSocket(DateTime.Now.ToShortDateString() + ": socket shutdown.");
         }
     }
 }
