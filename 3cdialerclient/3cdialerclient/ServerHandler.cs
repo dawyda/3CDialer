@@ -34,6 +34,7 @@ namespace _cdialerclient
             if(server.GET("L:" + GetXMLString(logins)))
             {
                 //get login response instance
+                if (server.responseXml == "error") return false;
                 LoginResponse response = (LoginResponse) GetObjectfromXML(server.responseXml,typeof(LoginResponse));
                 if (response.args.Response == true)
                 {
@@ -70,12 +71,25 @@ namespace _cdialerclient
             lr.Args = new ReqArgs() { Ext = ClientSettingsHandler.GetSettings().Extension, Campaign = this.userCampaign};
             if(server.GET("C:" + GetXMLString(lr)))
             {
-                calls = ((CallListXML)GetObjectfromXML(server.responseXml,typeof(CallListXML))).Args.Calls.ToList<Call>();
-                //set current call;
-                CurrentCall = calls[0];
-                //acknowledge receipt
-                server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
-                requested = true;
+                List<Call> callsvar;
+                try
+                {
+                    callsvar = ((CallListXML)GetObjectfromXML(server.responseXml, typeof(CallListXML))).Args.Calls.ToList<Call>();
+                }
+                catch (ArgumentNullException ane)
+                {
+                    Logger.Log(ane.Message);
+                    return false;
+                }
+                if (callsvar != null)
+                {
+                    calls = callsvar;
+                    //set current call;
+                    CurrentCall = calls[0];
+                    //acknowledge receipt
+                    server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
+                    requested = true;
+                }
             }
             return requested;
         }

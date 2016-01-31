@@ -32,6 +32,12 @@ namespace _cdialerclient
             {
                 SetDialCard();
             }
+            else
+            {
+                //no call in list found;
+                lv_dialcard.ItemsSource = DialCard.CreateBlank();
+                MessageBox.Show("No calls to dial!");
+            }
 		}
         //populate dialcard with details of next call;
         private void SetDialCard()
@@ -70,6 +76,7 @@ namespace _cdialerclient
 
         private void StartCalls(object sender, RoutedEventArgs e)
         {
+            if (!listRequested) return;
             dial = true;
             btn_Stopcalls.IsEnabled = true;
             btn_Startcalls.IsEnabled = false;
