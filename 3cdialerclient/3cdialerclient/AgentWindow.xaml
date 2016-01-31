@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <Menu HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="654" Grid.Row="1" Grid.RowSpan="2">
             <MenuItem Header="_File" Height="25" Margin="0,0,5,0">
-                <MenuItem Header="_Logout" HorizontalAlignment="Left" Width="125"/>
+                <MenuItem Header="_Logout" HorizontalAlignment="Left" Width="125" Click="menu_logout_Click"/>
                 <MenuItem Header="_Exit" Click="menu_exit_Click" HorizontalAlignment="Left" Width="125"/>
             </MenuItem>
             <MenuItem Header="_Settings" Margin="0,0,5,0"/>

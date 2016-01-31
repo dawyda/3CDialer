@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F6ABF18D-5DC9-4E14-A2E6-AD9217098038}</ProjectGuid>
+    <ProjectGuid>{9E87266C-3688-4853-B7B8-489D0B53BFFC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DialerService</RootNamespace>
@@ -51,16 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AckResponse.cs" />
     <Compile Include="CallListXML.cs" />
-    <Compile Include="ListRequest.cs" />
-    <Compile Include="MethodHandler.cs" />
-    <Compile Include="ProjectInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Server.cs" />
     <Compile Include="DBHandler.cs" />
     <Compile Include="DialerService.cs">
       <SubType>Component</SubType>
@@ -68,19 +60,23 @@
     <Compile Include="DialerService.Designer.cs">
       <DependentUpon>DialerService.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListRequest.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoginXML.cs" />
+    <Compile Include="LogoutReq.cs" />
+    <Compile Include="MethodHandler.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DialerService.resx">
-      <DependentUpon>DialerService.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>

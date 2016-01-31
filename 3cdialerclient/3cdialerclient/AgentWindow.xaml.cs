@@ -65,7 +65,7 @@ namespace _cdialerclient
 
         private void menu_exit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            LogoutAndClose();
         }
 
         private void StartCalls(object sender, RoutedEventArgs e)
@@ -80,6 +80,32 @@ namespace _cdialerclient
             dial = false;
             btn_Stopcalls.IsEnabled = false;
             btn_Startcalls.IsEnabled = true;
+        }
+
+        private void menu_logout_Click(object sender, RoutedEventArgs e)
+        {
+            LogoutAndClose();
+        }
+        protected void LogoutAndClose()
+        {
+            if (this.serverHandler.Logout())
+            {
+                this.Close();
+            }
+            else
+            {
+                Logger.Log("Logout failed but will close anyway.");
+                this.Close();
+            }
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            var close = MessageBox.Show("Proceed with close and exit ?", "Exiting...", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (!(close == MessageBoxResult.OK))
+            {
+                e.Cancel = true;
+                return;
+            }
         }
 	}
 }

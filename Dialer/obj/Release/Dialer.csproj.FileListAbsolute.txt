@@ -14,3 +14,6 @@ C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Relea
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.application
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.exe.manifest
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.application
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.csprojResolveAssemblyReference.cache
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer_MarkupCompile.lref

@@ -53,6 +53,33 @@ namespace DialerService
             }
         }
 
+        internal bool AcknowledgeList(string userid)
+        {
+            if (Open())
+            {
+                var pr = (from pending in receiptsPending
+                                    where
+                                        pending.userid == userid
+                                    select pending).ToList();
+                PendingReceipt prs = pr[0];
+                string query = "";
+                foreach (int id in prs.IDs)
+                {
+                    query += "UPDATE call_list_data SET assigned = 1 WHERE id = " + id +";";
+                }
+                int i = 0;
+                if((i = new MySqlCommand(query, conn).ExecuteNonQuery()) > 0)
+                {
+                    receiptsPending.Remove(prs);
+                    Close();
+                    return true;
+                }
+            }
+           
+            Close();
+            return false;
+        }
+
         internal LoginResponse Login(string username, string password)
         {
             string query = "SELECT u.id,u.name, c.name AS campaign,c.script FROM users u "+
@@ -130,7 +157,7 @@ namespace DialerService
                             "c.custom4,c.custom5,c.custom6,c.custom7 from call_list_data as c " +
                             "INNER JOIN call_lists as cl ON c.calllistID = cl.id " +
                             "INNER JOIN campaigns as cc ON cc.id = cl.campaignID " +
-                            "WHERE cc.name = '" + campaign + "' AND c.status = 'NEW' ORDER BY c.id ASC LIMIT 0," + calls_per_user + ";";
+                            "WHERE cc.name = '" + campaign + "' AND c.status = 'NEW' AND c.assigned = 0 ORDER BY c.id ASC LIMIT 0," + calls_per_user + ";";
                         reader.Close();
                         reader = new MySqlCommand(query, conn).ExecuteReader();
 
@@ -250,6 +277,23 @@ namespace DialerService
         {
             //check if session exists;
             return (this.tokens.IndexOf(token) > -1);
+        }
+
+        internal bool Logout(session session)
+        {
+            //remove userid and token
+            if (Open())
+            {
+                tokens.Remove(session.Token);
+                string query = "DELETE FROM sessions WHERE userid = " + session.Userid + ";";
+                int res = new MySqlCommand(query, conn).ExecuteNonQuery();
+                Close();
+                return res > 0;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
     //public class Logins

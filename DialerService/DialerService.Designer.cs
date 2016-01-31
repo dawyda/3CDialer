@@ -28,12 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            // 
-            // DialerService
-            // 
-            this.CanShutdown = true;
+            components = new System.ComponentModel.Container();
             this.ServiceName = "DialerService";
-
         }
 
         #endregion

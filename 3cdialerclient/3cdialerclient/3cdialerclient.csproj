@@ -53,12 +53,14 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AckResponse.cs" />
     <Compile Include="CallListXML.cs" />
     <Compile Include="ClientSettings.cs" />
     <Compile Include="ClientSettingsHandler.cs" />
     <Compile Include="DialCard.cs" />
     <Compile Include="ListRequest.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="LogoutReq.cs" />
     <Compile Include="ServerHandler.cs" />
     <Compile Include="ServerSocket.cs" />
     <Compile Include="Settings.xaml.cs">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dialer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,12 +7,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
-using Dialer;
+using System.Threading;
 
 namespace DialerService
 {
     public partial class DialerService : ServiceBase
     {
+        Thread serverThread;
         public DialerService()
         {
             InitializeComponent();
@@ -21,26 +23,28 @@ namespace DialerService
         {
             try
             {
-                Server server = new Server();
-                server.StartListening();
+                serverThread = new Thread(new ThreadStart(new Server().StartListening));
+                serverThread.Start();
+                this.EventLog.WriteEntry("Socket started with thread id: " + serverThread.ManagedThreadId.ToString());
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                Logger.Log(string.Format("Dialer service Exception occured at {0}: {1}", DateTime.Now.ToShortTimeString(),e.Message + " \nMore:" + e.InnerException));
+                Logger.LogServiceError(e.Message);
             }
-            Logger.Log(string.Format("Dialer service started at: {0}",DateTime.Now.ToShortTimeString()));
         }
 
         protected override void OnStop()
         {
-            Logger.Log(string.Format("Dialer service stopped at: {0}", DateTime.Now.ToShortTimeString()));
-            //server.StopListening();
-        }
-
-        protected override void OnShutdown()
-        {
-            Logger.Log(string.Format("Dialer service shutdown at: {0}", DateTime.Now.ToShortTimeString()));
-            //server.StopListening();   
+            try
+            {
+                serverThread.Abort();
+                this.EventLog.WriteEntry("Socket stopped with thread id: " + serverThread.ManagedThreadId.ToString());
+            }
+            catch(Exception e)
+            {
+                this.EventLog.WriteEntry(e.InnerException+ ": " + e.Message+": " + serverThread.ManagedThreadId.ToString(),EventLogEntryType.Error);
+                Logger.LogServiceError(e.Message);
+            }
         }
     }
 }

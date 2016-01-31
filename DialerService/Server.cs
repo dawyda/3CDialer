@@ -37,14 +37,8 @@ namespace DialerService
             {
                 Logger.LogError(e.Message + ": " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
-            try
-            {
-                localEndPoint = new IPEndPoint(IPAddress.Parse(settings.Service.bindip), Convert.ToInt32(settings.Service.bindport));
-                listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            }
-            catch(Exception e){
-                Logger.LogError(e.Message + ": " + System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
+            localEndPoint = new IPEndPoint(IPAddress.Parse(settings.Service.bindip), Convert.ToInt32(settings.Service.bindport));
+            listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
         public void StartListening()

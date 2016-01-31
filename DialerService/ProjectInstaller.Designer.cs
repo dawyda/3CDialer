@@ -39,7 +39,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Dialing service. This service runs on the port you specified in settings.";
+            this.serviceInstaller1.Description = "The dialing service";
             this.serviceInstaller1.DisplayName = "3CDialer Service";
             this.serviceInstaller1.ServiceName = "DialerService";
             // 

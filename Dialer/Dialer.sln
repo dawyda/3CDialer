@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dialer", "Dialer.csproj", "{BEEAEF22-A51C-4602-B2B9-E2ADF320B91F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DialerService", "..\DialerService\DialerService.csproj", "{F6ABF18D-5DC9-4E14-A2E6-AD9217098038}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DialerService", "..\DialerService\DialerService.csproj", "{9E87266C-3688-4853-B7B8-489D0B53BFFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,10 @@ Global
 		{BEEAEF22-A51C-4602-B2B9-E2ADF320B91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEEAEF22-A51C-4602-B2B9-E2ADF320B91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEEAEF22-A51C-4602-B2B9-E2ADF320B91F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6ABF18D-5DC9-4E14-A2E6-AD9217098038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6ABF18D-5DC9-4E14-A2E6-AD9217098038}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6ABF18D-5DC9-4E14-A2E6-AD9217098038}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6ABF18D-5DC9-4E14-A2E6-AD9217098038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E87266C-3688-4853-B7B8-489D0B53BFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E87266C-3688-4853-B7B8-489D0B53BFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E87266C-3688-4853-B7B8-489D0B53BFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E87266C-3688-4853-B7B8-489D0B53BFFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

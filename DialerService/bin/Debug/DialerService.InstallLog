@@ -4,36 +4,13 @@ Affected parameters are:
    logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
    assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
 Installing service DialerService...
-Service DialerService has been successfully installed.
 Creating EventLog source DialerService in log Application...
-Committing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
+Rolling back assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
 Affected parameters are:
    logtoconsole = 
    logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
    assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-Uninstalling assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-Removing EventLog source DialerService.
-Service DialerService is being removed from the system...
-Service DialerService was successfully removed from the system.
-Installing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   i = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-   logtoconsole = 
-Installing service DialerService...
-Service DialerService has been successfully installed.
-Creating EventLog source DialerService in log Application...
-Committing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   i = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-   logtoconsole = 
+Restoring event log to previous state for source DialerService.
 Uninstalling assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
 Affected parameters are:
    logtoconsole = 
@@ -77,29 +54,6 @@ System.ComponentModel.Win32Exception: The specified service does not exist as an
 An exception occurred while uninstalling. This exception will be ignored and the uninstall will continue. However, the application might not be fully uninstalled after the uninstall is complete.
 Installing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
 Affected parameters are:
-   i = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-   logtoconsole = 
-Installing service DialerService...
-Service DialerService has been successfully installed.
-Creating EventLog source DialerService in log Application...
-Committing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   i = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-   logtoconsole = 
-Uninstalling assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-Removing EventLog source DialerService.
-Service DialerService is being removed from the system...
-Service DialerService was successfully removed from the system.
-Installing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
    logtoconsole = 
    logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
    assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
@@ -111,29 +65,6 @@ Affected parameters are:
    logtoconsole = 
    logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
    assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-Uninstalling assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   logtoconsole = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-Removing EventLog source DialerService.
-Service DialerService is being removed from the system...
-Service DialerService was successfully removed from the system.
-Installing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   i = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-   logtoconsole = 
-Installing service DialerService...
-Service DialerService has been successfully installed.
-Creating EventLog source DialerService in log Application...
-Committing assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
-Affected parameters are:
-   i = 
-   logfile = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.InstallLog
-   assemblypath = C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
-   logtoconsole = 
 Uninstalling assembly 'C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe'.
 Affected parameters are:
    logtoconsole = 

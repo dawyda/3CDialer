@@ -14,3 +14,4 @@ C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\obj\Debug\3cdialerclient.csproj.GenerateResource.Cache
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\obj\Debug\_cdialerclient.exe
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\obj\Debug\_cdialerclient.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\obj\Debug\3cdialerclient.csprojResolveAssemblyReference.cache

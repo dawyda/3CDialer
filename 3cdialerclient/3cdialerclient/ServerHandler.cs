@@ -45,6 +45,19 @@ namespace _cdialerclient
             }
             return logged;
         }
+        public bool Logout()
+        {
+            LogoutReq lq = new LogoutReq() { Session = new session() { Userid = this.userid, Token = this.token } };
+            if (server.GET("O:" + GetXMLString(lq)))
+            {
+                return true;
+            }
+            else
+            {
+                Logger.Log("Socket client error: failed to initiate logout.");
+                return false;
+            }
+        }
 
         //request call list
         public bool RequestCallList()
@@ -60,6 +73,8 @@ namespace _cdialerclient
                 calls = ((CallListXML)GetObjectfromXML(server.responseXml,typeof(CallListXML))).Args.Calls.ToList<Call>();
                 //set current call;
                 CurrentCall = calls[0];
+                //acknowledge receipt
+                server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
                 requested = true;
             }
             return requested;
@@ -78,9 +93,18 @@ namespace _cdialerclient
         }
         private Object GetObjectfromXML(string xmlString, Type t)
         {
-            StringReader sw = new StringReader(xmlString);
-            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(t);
-            return xs.Deserialize(sw);
+            Object obj = null;
+            try
+            {
+                StringReader sw = new StringReader(xmlString);
+                System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(t);
+                obj = xs.Deserialize(sw);
+            }
+            catch (Exception e)
+            {
+                Logger.Log("Deserialization failed. Server might have closed." + e.Message);
+            }
+            return obj;
         }
     }
 }

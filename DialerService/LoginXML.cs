@@ -36,7 +36,7 @@ namespace DialerService
     /**
      * Section for login response; 
      */
-    [XmlRoot("3cdialerserver")]
+    [XmlRoot("dialerserver")]
     public class LoginResponse
     {
         [XmlElement("method")]
