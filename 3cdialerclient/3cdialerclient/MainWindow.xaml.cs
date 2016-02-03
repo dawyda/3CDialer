@@ -52,6 +52,7 @@ namespace _cdialerclient
             if (!success)
             {
                 tb_error.Visibility = System.Windows.Visibility.Visible;
+                tb_error.Text = serverHandler.error;
                 txt_password.SelectAll();
                 txt_password.Focus();
                 e.Handled = true;

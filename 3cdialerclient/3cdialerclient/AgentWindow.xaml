@@ -43,8 +43,8 @@
                     </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding KShort}" Header="Key Shortcut" Width="140"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Function}" Header="Function" Width="144"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding KShort}" Header="Key Shortcut" Width="100"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Function}" Header="Function" Width="183"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

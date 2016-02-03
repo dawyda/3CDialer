@@ -142,7 +142,14 @@ namespace DialerService
                         "INNER JOIN campaigns as cc ON cc.id = cl.campaignID "+
                         "WHERE cc.name = '" + campaign + "' AND c.status = 'new' LIMIT 0,20;";
                     cmd = new MySqlCommand(query,conn);
-                    cmd.ExecuteNonQuery();
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows < 1)
+                    {
+                        //no calls available for user.
+                        reader.Close();
+                        Close();
+                        return clx;
+                    }
                     //update status as assigned.
                     query = "UPDATE call_list_data c "+
                         "INNER JOIN call_2_userid u ON "+

@@ -30,16 +30,17 @@ namespace _cdialerclient
             bool logged = false;
             LoginXML logins = new LoginXML();
             logins.Method = "Login";
+            error = "Wrong username or password.";
             logins.Session = new session() { Userid = string.Empty, Token= string.Empty};
             logins.Args = new args() { Username = username, Password = password};
             if(server.GET("L:" + GetXMLString(logins)))
             {
                 //get login response instance
-                if (server.responseXml == "error" || server.responseXml == "" || server.responseXml == null) 
+                if (server.responseXml == "" || server.responseXml == null) 
                 { 
                     return logged; 
                 }
-                else if (server.responseXml.IndexOf( "<error msg=") > -1)
+                else if (server.responseXml.IndexOf("<error msg=") > -1)
                 {
                     Error err = GetObjectfromXML(server.responseXml, typeof(Error)) as Error;
                     error = err.Message;
@@ -55,6 +56,19 @@ namespace _cdialerclient
                     logged = true;
                 }
             }
+            else
+            {
+                if (server.netError)
+                {
+                    error = "Network error or check IP settings";
+                    return logged;
+                }
+                else
+                {
+                    error = "Unknown error occured. Check event log.";
+                    return logged;
+                }
+            }
             return logged;
         }
         public bool Logout()
@@ -67,6 +81,7 @@ namespace _cdialerclient
             else
             {
                 Logger.Log("Socket client error: failed to initiate logout.");
+                error = "Failed logout";
                 return false;
             }
         }
@@ -82,23 +97,27 @@ namespace _cdialerclient
             lr.Args = new ReqArgs() { Ext = ClientSettingsHandler.GetSettings().Extension, Campaign = this.userCampaign};
             if(server.GET("C:" + GetXMLString(lr)))
             {
-                List<Call> callsvar;
+                List<Call> callsvar = null;
                 try
                 {
                     callsvar = ((CallListXML)GetObjectfromXML(server.responseXml, typeof(CallListXML))).Args.Calls.ToList<Call>();
                 }
                 catch (ArgumentNullException ane)
                 {
-                    Logger.Log(ane.Message);
+                    Logger.Log(ane.Message + " arg null exception");
                     return false;
+                }
+                catch(Exception e)
+                {
+                    Logger.Log(e.Message + " Exception");
                 }
                 if (callsvar != null)
                 {
                     calls = callsvar;
                     //set current call;
                     CurrentCall = calls[0];
-                    //acknowledge receipt
-                    server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
+                    //acknowledge receipt deprecated.
+                    //server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
                     requested = true;
                 }
             }

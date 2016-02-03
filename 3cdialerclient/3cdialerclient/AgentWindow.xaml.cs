@@ -21,6 +21,7 @@ namespace _cdialerclient
         public ServerHandler serverHandler;
         bool listRequested = false;
         bool dial = false;
+        private bool loggingOut = false;
         //Timer timer;
 		public AgentWindow(ServerHandler serverHandler)
 		{
@@ -36,7 +37,7 @@ namespace _cdialerclient
             {
                 //no call in list found;
                 lv_dialcard.ItemsSource = DialCard.CreateBlank();
-                MessageBox.Show("No calls to dial!");
+                MessageBox.Show("No calls to dial! Ask admin to upload.");
             }
 		}
         //populate dialcard with details of next call;
@@ -56,15 +57,15 @@ namespace _cdialerclient
             }
             else
             {
-                MessageBox.Show("Current List Calls Completed","Well Done!");
+                MessageBox.Show("Current List Calls Completed.\nChecking for more calls. Click OK.","Well Done!");
             }
         }
 
 		protected void AddKeyShortcuts()
 		{
 			lv_shortList.Items.Add(new {KShort = "Space bar", Function = "End call"});
-			lv_shortList.Items.Add(new {KShort = "CTRL + Y", Function = "Redial Last Call"});
-			lv_shortList.Items.Add(new {KShort = "F6", Function = "Skip to Next Call"});
+			lv_shortList.Items.Add(new {KShort = "Ctrl + Y", Function = "Redial call. Press after end call."});
+			lv_shortList.Items.Add(new {KShort = "F6", Function = "Skip to next Call"});
 			lv_shortList.Items.Add(new {KShort = "Space bar", Function = "End call"});
 			lv_shortList.Items.Add(new {KShort = "Space bar", Function = "End call"});
 		}
@@ -91,7 +92,11 @@ namespace _cdialerclient
 
         private void menu_logout_Click(object sender, RoutedEventArgs e)
         {
-            LogoutAndClose();
+            //logout only.
+            serverHandler.Logout();
+            new MainWindow().Show();
+            loggingOut = true;
+            this.Close();
         }
         protected void LogoutAndClose()
         {
@@ -107,6 +112,10 @@ namespace _cdialerclient
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
+            if (loggingOut)
+            {
+                return;
+            }
             var close = MessageBox.Show("Proceed with close and exit ?", "Exiting...", MessageBoxButton.OKCancel, MessageBoxImage.Question);
             if (!(close == MessageBoxResult.OK))
             {

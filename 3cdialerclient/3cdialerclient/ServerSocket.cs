@@ -12,6 +12,7 @@ namespace _cdialerclient
     public class ServerSocket
     {
         public string responseXml;
+        public bool netError = false;
 
         public ServerSocket() 
         {
@@ -43,10 +44,12 @@ namespace _cdialerclient
                     remoteEP = new IPEndPoint(ipAddress, Convert.ToInt32(ClientSettingsHandler.GetSettings().Server.port));
 
                     sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    if(netError) netError = !netError;
                 }
                 catch (Exception e)
                 {
                     Logger.Log(e.Message + ": " + e.InnerException);
+                    netError = true;
                 }
 
                 // Connect the socket to the remote endpoint. Catch any errors.
@@ -68,25 +71,30 @@ namespace _cdialerclient
                     // Release the socket.
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
+                    if (netError) netError = !netError;
                     return datasent = true;
                 }
                 catch (ArgumentNullException ane)
                 {
                     Logger.Log(ane.Message + ": " + ane.InnerException);
+                    netError = true;
                 }
                 catch (SocketException se)
                 {
                     Logger.Log(se.Message + ": " + se.InnerException);
+                    netError = true;
                 }
                 catch (Exception e)
                 {
                     Logger.Log(e.Message + ": " + e.InnerException);
+                    netError = true;
                 }
 
             }
             catch (Exception e)
             {
                 Logger.Log(e.Message + ": " + e.InnerException);
+                netError = true;
             }
             return datasent;
         }
