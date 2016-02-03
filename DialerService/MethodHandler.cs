@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using System.IO;
 using _cdialerclient;
 using System.Xml;
+using Dialer;
 
 namespace DialerService
 {
@@ -13,6 +14,7 @@ namespace DialerService
     {
         protected DBHandler dbhandler = new DBHandler();
         string response;
+        public string methodError = "";
         //excutes specified method in xml
         public string Execute(string xmlString)
         {
@@ -85,35 +87,64 @@ namespace DialerService
         private string DoLogin(string xml)
         {
             LoginXML logins = GetObjectfromXML(xml, typeof(LoginXML)) as LoginXML;
-            LoginResponse lr = dbhandler.Login(logins.Args.Username,logins.Args.Password);
+            LoginResponse lr = null;
+            if (logins != null)
+            {
+                lr = dbhandler.Login(logins.Args.Username, logins.Args.Password);
+            }
             return GetXMLString(lr);
         }
 
         private string GetXMLString<T>(T arg)
         {
             StringWriter sw = new StringWriter();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.NewLineHandling = NewLineHandling.None;
-            settings.Indent = false;
-            settings.OmitXmlDeclaration = true;
-            sw.NewLine = "";
-            XmlWriter xw = XmlWriter.Create(sw,settings);
-            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(arg.GetType());
-            System.Xml.Serialization.XmlSerializerNamespaces ns = new System.Xml.Serialization.XmlSerializerNamespaces();
-            ns.Add("", "");
-            xs.Serialize(xw, arg, ns);
+            try
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.NewLineHandling = NewLineHandling.None;
+                settings.Indent = false;
+                settings.OmitXmlDeclaration = true;
+                sw.NewLine = "";
+                XmlWriter xw = XmlWriter.Create(sw, settings);
+                System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(arg.GetType());
+                System.Xml.Serialization.XmlSerializerNamespaces ns = new System.Xml.Serialization.XmlSerializerNamespaces();
+                ns.Add("", "");
+                xs.Serialize(xw, arg, ns);
+            }
+            catch (InvalidOperationException ioe)
+            {
+                Logger.LogServiceError("DB request serailization error: " + ioe.Message);
+            }
+            catch (Exception e)
+            {
+                Logger.LogServiceError("Exception during db data serialization: " + e.Message);
+            }
             return sw.ToString();
         }
 
         private Object GetObjectfromXML(string xmlString, Type t)
         {
-            using (StreamWriter swr = File.AppendText(@"xmler.txt"))
+            Object obj = null;
+            try
             {
-                swr.WriteLine(xmlString);
+                using (StreamWriter swr = File.AppendText(@"xmler.txt"))
+                {
+                    swr.WriteLine(xmlString);
+                    swr.Close();
+                }
+                StringReader sw = new StringReader(xmlString);
+                System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(t);
+                obj = xs.Deserialize(sw);
             }
-            StringReader sw = new StringReader(xmlString);
-            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(t);
-            return xs.Deserialize(sw);
+            catch (InvalidOperationException ioe)
+            {
+                Logger.LogServiceError("Unsupported method exception: " + ioe.Message);
+            }
+            catch(Exception e)
+            {
+                Logger.LogServiceError("Exception during deserialization: " + e.Message);
+            }
+            return obj;
         }
     }
 }

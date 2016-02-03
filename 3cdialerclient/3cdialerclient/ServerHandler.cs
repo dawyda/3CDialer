@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace _cdialerclient
 {
@@ -19,7 +20,7 @@ namespace _cdialerclient
         private string token;
         private string userid;
         internal bool endReached;
-        //string error = "";
+        public string error = "";
         
         public ServerHandler() {
             server = new ServerSocket();        
@@ -34,7 +35,17 @@ namespace _cdialerclient
             if(server.GET("L:" + GetXMLString(logins)))
             {
                 //get login response instance
-                if (server.responseXml == "error") return false;
+                if (server.responseXml == "error" || server.responseXml == "" || server.responseXml == null) 
+                { 
+                    return logged; 
+                }
+                else if (server.responseXml.IndexOf( "<error msg=") > -1)
+                {
+                    Error err = GetObjectfromXML(server.responseXml, typeof(Error)) as Error;
+                    error = err.Message;
+                    Logger.Log("In login:" + error);
+                    return logged;
+                }
                 LoginResponse response = (LoginResponse) GetObjectfromXML(server.responseXml,typeof(LoginResponse));
                 if (response.args.Response == true)
                 {
@@ -116,9 +127,16 @@ namespace _cdialerclient
             }
             catch (Exception e)
             {
-                Logger.Log("Deserialization failed. Server might have closed." + e.Message);
+                Logger.Log("Deserialization failed. Server might have closed. " + e.Message);
             }
             return obj;
         }
+    }
+
+    [XmlRoot("error")]
+    public class Error
+    {
+        [XmlAttribute("msg")]
+        public string Message{get; set;}
     }
 }

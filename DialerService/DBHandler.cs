@@ -15,12 +15,11 @@ namespace DialerService
         MySqlConnection conn;
         Settings settings;
         public List<String> tokens;
-        public List<PendingReceipt> receiptsPending;
+        public string DBerror = "";
 
         public DBHandler()
         {
             tokens = new List<string>();
-            receiptsPending = new List<PendingReceipt>();
             try
             {
                 StreamReader sr = new StreamReader(@"C:\ProgramData\3CDialer\settings.xml");
@@ -38,11 +37,6 @@ namespace DialerService
                ";DATABASE=" + settings.DBserver.dbname +
                ";UID=" + settings.DBserver.user +
                ";PASSWORD=" + settings.DBserver.password + ";Allow User Variables=false;";
-            //using(StreamWriter swr  = File.AppendText(@"gutz.txt"))
-            //{
-            //    swr.WriteLine(connectionString);
-            //}
-
             try
             {
                 conn = new MySqlConnection(connectionString);
@@ -55,29 +49,7 @@ namespace DialerService
 
         internal bool AcknowledgeList(string userid)
         {
-            if (Open())
-            {
-                var pr = (from pending in receiptsPending
-                                    where
-                                        pending.userid == userid
-                                    select pending).ToList();
-                PendingReceipt prs = pr[0];
-                string query = "";
-                foreach (int id in prs.IDs)
-                {
-                    query += "UPDATE call_list_data SET assigned = 1 WHERE id = " + id +";";
-                }
-                int i = 0;
-                if((i = new MySqlCommand(query, conn).ExecuteNonQuery()) > 0)
-                {
-                    receiptsPending.Remove(prs);
-                    Close();
-                    return true;
-                }
-            }
-           
-            Close();
-            return false;
+            return true;
         }
 
         internal LoginResponse Login(string username, string password)
@@ -129,70 +101,62 @@ namespace DialerService
         internal CallListXML GetCallList(string campaign, string userid)
         {
             CallListXML clx = new CallListXML();
-            double callsinlist = 1;
-            double users = 1;
-            double calls_per_user = 1;
-            string query = "Select ( select count(cd.id) from call_list_data as cd " +
-"INNER JOIN call_lists as cl ON cd.calllistID = cl.id "+
-"INNER JOIN campaigns as c ON c.id = cl.campaignID "+
-"WHERE c.name = '"+ campaign +"' AND cd.status = 'NEW') as calls, "+
-"( select count(u.id) FROM users as u "+
-"INNER JOIN campaigns as c ON u.campaignId = c.id) as users;";
+            clx.Method = "SetCallList";
+            string query = "select c.id,CONCAT(c.fname,' ',c.lname) as name, c.tel1,c.tel2,c.language,c.country, " +
+                    "custom1,c.custom2,c.custom3,c.custom4,c.custom5,c.custom6,c.custom7 from call_list_data " +
+                    "as c INNER JOIN call_2_userid as u ON c.id = u.callid WHERE u.userid = " + userid + " AND called = FALSE;";
+            List<Call> calls = new List<Call>();
             if(Open()){
-                MySqlDataReader reader = new MySqlCommand(query,conn).ExecuteReader();
-                while (reader.Read())
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    callsinlist = Convert.ToDouble(reader["calls"]);
-                    users = Convert.ToDouble(reader["users"]);
-                }
-                List<int> ids = new List<int>();
-                List<Call> calls = new List<Call>();
-                if (callsinlist > 0)
-                {
-                    calls_per_user = Math.Ceiling(callsinlist / users);
-
-                    if (calls_per_user > 0)
+                    while (reader.Read())
                     {
-                        query = "SELECT c.id, CONCAT(c.fname,' ',c.lname) as name, c.tel1,c.tel2,c.language,c.country,c.custom1,c.custom2,c.custom3," +
-                            "c.custom4,c.custom5,c.custom6,c.custom7 from call_list_data as c " +
-                            "INNER JOIN call_lists as cl ON c.calllistID = cl.id " +
-                            "INNER JOIN campaigns as cc ON cc.id = cl.campaignID " +
-                            "WHERE cc.name = '" + campaign + "' AND c.status = 'NEW' AND c.assigned = 0 ORDER BY c.id ASC LIMIT 0," + calls_per_user + ";";
-                        reader.Close();
-                        reader = new MySqlCommand(query, conn).ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            calls.Add(new Call()
-                            {
-                                id = Convert.ToInt32(reader["id"]),
-                                name = reader["name"].ToString(),
-                                tel1 = reader["tel1"].ToString(),
-                                tel2 = reader["tel2"].ToString(),
-                                lang = reader["language"].ToString(),
-                                country = reader["country"].ToString(),
-                                custom1 = reader["custom1"].ToString(),
-                                custom2 = reader["custom2"].ToString(),
-                                custom3 = reader["custom3"].ToString(),
-                                custom4 = reader["custom4"].ToString(),
-                                custom5 = reader["custom5"].ToString(),
-                                custom6 = reader["custom6"].ToString(),
-                                custom7 = reader["custom7"].ToString()
-                            });
-                            ids.Add(Convert.ToInt32(reader["id"]));
-                        }
+                        calls.Add(new Call() {
+                            id = Convert.ToInt32(reader["id"]),
+                            name = reader["name"].ToString(),
+                            tel1 = reader["tel1"].ToString(),
+                            tel2 = reader["tel2"].ToString(),
+                            lang = reader["language"].ToString(),
+                            country = reader["country"].ToString(),
+                            custom1 = reader["custom1"].ToString(),
+                            custom2 = reader["custom2"].ToString(),
+                            custom3 = reader["custom3"].ToString(),
+                            custom4 = reader["custom4"].ToString(),
+                            custom5 = reader["custom5"].ToString(),
+                            custom6 = reader["custom6"].ToString(),
+                            custom7 = reader["custom7"].ToString()
+                        });
                     }
+                    clx.Args = new CallArgs() { Calls = calls.ToArray()};
+                    Close();
                 }
                 else
                 {
-                    //no calls in list;
+                    reader.Close();
+                    //get calls from call_list data and assign.
+                    query = "INSERT INTO call_2_userid (callid,userid) "+
+                        "SELECT c.id, " + userid + " from call_list_data as c "+
+                        "INNER JOIN call_lists as cl ON c.calllistID = cl.id "+
+                        "INNER JOIN campaigns as cc ON cc.id = cl.campaignID "+
+                        "WHERE cc.name = '" + campaign + "' AND c.status = 'new' LIMIT 0,20;";
+                    cmd = new MySqlCommand(query,conn);
+                    cmd.ExecuteNonQuery();
+                    //update status as assigned.
+                    query = "UPDATE call_list_data c "+
+                        "INNER JOIN call_2_userid u ON "+
+                        "c.id = u.callid "+
+                        "SET c.status = 'assigned' "+
+                        "WHERE u.userid = " + userid + ";";
+                    cmd = new MySqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    reader.Close();
+                    Close();
+                    clx = GetCallList(campaign,userid);
                 }
-                PendingReceipt p = new PendingReceipt() { userid = userid, IDs = ids };
-                receiptsPending.Add(p);
-                clx.Args = new CallArgs() { Calls = calls.ToArray()};
             }
-            clx.Method = "SetCallList";
-            Close();
+            if(conn.State == System.Data.ConnectionState.Open) Close();
             return clx;
         }
 
@@ -210,12 +174,17 @@ namespace DialerService
                 {
                     Logger.LogDBError(DateTime.Now.ToLongTimeString() + ": Duplicate session for userid " + id);
                 }
-            }
-            if (!( res> 0))
-            {
-                Logger.LogDBError("Failed to add user session ? opened earlier.");
+                else
+                {
+                    Logger.LogDBError(me.Message);
+                }
                 return false;
             }
+            //if (!( res > 0))
+            //{
+            //    Logger.LogDBError("Failed to add user session opened earlier.");
+            //    return false;
+            //}
             return true;
         }
 
@@ -294,6 +263,16 @@ namespace DialerService
             {
                 return false;
             }
+        }
+        //can be as big as you like;
+        //calls maintenance, sessions, statuses check, etc.
+        //can call sub methods prefix with MDD_
+        internal void MaintainDBData()
+        {
+            /***
+             * check session last access. if last access is more than 10 minutes ago. mainatin the data i.e
+             * set calls with status new and asssigned 1 as assigned 0;
+             ***/
         }
     }
     //public class Logins

@@ -101,6 +101,10 @@ namespace DialerService
 
         private void Send(Socket handler, string content)
         {
+            if (content == null || content == " " || content == string.Empty)
+            {
+                content = "<error msg=\"An error occured:" + methods.methodError + "\"/>";
+            }
             byte[] byteData = Encoding.ASCII.GetBytes(content);
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
         }
