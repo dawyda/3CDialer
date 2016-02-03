@@ -60,7 +60,7 @@
                     <RowDefinition Height="115*"/>
                     <RowDefinition Height="26*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="btn_hold" HorizontalAlignment="Left" Margin="14,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051">
+                <Button x:Name="btn_hold" HorizontalAlignment="Left" Margin="14,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051" IsEnabled="False">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="ip-phone-hold-icon-key.png" Width="35" Height="35"/>
                         <TextBlock FontWeight="Bold" Foreground="#FF098CC9" Text="Hold Call" FontSize="12.667"/>

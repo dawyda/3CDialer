@@ -1,0 +1,5 @@
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\CallLauncher\PluginLoader\bin\Debug\PluginLoader.dll
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\CallLauncher\PluginLoader\bin\Debug\PluginLoader.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\CallLauncher\PluginLoader\bin\Debug\MyPhoneCRMIntegration.dll
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\CallLauncher\PluginLoader\obj\Debug\PluginLoader.dll
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\CallLauncher\PluginLoader\obj\Debug\PluginLoader.pdb
