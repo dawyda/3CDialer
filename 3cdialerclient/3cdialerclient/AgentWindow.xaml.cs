@@ -22,12 +22,16 @@ namespace _cdialerclient
         bool listRequested = false;
         bool dial = false;
         private bool loggingOut = false;
-        //Timer timer;
+        Timer timer;
+        int CALL_STATUS_INTERVAL = 1; //every one second.
+        
 		public AgentWindow(ServerHandler serverHandler)
 		{
 			this.InitializeComponent();
 			AddKeyShortcuts();
 			// Insert code required on object creation below this point.
+            timer = new Timer(1000);
+            timer.Elapsed += new ElapsedEventHandler(UpdatesLoop);
             this.serverHandler = serverHandler;
             if (listRequested = serverHandler.RequestCallList())
             {
@@ -39,7 +43,17 @@ namespace _cdialerclient
                 lv_dialcard.ItemsSource = DialCard.CreateBlank();
                 MessageBox.Show("No calls to dial! Ask admin to upload.");
             }
+            //this timer does updates to server and also the plugin.
+            try
+            {
+                timer.Start();
+            }
+            catch (ArgumentOutOfRangeException aoe)
+            {
+                Logger.Log("Timer exception: " + aoe.Message);
+            }
 		}
+
         //populate dialcard with details of next call;
         private void SetDialCard()
         {
@@ -112,6 +126,8 @@ namespace _cdialerclient
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
+            timer.Stop();
+            timer.Close();
             if (loggingOut)
             {
                 return;
@@ -122,6 +138,12 @@ namespace _cdialerclient
                 e.Cancel = true;
                 return;
             }
+        }
+
+        private void UpdatesLoop(object sender, ElapsedEventArgs e)
+        {
+            //call update functions here!
+
         }
 	}
 }
