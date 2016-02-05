@@ -7,6 +7,7 @@ using System.IO;
 using _cdialerclient;
 using System.Xml;
 using Dialer;
+using DialerServiceDebugger;
 
 namespace DialerService
 {
@@ -35,7 +36,7 @@ namespace DialerService
                     break;
                 //update list
                 case "UL":
-                    response = GetCalls(strings[1]);
+                    response = UpdateCall(strings[1]);
                     break;
                 //logout
                 case "O":
@@ -46,6 +47,18 @@ namespace DialerService
                     return "error";
             }
             return response;
+        }
+
+        private string UpdateCall(string updateXML)
+        {
+            UpdateXML uxml = GetObjectfromXML(updateXML, typeof(UpdateXML)) as UpdateXML;
+            var resp = new UpdateResponse();
+            resp.response = "FAIL";
+            if(dbhandler.UpdateCallbyID(uxml))
+            {
+                resp.response = "OK";
+            }
+            return GetXMLString(resp);
         }
 
         private string DoLogout(string logoutXml)

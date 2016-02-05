@@ -79,6 +79,8 @@ namespace DialerService
                         args.Name = reader["name"].ToString();
                         args.Campaign = reader["campaign"].ToString();
                         args.Script = reader["script"].ToString();
+                        args.URL = settings.PopURL;
+                        args.WrapUp = settings.WrapUp;
                     }
                     reader.Close();
                     if (!AddSession(args.Userid))
@@ -217,6 +219,7 @@ namespace DialerService
         { 
             try
             {
+                if (conn.State == System.Data.ConnectionState.Open) return true;
                 conn.Open();
                 return true;
             }
@@ -280,6 +283,27 @@ namespace DialerService
              * check session last access. if last access is more than 10 minutes ago. mainatin the data i.e
              * set calls with status new and asssigned 1 as assigned 0;
              ***/
+        }
+
+        internal bool UpdateCallbyID(UpdateXML uxml)
+        {
+            string outcome = "unsuccessful";
+            if(uxml.Status)
+            {
+                outcome = "successful";
+            }
+            string query = "UPDATE call_2_userid SET called = " + 1 + " WHERE callid =" + uxml.CallId + ";" + 
+                "INSERT INTO outcome (callid,status) VALUES(" + uxml.CallId + ",'" + outcome + "');";
+            if (Open())
+            {
+                int i = new MySqlCommand(query, conn).ExecuteNonQuery();
+                if (i > 0)
+                {
+                    return true;
+                }
+                Close();
+            }
+            return false;
         }
     }
     //public class Logins

@@ -60,5 +60,18 @@ namespace _cdialerclient
         public string Script { get; set; }
 		[XmlElement("name")]
         public string Name { get; set; }
+        [XmlElement("popurl")]
+        public popurl URL { get; set; }
+        [XmlElement("wrapup")]
+        public int WrapUp { get; set; }
+    }
+
+    [XmlRoot("popurl")]
+    public class popurl
+    {
+        [XmlAttribute("address")]
+        public string address { get; set; }
+        [XmlText]
+        public bool Value { get; set; }
     }
 }

@@ -23,16 +23,24 @@ namespace _cdialerclient
         bool dial = false;
         private bool loggingOut = false;
         Timer timer;
-        int CALL_STATUS_INTERVAL = 1; //every one second.
-        
+        int CALL_STATUS_INTERVAL = 2; //every one second.
+        int CALL_LIST_REFRESH = 600;// every 5 minues check for changes in call list.
+        int UPDATE_USER_STATUS = 1200; //check if user has had his campaign changed.
+        Timer wrapuptimer;
+
+        private string prevStatus = "starting";
+              
 		public AgentWindow(ServerHandler serverHandler)
 		{
 			this.InitializeComponent();
 			AddKeyShortcuts();
 			// Insert code required on object creation below this point.
-            timer = new Timer(1000);
+            timer = new Timer(500);
             timer.Elapsed += new ElapsedEventHandler(UpdatesLoop);
             this.serverHandler = serverHandler;
+            wrapuptimer = new Timer(1000 * serverHandler.wrapup);
+            wrapuptimer.Elapsed += new ElapsedEventHandler(startCall);
+
             if (listRequested = serverHandler.RequestCallList())
             {
                 SetDialCard();
@@ -42,6 +50,7 @@ namespace _cdialerclient
                 //no call in list found;
                 lv_dialcard.ItemsSource = DialCard.CreateBlank();
                 MessageBox.Show("No calls to dial! Ask admin to upload.");
+                tb_status.Text = "Status: You have no calls to dial.";
             }
             //this timer does updates to server and also the plugin.
             try
@@ -52,6 +61,9 @@ namespace _cdialerclient
             {
                 Logger.Log("Timer exception: " + aoe.Message);
             }
+            tb_campaign.Text = "Campaign - " + serverHandler.userCampaign;
+            txt_script.Text = serverHandler.campaign_script;
+            tb_user.Text = "Logged in as: " + serverHandler.username;
 		}
 
         //populate dialcard with details of next call;
@@ -62,12 +74,14 @@ namespace _cdialerclient
                 try
                 {
                     List<DialCardItem> listdc = DialCard.Create(serverHandler.CurrentCall);
+                    if (lv_dialcard.HasItems) lv_dialcard.ItemsSource = null;
                     lv_dialcard.ItemsSource = listdc;
                 }
                 catch(Exception e)
                 {
                     MessageBox.Show(e.Message);
                 }
+                //set other stuff.
             }
             else
             {
@@ -91,10 +105,16 @@ namespace _cdialerclient
 
         private void StartCalls(object sender, RoutedEventArgs e)
         {
-            if (!listRequested) return;
+            if (!listRequested)
+            {
+                MessageBox.Show("No calls to Dial. \nTry to refresh.","Dial Error");
+                e.Handled = true;
+                return;
+            }
             dial = true;
             btn_Stopcalls.IsEnabled = true;
             btn_Startcalls.IsEnabled = false;
+            DialNext();
         }
 
         private void StopCalls(object sender, RoutedEventArgs e)
@@ -142,8 +162,97 @@ namespace _cdialerclient
 
         private void UpdatesLoop(object sender, ElapsedEventArgs e)
         {
-            //call update functions here!
+            CALL_STATUS_INTERVAL--;
+            CALL_LIST_REFRESH--;
+            UPDATE_USER_STATUS--;
 
+            if (CALL_STATUS_INTERVAL == 0)
+            {
+                if(dial){
+                    GetCallStatus();
+                }
+                CALL_STATUS_INTERVAL = 2;//reset timer
+            }
+
+            if (CALL_LIST_REFRESH == 0)
+            {
+                RefreshCalls();
+                CALL_LIST_REFRESH = 600; //reset timer
+            }
+
+            if (UPDATE_USER_STATUS == 0)
+            {
+                RefreshUserStatus();
+                UPDATE_USER_STATUS = 1200;//reset timer
+            }
+        }
+
+        private void GetCallStatus()
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+                {
+                    // your code here.
+                    try
+                    {
+                        string status = serverHandler.SP_GetCallStatus();
+                        if (prevStatus != status)
+                        {
+                            prevStatus = status;
+                            tb_status.Text = "status: " + status;
+                            if (status == "ended")
+                            {
+                                serverHandler.MarkDialed();
+                                if (serverHandler.endReached)
+                                {
+                                    MessageBox.Show("Calls completed", "Well done!");
+                                    RefreshCalls();
+                                    return;
+                                }
+                                wrapuptimer.Start();
+                            }
+                            else
+                            {
+                                //update call status at server. activities ike ringing, dialing, etc.
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Log(e.Message + ": Might occur when softphone is not launched.");
+                    }
+                }));
+        }
+
+        private void startCall(object sender, ElapsedEventArgs e)
+        {
+            wrapuptimer.Stop();
+            SetDialCard();
+            DialNext();
+        }
+
+        private void DialNext()
+        {
+            if (dial)
+            {
+                serverHandler.SP_Call();
+            }
+        }
+
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshCalls();
+            RefreshUserStatus();
+            SetDialCard();
+        }
+
+        private void RefreshCalls()
+        {
+            listRequested = serverHandler.RequestCallList();
+        }
+
+        private void RefreshUserStatus()
+        {
+            //to be done later.
         }
 	}
 }

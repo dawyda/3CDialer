@@ -60,6 +60,10 @@ namespace DialerService
         public string Script { get; set; }
 		[XmlElement("name")]
         public string Name { get; set; }
+		[XmlElement("popurl")]
+        public popurl URL { get; set; }
+        [XmlElement("wrapup")]
+        public int WrapUp { get; set; }
         //[XmlElement("error")]
         //public string Error { get; set; }
     }

@@ -10,21 +10,16 @@ using System.Threading;
 
 namespace _cdialerclient
 {
-    public class ServerSocket
+    public class SoftPhone
     {
-        public string responseXml;
+        public string response;
         public bool netError = false;
 
-        public ServerSocket() 
+        public SoftPhone()
         {
-            responseXml = "";
+            response = "";
         }
-        /**
-         * This method will be called iternally from other more specific methods.
-         * login calls it directly
-         * other funcs will do more before calling it e.g. session setting.
-         * */
-        private bool SendtoServer(string data)
+        private bool Request(string data)
         {
             bool datasent = false;
             // Data buffer for incoming data.
@@ -32,20 +27,11 @@ namespace _cdialerclient
             // Connect to server.
             try
             {
-                //check if hostname of ip first; to be done later.
-    //            string ip = ClientSettingsHandler.GetSettings().Server.ip;
-    //            if(Regex.IsMatch(ip, "(2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?")) {
-    //// the string is an IP
                 Socket sender = null;
-                IPAddress ipAddress = null;
-                IPEndPoint remoteEP = null;
                 try
                 {
-                    ipAddress = IPAddress.Parse(ClientSettingsHandler.GetSettings().Server.ip);
-                    remoteEP = new IPEndPoint(ipAddress, Convert.ToInt32(ClientSettingsHandler.GetSettings().Server.port));
-
                     sender = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    if(netError) netError = !netError;
+                    if (netError) netError = false;
                 }
                 catch (Exception e)
                 {
@@ -57,7 +43,7 @@ namespace _cdialerclient
                 //this could be moved in the background later via a thread.
                 try
                 {
-                    sender.Connect(remoteEP);
+                    sender.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"),15501));
 
                     // Encode the data string into a byte array.
                     byte[] msg = Encoding.ASCII.GetBytes(data + "<br>");
@@ -68,7 +54,7 @@ namespace _cdialerclient
                     // Receive the response from the server.
                     int bytesRec = sender.Receive(bytes);
 
-                    responseXml = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                    response = Encoding.ASCII.GetString(bytes, 0, bytesRec);
                     // Release the socket.
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
@@ -99,15 +85,15 @@ namespace _cdialerclient
             }
             return datasent;
         }
-        //does login and sets session
+
         internal bool GET(string sendString)
         {
             bool success = false;
             try
             {
-                Thread getThread = new Thread(() => { success = this.SendtoServer(sendString); });
+                Thread getThread = new Thread(() => { success = this.Request(sendString); });
                 getThread.Start();
-                getThread.Join(1500);
+                getThread.Join(500);
             }
             catch (Exception e)
             {

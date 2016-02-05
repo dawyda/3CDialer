@@ -58,7 +58,8 @@ namespace PluginLoader
                 if(!was_connected && hasAlt)
                 {
                     error = "Failed. Retrying alternate Number.";
-                    MakeCall(AltNumber);
+                    CallStatus c = MakeCall(AltNumber);
+					lastcallid = c.CallID;
                     hasAlt = false;
                     return;
                 }
@@ -153,6 +154,9 @@ namespace PluginLoader
                 case "GPS"://getphonestatus...will be used later
                     GetPhoneStatus();
                     break;
+                case "GWC"://get was connected.
+                    WasConnected();
+                    break;
                 case "E"://get error request
                     GetError();
                     break;
@@ -188,9 +192,14 @@ namespace PluginLoader
            dataToSend = this.DialTime.ToString("MM/dd/yyyy HH:mm:ss.fff");
         }
 
+        private void WasConnected()
+        {
+            dataToSend = was_connected.ToString();
+        }
+
         private void GetEndTime()
         {
-            dataToSend = this.DialTime.ToString("MM/dd/yyyy HH:mm:ss.fff");
+            dataToSend = this.EndTime.ToString("MM/dd/yyyy HH:mm:ss.fff");
         }
 
         private void GetPhoneStatus()

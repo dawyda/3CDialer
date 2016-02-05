@@ -11,10 +11,17 @@ namespace _cdialerclient
         public Logger() { }
         public static void Log(string msg)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\3CdialerClient\log.txt";
-            StreamWriter sr = File.AppendText(path);
-            sr.WriteLine("{0}: {1}", DateTime.Now.ToLongTimeString(), msg);
-            sr.Close();
+            try
+            {
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\3CdialerClient\log.txt";
+                StreamWriter sr = File.AppendText(path);
+                sr.WriteLine("{0}: {1}", DateTime.Now.ToLongTimeString(), msg);
+                sr.Close();
+            }
+            catch(Exception e)
+            {
+                
+            }
         }
     }
 }

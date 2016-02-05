@@ -4,7 +4,7 @@
 	x:Class="_cdialerclient.AgentWindow"
 	x:Name="Window"
 	Title="AgentWindow"
-	Width="660" Height="495" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
+	Width="660" Height="515" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -20,21 +20,21 @@
             <MenuItem Header="_Settings" Margin="0,0,5,0"/>
             <MenuItem Header="_About" Margin="0,0,5,0"/>
         </Menu>
-        <Grid HorizontalAlignment="Left" Height="423" Grid.Row="2" VerticalAlignment="Top" Width="654">
+        <Grid HorizontalAlignment="Left" Height="418.341" Grid.Row="2" VerticalAlignment="Top" Width="654">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1" HorizontalAlignment="Left" Height="400.297" VerticalAlignment="Top" Width="290.667" Background="White">
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Height="418.341" VerticalAlignment="Top" Width="290.667" Background="White">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="169*"/>
-                    <RowDefinition Height="177*"/>
-                    <RowDefinition Height="55*"/>
+                    <RowDefinition Height="110*"/>
+                    <RowDefinition Height="269*"/>
+                    <RowDefinition Height="39*"/>
                 </Grid.RowDefinitions>
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="  Script" VerticalAlignment="Top" Width="290.667" Height="23.96" Background="Black" Foreground="#FFF7EE33" Padding="0,2,0,0"/>
-                <TextBox ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="Sample script..." Margin="0,23.96,0,0" Foreground="Blue" FontSize="14" IsReadOnly="True"/>
-                <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="  Shortcuts" VerticalAlignment="Top" Width="290.667" Height="26.96" Background="Black" Foreground="#FFFDFD04" Padding="0,3,0,0"/>
-                <ListView Name="lv_shortList" HorizontalAlignment="Left" Height="150" Margin="0,27,-0.333,0" Grid.Row="1" VerticalAlignment="Top" Width="291" Background="#FFE8E8E8">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="  Script" VerticalAlignment="Top" Width="290.667" Height="23" Background="Black" Foreground="#FFF7EE33" Padding="0,2,0,0"/>
+                <TextBox x:Name="txt_script" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="Sample script..." Margin="0,23,0,0" Foreground="Blue" FontSize="14" IsReadOnly="True"/>
+                <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="  Shortcuts" VerticalAlignment="Top" Width="290.667" Height="23" Background="Black" Foreground="#FFFDFD04" Padding="0,3,0,0"/>
+                <ListView Name="lv_shortList" HorizontalAlignment="Left" Height="160" Margin="0,23,-0.333,0" Grid.Row="1" VerticalAlignment="Top" Width="291" Background="#FFE8E8E8">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Setter Property="BorderBrush" Value="DarkGray" />
@@ -48,31 +48,33 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-				<Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Height="25.051" Grid.Row="2" Margin="166.667,19.853,0,0">
+				<Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Height="25.051" Grid.Row="2" Margin="166.667,7.981,0,0" Click="RefreshBtn_Click">
                     <StackPanel Orientation="Horizontal" Width="104">
                         <Image Source="Refresh.ico" Margin="0,0,10,0"/>
                         <TextBlock Text="Refresh data" FontWeight="Bold" Foreground="#FF1D1D1B" FontSize="11" Width="72.783" Height="16.051"/>
                     </StackPanel>
                 </Button>
+				<TextBox x:Name="txt_notes" HorizontalAlignment="Left" Height="86.219" Margin="0,183,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Notes about the call..." VerticalAlignment="Top" Width="290.667" FontStyle="Italic" FontFamily="/_cdialerclient;component/Fonts/#Segoe UI" ToolTip="Additional notes"/>
+				<Button Content="Save Notes" HorizontalAlignment="Left" Margin="10,6.855,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="25.051" ToolTip="Press before next call"/>
             </Grid>
-            <Grid HorizontalAlignment="Left" Height="423.297" VerticalAlignment="Top" Width="363.333" Margin="0,0,0,-0.297">
+            <Grid HorizontalAlignment="Left" Height="418.341" VerticalAlignment="Top" Width="363.333">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="115*"/>
                     <RowDefinition Height="26*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="btn_hold" HorizontalAlignment="Left" Margin="14,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051" IsEnabled="False">
+                <Button x:Name="btn_hold" HorizontalAlignment="Left" Margin="14,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051" IsEnabled="False">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="ip-phone-hold-icon-key.png" Width="35" Height="35"/>
                         <TextBlock FontWeight="Bold" Foreground="#FF098CC9" Text="Hold Call" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btn_end" HorizontalAlignment="Left" Margin="99,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051">
+                <Button x:Name="btn_end" HorizontalAlignment="Left" Margin="99,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="end_call.png" Width="35" Height="35"/>
                         <TextBlock Text="End Call" FontWeight="Bold" Foreground="Red" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <ListView x:Name="lv_dialcard" HorizontalAlignment="Left" Height="346.246" VerticalAlignment="Top" Width="363.333" Grid.RowSpan="2" SelectionMode="Single">
+                <ListView x:Name="lv_dialcard" HorizontalAlignment="Left" Height="341.2" VerticalAlignment="Top" Width="363.333" SelectionMode="Single">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Style.Triggers>
@@ -111,21 +113,22 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button x:Name="btn_Startcalls" HorizontalAlignment="Left" Margin="183,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="61.051" Click="StartCalls">
+                <Button x:Name="btn_Startcalls" HorizontalAlignment="Left" Margin="183,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="61.051" Click="StartCalls">
                 	<StackPanel Orientation="Vertical">
                 		<Image VerticalAlignment="Top" Source="call-start.png" Width="35"/>
                 		<TextBlock Text="Start Calls" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
                 	</StackPanel>
                 </Button>
-                <Button x:Name="btn_Stopcalls" HorizontalAlignment="Left" Margin="273,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71.333" Height="61.051" Click="StopCalls" IsEnabled="False">
+                <Button x:Name="btn_Stopcalls" HorizontalAlignment="Left" Margin="273,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71.333" Height="61.051" Click="StopCalls" IsEnabled="False">
                 	<StackPanel Orientation="Vertical">
                 		<Image VerticalAlignment="Top" Source="call-stop.png" Width="35"/>
                 		<TextBlock Text="Stop Calls" FontWeight="Bold" Foreground="#FFFB0B00" FontSize="12.667"/>
                 	</StackPanel>
                 </Button>
             </Grid>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="0,400.297,0,-0.297" TextWrapping="Wrap" Text="Logged in as ADMIN" VerticalAlignment="Top" Width="290.667" Height="23" Background="#FF05345B" Foreground="#FF14F0D2" FontFamily="Verdana" FontSize="12.667" Padding="3,3,0,0"/>
+            <TextBlock x:Name="tb_user" Grid.Column="1" HorizontalAlignment="Left" Margin="0,419.297,0,-22.956" TextWrapping="Wrap" Text="Logged in as ADMIN" VerticalAlignment="Top" Width="290.667" Height="22" Background="#FF05345B" Foreground="#FF14F0D2" FontFamily="Verdana" FontSize="12.667" Padding="3,3,0,0"/>
         </Grid>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Campaign - Demo" VerticalAlignment="Top" Height="19" Width="654" Background="#FF252424" Foreground="White"/>
-    </Grid>
+        <TextBlock x:Name="tb_campaign" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Campaign - Demo" VerticalAlignment="Top" Height="19" Width="654" Background="#FF252424" Foreground="White" Padding="5,0,0,0"/>
+		<TextBlock x:Name="tb_status" Text="Status: " Margin="0,418.341,291,-0.186" Grid.Row="2" Background="#FF03423F" Padding="10,1,0,0" Foreground="#FF74FFF9" FontSize="13.333" ToolTip="Status bar"/>
+	</Grid>
 </Window>

@@ -14,13 +14,19 @@ namespace _cdialerclient
     public class ServerHandler
     {
         protected ServerSocket server;
+        protected SoftPhone softPhone;
         internal string userCampaign;
         internal List<Call> calls;
         internal Call CurrentCall;
         private string token;
         private string userid;
+        internal string username;
         internal bool endReached;
         public string error = "";
+        public popurl popURL;
+        internal string campaign_script = "Sample script here...";
+        internal uint SERVER_RETRIES = 3; //Default number is 3.
+        public int wrapup;
         
         public ServerHandler() {
             server = new ServerSocket();        
@@ -53,7 +59,12 @@ namespace _cdialerclient
                     userid = response.args.Userid;
                     token = response.args.Token;
                     userCampaign = response.args.Campaign;
+                    this.username = response.args.Name;
+                    campaign_script = response.args.Script;
                     logged = true;
+                    popURL = response.args.URL;
+                    wrapup = response.args.WrapUp;
+                    softPhone = new SoftPhone();
                 }
             }
             else
@@ -113,12 +124,14 @@ namespace _cdialerclient
                 }
                 if (callsvar != null)
                 {
+                    if (calls != null) calls.Clear();
                     calls = callsvar;
                     //set current call;
                     CurrentCall = calls[0];
                     //acknowledge receipt deprecated.
                     //server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
                     requested = true;
+                    if (endReached) endReached = false;
                 }
             }
             return requested;
@@ -149,6 +162,79 @@ namespace _cdialerclient
                 Logger.Log("Deserialization failed. Server might have closed. " + e.Message);
             }
             return obj;
+        }
+
+        internal string SP_GetCallStatus()
+        {
+            if (softPhone.GET("GS"))
+            {
+                return softPhone.response;
+            }
+            else
+            {
+                softPhone.GET("E");
+                return softPhone.response;
+            }
+        }
+
+        internal bool SP_GetIfConnected()
+        {
+            if (softPhone.GET("GWC"))
+            {
+                return softPhone.response == "true" ? true : false;
+            }
+            return false;
+        }
+
+        internal void MarkDialed()
+        {
+            while (true)
+            {
+                string str = "UL:" + GetXMLString(new UpdateXML()
+                {
+                    Session = new session()
+                    {
+                        Userid = this.userid,
+                        Token = this.token
+                    },
+                    CallId = CurrentCall.id.ToString(),
+                    Status = this.SP_GetIfConnected()
+                });
+                if (server.GET(str)) break;
+            }
+            //if (server.responseXml != "OK")
+            //{
+            //    //retry
+            //}
+            if (!endReached)
+            {
+                calls.Remove(CurrentCall);
+                CurrentCall = calls[0];
+                if (calls.Count == 1) { endReached = true; calls.Clear(); }
+            }
+        }
+
+        private DateTime SP_GetDailTime()
+        {
+            while (true)
+            {
+                if (softPhone.GET("GD")) break;
+            }
+            return DateTime.Parse(softPhone.response);
+        }
+
+        private DateTime SP_GetEndTime()
+        {
+            while (true)
+            {
+                if (softPhone.GET("GE")) break;
+            }
+            return DateTime.Parse(softPhone.response);
+        }
+
+        internal void SP_Call()
+        {
+            softPhone.GET("C" + CurrentCall.tel1 + ":" + CurrentCall.tel2);
         }
     }
 
