@@ -101,7 +101,6 @@ namespace _cdialerclient
         public bool RequestCallList()
         {
             bool requested = false;
-            endReached = false;
             ListRequest lr = new ListRequest();
             lr.Method = "GetCallList";
             lr.Session = new session() { Userid = this.userid, Token = this.token };
@@ -131,7 +130,7 @@ namespace _cdialerclient
                     //acknowledge receipt deprecated.
                     //server.GET("AL:" + GetXMLString(new AckRequest() { Session = new session() { Userid = this.userid, Token = this.token } }));
                     requested = true;
-                    if (endReached) endReached = false;
+                    endReached = false;
                 }
             }
             return requested;
@@ -181,7 +180,7 @@ namespace _cdialerclient
         {
             if (softPhone.GET("GWC"))
             {
-                return softPhone.response == "true" ? true : false;
+                return softPhone.response.ToLower() == "true" ? true : false;
             }
             return false;
         }
@@ -235,6 +234,48 @@ namespace _cdialerclient
         internal void SP_Call()
         {
             softPhone.GET("C" + CurrentCall.tel1 + ":" + CurrentCall.tel2);
+        }
+
+        internal void MarkDialed(string callNotes)
+        {
+            while (true)
+            {
+                string str = "UL:" + GetXMLString(new UpdateXML()
+                {
+                    Session = new session()
+                    {
+                        Userid = this.userid,
+                        Token = this.token
+                    },
+                    CallId = CurrentCall.id.ToString(),
+                    Status = this.SP_GetIfConnected(),
+                    Notes = callNotes
+                });
+                if (server.GET(str)) break;
+            }
+            //if (server.responseXml != "OK")
+            //{
+            //    //retry
+            //}
+            if (!endReached)
+            {
+                calls.Remove(CurrentCall);
+                if (calls.Count < 1)
+                {
+                    endReached = true;
+                    CurrentCall = null;
+                    return;
+                }
+                CurrentCall = calls[0];
+            }
+        }
+
+        internal void SP_EndCall()
+        {
+            while (true)
+            {
+                if (softPhone.GET("D")) break;
+            }
         }
     }
 

@@ -7,7 +7,6 @@ using System.IO;
 using _cdialerclient;
 using System.Xml;
 using Dialer;
-using DialerServiceDebugger;
 
 namespace DialerService
 {

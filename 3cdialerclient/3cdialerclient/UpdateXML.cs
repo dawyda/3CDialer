@@ -10,6 +10,7 @@ namespace _cdialerclient
         public session Session { get; set; }
         public string CallId { get; set; }
         public bool Status { get; set; }
+        public string Notes { get; set; }
     }
     public class UpdateResponse
     {

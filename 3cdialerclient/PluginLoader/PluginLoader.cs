@@ -44,6 +44,7 @@ namespace PluginLoader
             {
                 this.status = "dailing";
                 this.DialTime = DateTime.Now;
+                was_connected = false;
             }
             else if (callInfo.State == CallState.Connected)
             {
@@ -143,7 +144,6 @@ namespace PluginLoader
                 //    break;
                 case "GS"://getstatus
                     GetStatus();
-                    WriteTrace(action);
                     break;
                 case "GD"://getdialtime
                     GetDialTime();

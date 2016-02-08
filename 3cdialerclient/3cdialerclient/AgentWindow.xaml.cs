@@ -61,32 +61,38 @@ namespace _cdialerclient
             {
                 Logger.Log("Timer exception: " + aoe.Message);
             }
-            tb_campaign.Text = "Campaign - " + serverHandler.userCampaign;
+            int numCalls = serverHandler.calls == null ? 0 : serverHandler.calls.Count;
+            tb_campaign.Text = "Campaign - " + serverHandler.userCampaign + "            ( " + numCalls + " Calls Loaded. )";
             txt_script.Text = serverHandler.campaign_script;
             tb_user.Text = "Logged in as: " + serverHandler.username;
+            tb_status.Text = "Client started. Click 'Start calls' button to start dialing.";
 		}
 
         //populate dialcard with details of next call;
         private void SetDialCard()
         {
-            if (!serverHandler.endReached)
-            {
-                try
+            this.Dispatcher.Invoke((Action)(() =>
                 {
-                    List<DialCardItem> listdc = DialCard.Create(serverHandler.CurrentCall);
-                    if (lv_dialcard.HasItems) lv_dialcard.ItemsSource = null;
-                    lv_dialcard.ItemsSource = listdc;
-                }
-                catch(Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                }
-                //set other stuff.
-            }
-            else
-            {
-                MessageBox.Show("Current List Calls Completed.\nChecking for more calls. Click OK.","Well Done!");
-            }
+                    if (!serverHandler.endReached)
+                    {
+                        try
+                        {
+                            List<DialCardItem> listdc = DialCard.Create(serverHandler.CurrentCall);
+                            if (lv_dialcard.HasItems) lv_dialcard.ItemsSource = null;
+                            lv_dialcard.ItemsSource = listdc;
+                            txt_notes.Text = "Enter notes about the call here...";
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Log("During set dial card: " + e.Message);
+                        }
+                        //set other stuff.
+                    }
+                    else
+                    {
+                        MessageBox.Show("Current List Calls Completed.\nChecking for more calls. Click OK.", "Well Done!");
+                    }
+                }));
         }
 
 		protected void AddKeyShortcuts()
@@ -198,10 +204,10 @@ namespace _cdialerclient
                         if (prevStatus != status)
                         {
                             prevStatus = status;
-                            tb_status.Text = "status: " + status;
+                            tb_status.Text = "Phone status: " + status;
                             if (status == "ended")
                             {
-                                serverHandler.MarkDialed();
+                                serverHandler.MarkDialed(txt_notes.Text);
                                 if (serverHandler.endReached)
                                 {
                                     MessageBox.Show("Calls completed", "Well done!");
@@ -226,6 +232,7 @@ namespace _cdialerclient
         private void startCall(object sender, ElapsedEventArgs e)
         {
             wrapuptimer.Stop();
+            if (serverHandler.endReached) return;
             SetDialCard();
             DialNext();
         }
@@ -253,6 +260,11 @@ namespace _cdialerclient
         private void RefreshUserStatus()
         {
             //to be done later.
+        }
+
+        private void btn_EndCall_Click(object sender, RoutedEventArgs e)
+        {
+            serverHandler.SP_EndCall();
         }
 	}
 }

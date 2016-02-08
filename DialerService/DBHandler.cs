@@ -285,7 +285,7 @@ namespace DialerService
              ***/
         }
 
-        internal bool UpdateCallbyID(UpdateXML uxml)
+        internal bool UpdateCallbyID(_cdialerclient.UpdateXML uxml)
         {
             string outcome = "unsuccessful";
             if(uxml.Status)
@@ -293,7 +293,7 @@ namespace DialerService
                 outcome = "successful";
             }
             string query = "UPDATE call_2_userid SET called = " + 1 + " WHERE callid =" + uxml.CallId + ";" + 
-                "INSERT INTO outcome (callid,status) VALUES(" + uxml.CallId + ",'" + outcome + "');";
+                "INSERT INTO outcome (callid,status,notes) VALUES(" + uxml.CallId + ",'" + outcome + "','"+ uxml.Notes +"');";
             if (Open())
             {
                 int i = new MySqlCommand(query, conn).ExecuteNonQuery();

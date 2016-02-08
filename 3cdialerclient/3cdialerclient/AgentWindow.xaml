@@ -68,7 +68,7 @@
                         <TextBlock FontWeight="Bold" Foreground="#FF098CC9" Text="Hold Call" FontSize="12.667"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btn_end" HorizontalAlignment="Left" Margin="99,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051">
+                <Button x:Name="btn_end" HorizontalAlignment="Left" Margin="99,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="61.051" Click="btn_EndCall_Click">
                     <StackPanel Orientation="Vertical">
                         <Image VerticalAlignment="Top" Source="end_call.png" Width="35" Height="35"/>
                         <TextBlock Text="End Call" FontWeight="Bold" Foreground="Red" FontSize="12.667"/>

@@ -20,7 +20,7 @@ namespace _cdialerclient
             }
             catch(Exception e)
             {
-                
+                System.Diagnostics.Trace.WriteLine( e.StackTrace.ToString());
             }
         }
     }

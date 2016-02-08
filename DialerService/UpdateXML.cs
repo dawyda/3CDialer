@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DialerService;
 
-namespace DialerService
+namespace _cdialerclient
 {
     public class UpdateXML
     {
         public session Session { get; set; }
         public string CallId { get; set; }
         public bool Status { get; set; }
+        public string Notes { get; set; }
     }
     public class UpdateResponse
     {
