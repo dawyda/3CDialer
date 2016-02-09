@@ -1,7 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Dialer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="company" Type="System.String" Scope="User">
+      <Value Profile="(Default)">contoso</Value>
+    </Setting>
+    <Setting Name="person" Type="System.String" Scope="User">
+      <Value Profile="(Default)">customer contoso</Value>
+    </Setting>
+    <Setting Name="email" Type="System.String" Scope="User">
+      <Value Profile="(Default)">customer@contoso.com</Value>
+    </Setting>
+    <Setting Name="keycode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ABCD-EFGH-IJKL-NMPO</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

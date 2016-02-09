@@ -1,0 +1,5 @@
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerInit\DialerInit\bin\Debug\DialerInit.exe
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerInit\DialerInit\bin\Debug\DialerInit.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerInit\DialerInit\obj\Debug\DialerInit.exe
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerInit\DialerInit\obj\Debug\DialerInit.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerInit\DialerInit\obj\Debug\DialerInit.csprojResolveAssemblyReference.cache

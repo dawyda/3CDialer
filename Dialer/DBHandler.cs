@@ -162,6 +162,23 @@ namespace Dialer
             return false;
         }
 
+        private string Hash(string input)
+        {
+            using (System.Security.Cryptography.SHA1Managed sha1 = new System.Security.Cryptography.SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    // can be "x2" if you want lowercase
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString();
+            }
+        }
+
         public bool AddList(List<Call> list, string name, string desc = "", string campaign = "")
         {
             int campaignID = getCampaignID(campaign);
@@ -460,10 +477,11 @@ namespace Dialer
         //users stuff will be put here
         internal List<User> GetAllUsers()
         {
-            string query = "SELECT u.id,u.username,u.name,u.password,r.name AS role,c.name AS campaign FROM users u " +
+            string query = "SELECT u.id,u.username,u.name,r.name AS role,c.name AS campaign FROM users u " +
                 "INNER JOIN roles r ON u.roleID = r.id " +
                 "INNER JOIN campaigns c ON u.campaignID = c.id "+
-                "WHERE u.id <> 1;";//limit to be added based on license.
+                "WHERE u.id <> 1;";
+            //limit to be added based on license.
             List<User> users = new List<User>();
             if (OpenConn() == true)
             {
@@ -474,7 +492,7 @@ namespace Dialer
                     {
                         users.Add(new User(reader["name"].ToString(),
                             reader["username"].ToString(),
-                            reader["password"].ToString(),
+                            "password is hashed",
                             reader["role"].ToString(),
                             reader["campaign"].ToString(),
                             reader["id"].ToString()
@@ -565,7 +583,7 @@ namespace Dialer
             {
                 try
                 {
-                    string query = "INSERT INTO users (username,name,password,campaignID,roleID) SELECT '" + user.Username + "','" + user.Name + "','" + user.Password + "'," + cid + ",r.id FROM roles AS r " +
+                    string query = "INSERT INTO users (username,name,password,campaignID,roleID) SELECT '" + user.Username + "','" + user.Name + "','" + Hash(user.Password) + "'," + cid + ",r.id FROM roles AS r " +
                         "WHERE r.name = '" + user.Role + "';";
                     int ins = new MySqlCommand(query, conn).ExecuteNonQuery();
                     if (ins != 0)

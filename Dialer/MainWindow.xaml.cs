@@ -59,6 +59,7 @@ namespace Dialer
         private void initSettingsTab()
         {
             IPAddress[] host = Dns.GetHostAddresses(Dns.GetHostName());
+            cb_ipaddr.Items.Add("127.0.0.1");
             foreach(IPAddress address in host)
             {
                 if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) cb_ipaddr.Items.Add(address.ToString());
@@ -619,6 +620,12 @@ namespace Dialer
             {
                 MessageBox.Show("Test Failed!", "FAILED", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void btn_license_Click(object sender, RoutedEventArgs e)
+        {
+            LicenseWindow win = new LicenseWindow();
+            win.ShowDialog();
         }
     }
 }

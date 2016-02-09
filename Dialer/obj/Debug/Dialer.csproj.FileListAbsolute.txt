@@ -16,3 +16,7 @@ C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.application
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.exe
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.pdb
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.csprojResolveAssemblyReference.cache
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\LicenseWindow.baml
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\LicenseWindow.g.cs
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Debug\Dialer.exe.config

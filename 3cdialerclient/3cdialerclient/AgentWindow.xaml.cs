@@ -235,6 +235,11 @@ namespace _cdialerclient
             if (serverHandler.endReached) return;
             SetDialCard();
             DialNext();
+            if (serverHandler.popURL.Value)
+            {
+                object[] args = {serverHandler.CurrentCall.tel1,serverHandler.CurrentCall.tel2,serverHandler.CurrentCall.name };
+                System.Diagnostics.Process.Start(String.Format(serverHandler.popURL.address,args));
+            }
         }
 
         private void DialNext()
