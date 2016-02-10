@@ -17,6 +17,8 @@ namespace DialerService
         public popurl PopURL { get; set; }
         [XmlElement("wrapup")]
         public int WrapUp { get; set; }
+        [XmlElement("listlength")]
+        public int ListLength { get; set; }
     }
 
     [XmlRoot("dbserver")]

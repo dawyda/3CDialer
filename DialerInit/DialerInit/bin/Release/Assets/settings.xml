@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <server ip="127.0.0.1" port="15500" />
+  <retry>3</retry>
+  <extension>105</extension>
+</settings>

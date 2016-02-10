@@ -18,6 +18,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Threading;
 using System.Net;
+using System.ServiceProcess;
 
 namespace Dialer
 {
@@ -32,6 +33,9 @@ namespace Dialer
         private DBHandler database;
         private int num_import_records = 0;//number of rows in CSV
         private bool addingNew = false;
+        private System.Timers.Timer refreshTimer;
+        private bool cancelRefresh = false;
+        private ServiceController sc = null;
 
         public MainWindow()
         {
@@ -54,8 +58,25 @@ namespace Dialer
             initTeamsTab();
             initUsersTab();
             initSettingsTab();
+            initTimer();
         }
 
+        //the timer to refresh GUI elems. 1 minute interval.
+        private void initTimer()
+        {
+            refreshTimer = new System.Timers.Timer(120000);
+            refreshTimer.Elapsed += new System.Timers.ElapsedEventHandler(TimedRefresh);
+            //disabled till a suitable implementation is found.
+            //refreshTimer.Start();
+        }
+
+        private void TimedRefresh(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (cancelRefresh) return;
+            RefreshAllTabs();
+        }
+
+        //SETTINGS TAB CODE HERE
         private void initSettingsTab()
         {
             IPAddress[] host = Dns.GetHostAddresses(Dns.GetHostName());
@@ -64,6 +85,35 @@ namespace Dialer
             {
                 if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork) cb_ipaddr.Items.Add(address.ToString());
             }
+            cb_ipaddr.Items.Add("0.0.0.0");
+
+            try
+            {
+                sc = new ServiceController("DialerService");
+                if ((sc.Status == ServiceControllerStatus.Stopped) || (sc.Status == ServiceControllerStatus.StopPending))
+                {
+                    tb_serviceStatus.Text = "The Dialer service is stopped. Click to start.";
+                    tb_serviceStatus.Foreground = new SolidColorBrush(Colors.Red);
+                }
+                else
+                {
+                    tb_serviceStatus.Text = "The Dialer service is started. Click to stop.";
+                    tb_serviceStatus.Foreground = new SolidColorBrush(Colors.Green);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogServiceError("Service might not be installed. " + e.Message);
+            }
+            //set license status.
+            LicenseStatus();
+        }
+
+        private void LicenseStatus()
+        {
+            string keyName = @"HKEY_LOCAL_MACHINE\SOFTWARE\3CDialer";
+            string statText = Microsoft.Win32.Registry.GetValue(keyName, "Status", "Not Activated!").ToString() + " (" + Microsoft.Win32.Registry.GetValue(keyName, "NumUsers", 5).ToString() + " users)";
+            tb_currentLic.Text = statText;
         }
 
         //USER TAB CODE HERE
@@ -414,6 +464,7 @@ namespace Dialer
             initCampaignsTab();
             initTeamsTab();
             initUsersTab();
+            initSettingsTab();
         }
 
         private void Btn_UpdateTeam_Click(object sender, RoutedEventArgs e)
@@ -626,6 +677,61 @@ namespace Dialer
         {
             LicenseWindow win = new LicenseWindow();
             win.ShowDialog();
+            LicenseStatus();
+        }
+
+        private void BtnService_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            if (sc == null)
+            {
+                tb_serviceStatus.Text = "Service not found on local computer.";
+                return;
+            }
+            sc.Refresh();
+            if (sc.Status.Equals(ServiceControllerStatus.StartPending) || sc.Status.Equals(ServiceControllerStatus.Running))
+            {
+                try
+                {
+                    sc.Stop();
+                    tb_serviceStatus.Text = "Dialer service is stopped. Click to stop.";
+                    tb_serviceStatus.Foreground = new SolidColorBrush(Colors.Red);
+                    btn_service.Content = "Start Service";
+                    sc.Refresh();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            else
+            {
+                try
+                {
+                    sc.Start();
+                    tb_serviceStatus.Text = "Dialer service is started. Click to start.";
+                    tb_serviceStatus.Foreground = new SolidColorBrush(Colors.Green);
+                    btn_service.Content = "Stop Service";
+                    sc.Refresh();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        private void onWinClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            sc.Close();
+        }
+
+        private void ResetSettings_Click(object sender, RoutedEventArgs e)
+        {
+            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Settings));
+            FileStream fs = File.OpenRead(@"C:\ProgramData\3CDialer\default_settings.xml");
+            Settings sets = xs.Deserialize(fs) as Settings;
+            fs.Close();
+            DialerViewModel.SettingsCtrl.Settings = sets;
+            DialerViewModel.SettingsCtrl.SaveSettings();
         }
     }
 }

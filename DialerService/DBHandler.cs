@@ -56,7 +56,7 @@ namespace DialerService
         {
             string query = "SELECT u.id,u.name, c.name AS campaign,c.script FROM users u "+
                 "INNER JOIN campaigns c  ON c.id = u.campaignid "+ 
-                "WHERE u.username = '"+ username +"' AND u.password = '"+ password +"' LIMIT 0,1;";
+                "WHERE u.username = '"+ username +"' AND u.password = '"+ Hash(password) +"' LIMIT 0,1;";
 
             LoginResponse lr = new LoginResponse();
             lr.Method = "LoginResponse";
@@ -142,7 +142,7 @@ namespace DialerService
                         "SELECT c.id, " + userid + " from call_list_data as c "+
                         "INNER JOIN call_lists as cl ON c.calllistID = cl.id "+
                         "INNER JOIN campaigns as cc ON cc.id = cl.campaignID "+
-                        "WHERE cc.name = '" + campaign + "' AND c.status = 'new' LIMIT 0,20;";
+                        "WHERE cc.name = '" + campaign + "' AND c.status = 'new' LIMIT 0,"+ settings.ListLength + ";";
                     cmd = new MySqlCommand(query,conn);
                     int rows = cmd.ExecuteNonQuery();
                     if (rows < 1)
@@ -285,7 +285,7 @@ namespace DialerService
              ***/
         }
 
-        internal bool UpdateCallbyID(_cdialerclient.UpdateXML uxml)
+        internal bool UpdateCallbyID(UpdateXML uxml)
         {
             string outcome = "unsuccessful";
             if(uxml.Status)

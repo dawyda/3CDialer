@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Name="win_mgt" x:Class="Dialer.MainWindow"
         Title="3CDialer - Management Console" MinHeight="550" MinWidth="900" MaxWidth="1000"
         Icon="Assets\3DialerIcon.png"
-        WindowState="Normal">
+        WindowState="Normal" Closing="onWinClosing">
     <Window.Resources>
         <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\Assets\save.png"/>
         <BitmapImage x:Key="ImageSource2" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\refresh.png"/>
@@ -336,9 +336,9 @@
                     <GroupBox Header="Services and Network" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="752" Height="224.019">
                         <Grid>
                             <Label Content="Dialing service:" Margin="10,4,640,163.059"/>
-                            <Button Content="Start Service" Margin="105,10,548,163.059" />
-                            <Border BorderThickness="1" BorderBrush="#FF462A0F" Margin="210,10,298,163.059" Padding="2">
-                                <TextBlock Text="Dialing Service is stopped. Click to start." Foreground="#FF004703" Padding="5,0,0,0" />
+                            <Button x:Name="btn_service" Content="Start Service" Margin="105,10,548,163.059" Click="BtnService_Click" />
+                            <Border BorderThickness="1" BorderBrush="#FF462A0F" Margin="210,10,251,163" Padding="2">
+                                <TextBlock x:Name="tb_serviceStatus" Text="Dialing Service is stopped. Click to start." Foreground="#FF004703" Padding="5,0,0,0" FontStyle="Italic" />
                             </Border>
                             <Label Content="Bind to Interface IP:" Margin="10,43,611,130"/>
                             <ComboBox x:Name="cb_ipaddr" Text="Is not open" SelectedItem="{Binding SettingsCtrl.Settings.Service.bindip}" Margin="134,46.529,426,129.529" Height="25" Width="180">
@@ -346,10 +346,10 @@
                             </ComboBox>
                             <Label Content="Port to Listen:" Margin="10,82.029,611,89.029" Height="30" />
                             <TextBox Text="{Binding SettingsCtrl.Settings.Service.bindport}" Margin="134,85.029,557,96.029" Height="20" Padding="5,0,0,0" />
-                            <Button Click="btn_license_Click" Content="Enter License Key" HorizontalAlignment="Left" Margin="15,170.568,0,0" VerticalAlignment="Top" Width="113" Height="25"/>
+                            <Button Click="btn_license_Click" Content="License Key" HorizontalAlignment="Left" Margin="15,171,0,0" VerticalAlignment="Top" Width="85" Height="25"/>
                             <Label Content="Licensing and versions " Margin="10,112.029,595,59.029" Height="30" />
                             <Label Content="Current license:" Margin="10,137.529,640,36.529" Height="27" />
-                            <TextBlock HorizontalAlignment="Left" Margin="105,144.029,0,0" TextWrapping="Wrap" Text="Demo (5 Agents)" VerticalAlignment="Top" Height="20.501" Width="209" Padding="5,0,0,0" TextDecorations="Underline"/>
+                            <TextBlock x:Name="tb_currentLic" HorizontalAlignment="Left" Margin="105,144.029,0,0" TextWrapping="Wrap" Text="Demo (5 Agents)" VerticalAlignment="Top" Height="20.501" Width="209" Padding="5,0,0,0" TextDecorations="Underline"/>
                         </Grid>
                     </GroupBox>
                     <CheckBox Content="Open URL :" IsChecked="{Binding SettingsCtrl.Settings.PopURL.Value}" HorizontalAlignment="Left" Margin="10,11,0,0" Grid.Row="2" VerticalAlignment="Top" Width="82" Height="18" ToolTip="Check to open the URL you specify"/>
@@ -377,7 +377,7 @@
                     <Label Content="Wrap-Up Time:" HorizontalAlignment="Left" Margin="10,34,0,0" Grid.Row="2" VerticalAlignment="Top" Width="90" ToolTip="The time between the last call and next dial" Height="26"/>
                     <TextBox HorizontalAlignment="Left" Height="20" Margin="105,38,0,0" Grid.Row="2" TextWrapping="NoWrap" Text="{Binding SettingsCtrl.Settings.WrapUp}" VerticalAlignment="Top" Width="25" Padding="2,0,0,0"/>
                     <Label Content="Seconds" HorizontalAlignment="Left" Margin="135,34,0,0" Grid.Row="2" VerticalAlignment="Top" Width="58" Height="26"/>
-                    <Button Content="Reset Defaults" HorizontalAlignment="Left" Margin="440,68,0,0" Grid.Row="2" VerticalAlignment="Top" Width="90" Height="25" ToolTip="resets all settings"/>
+                    <Button Content="Reset Defaults" HorizontalAlignment="Left" Margin="440,68,0,0" Grid.Row="2" VerticalAlignment="Top" Width="90" Height="25" ToolTip="resets all settings" Click="ResetSettings_Click"/>
                     <Label Content="Call fetch length:" HorizontalAlignment="Left" Margin="10,66,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" ToolTip="The time between the last call and next dial" Height="26"/>
                     <TextBox Text="{Binding SettingsCtrl.Settings.ListLength}" HorizontalAlignment="Left" Height="22" Margin="111,72,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" Padding="2,0,0,0"/>
                     <Label Content="Calls" HorizontalAlignment="Left" Margin="142,69,0,0" Grid.Row="2" VerticalAlignment="Top" Width="37" Height="26"/>
@@ -392,7 +392,11 @@
                 </Grid>
             </TabItem.Header>
             <Border BorderBrush="Gray" BorderThickness="1">
-                <Grid Background="#F0F9FC"/>
+                <Grid Background="#FF5893A6">
+                    <Image HorizontalAlignment="Left" Height="170" Margin="90,23.54,0,0" VerticalAlignment="Top" Width="169" Source="3DialerIcon.png"/>
+                    <Path Data="M53,243.54 L614.5,243.54" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Margin="53,208.54,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="562.5"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="99,254.54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="387.46" Height="127.96"><Run Text="This product is Licensed and sold by ERPKenya Ltd. www.erpkenya.co.ke"/><LineBreak/><Run/><LineBreak/><Run Text="3CDialer Version 1.0.0"/><LineBreak/><Run/><LineBreak/><Run Text="© 2015-2020"/><LineBreak/><Run Text="All rights reserved."/></TextBlock>
+                </Grid>
             </Border>
         </TabItem>
     </TabControl>

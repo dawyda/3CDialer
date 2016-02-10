@@ -50,7 +50,7 @@ namespace DialerService
             try
             {
                 listener.Bind(localEndPoint);
-                listener.Listen(50);
+                listener.Listen(5);
                 while (true)
                 {
                     allDone.Reset();

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace Dialer
 {
@@ -17,6 +18,9 @@ namespace Dialer
 	/// </summary>
 	public partial class LicenseWindow : Window
 	{
+        string DEMO_KEY = "1234-ABCD-ZYXW-9876";
+        string keyName = @"HKEY_LOCAL_MACHINE\SOFTWARE\3CDialer";
+
 		public LicenseWindow()
 		{
 			this.InitializeComponent();
@@ -26,17 +30,24 @@ namespace Dialer
 
 		private void btn_ActivateDemo_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// TODO: Add event handler implementation here.
+			//create in registry and set status as DEMO.
+            string valueName = "KeyType";
+            if (Registry.GetValue(keyName, valueName, null) == null)
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE", true).CreateSubKey("3CDialer");
+                key.SetValue("KeyType","Demo");
+                key.Close();
+            }
+            Registry.SetValue(keyName, valueName, "Demo");
+            Registry.SetValue(keyName, "KeyCode", DEMO_KEY);
+            Registry.SetValue(keyName, "NumUsers", 5);
+            Registry.SetValue(keyName,"Status","Demo Activated");
+            this.Close();
 		}
 
 		private void btn_ActivateKey_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            Properties.Settings.Default["company"] = txt_company.Text;
-            Properties.Settings.Default["person"] = txt_person.Text;
-            Properties.Settings.Default["email"] = txt_email.Text;
-            Properties.Settings.Default["keycode"] = txt_keycode.Text;
-            Properties.Settings.Default.Save();
-            lbl_actStatus.Content = "Contacting server...";
+            
             //stuff to do activation
 		}
 	}

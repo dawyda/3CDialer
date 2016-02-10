@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace DialerInit
 {
@@ -10,13 +11,14 @@ namespace DialerInit
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("This is 3CDialer initializer wizard.");
-            Console.WriteLine("-----------------------------------------------");
-            Console.WriteLine("Enter the selection number to perfom action:");
-            Console.WriteLine("Items Menu:\n Enter: ");
-            Console.WriteLine("1. To add plugin to softphone.\n2. Set default settings for client.\n3. To exit.");
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("This is 3CDialer initializer wizard.");
+                Console.WriteLine("-----------------------------------------------");
+                Console.WriteLine("Enter the selection number to perfom action:");
+                Console.WriteLine("Items Menu:\n Enter: ");
+                Console.WriteLine("1. To add plugin to softphone.\n2. Set default settings for client.\n3. To exit.\n4. To setup dialer databases.");
                 Console.Write(">");
                 string input = Console.ReadLine();
                 if( input == "1"){
@@ -26,6 +28,10 @@ namespace DialerInit
                 {
                     setSettings();
                 }
+                else if (input == "4")
+                {
+                    importTabs();
+                }
                 else if (input == "3")
                 {
                     break;
@@ -34,9 +40,27 @@ namespace DialerInit
                 {
                     Console.WriteLine("\nInput not recognized.\n");
                 }
+                Thread.Sleep(1500);
             }
             //Console.WriteLine("Press ENTER to exit...");
             //Console.ReadKey();
+        }
+
+        private static void importTabs()
+        {
+            string path = @"Assets\3cdialer.sql";
+            System.Diagnostics.Process p;
+            try{
+                p = System.Diagnostics.Process.Start("mysqldump -u root --password= 3cdialer <" + path);
+                if (p.HasExited)
+                {
+                    Console.WriteLine("Databases have been imported successfully!\n");
+                }
+            }
+            catch(Exception e)
+            {
+                Log(e.Message);
+            }
         }
 
         private static void setSettings()
@@ -91,6 +115,7 @@ namespace DialerInit
             string text = File.ReadAllText(path);
             Console.WriteLine("Exit softphone then press ENTER to continue...");
             Console.ReadKey();
+            bool linefound = false;
 
             using (StreamReader stream = new StreamReader(path))
             {
@@ -98,12 +123,18 @@ namespace DialerInit
                 {
                     if (line.IndexOf("<add key=\"CRMPlugin\" value=\"CallNotifier") > -1)
                     {
+                        linefound = true;
                         break;
                     }
                 }
             }
+            if (!linefound)
+            {
+                Console.WriteLine("Failed to add pluging to softphone. Reinstall the softphone and try again.");
+                return;
+            }
 
-            if(text.IndexOf(",PluginLoader") > -1){
+            if(line.IndexOf(",PluginLoader") > -1){
                 Console.WriteLine("DLL has already been added. Aborting operation...");
                 return;
             }
@@ -111,7 +142,12 @@ namespace DialerInit
             string repline = line.Substring(0, (line.Length - 3)) + ",PluginLoader\"/>";
             text = text.Replace(line, repline);
             File.WriteAllText(path, text);
+            File.Copy(@"Assets\PluginLoader.dll", @"C:\ProgramData\3CXPhone for Windows\PhoneApp\PluginLoader.dll",true);
             Console.WriteLine("Plugin added!\n Launch softphone first the client to use dialer.\n\n Enter 3 to exit:");
+        }
+        private static void Log(string Msg)
+        {
+            File.WriteAllText("error.txt",Msg);
         }
     }
 }

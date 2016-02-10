@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DialerService;
 
-namespace _cdialerclient
+namespace DialerService
 {
     public class UpdateXML
     {

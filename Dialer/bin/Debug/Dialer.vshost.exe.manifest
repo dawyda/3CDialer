@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dialer.exe" size="427520">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Dialer.exe" size="467456">
       <assemblyIdentity name="Dialer" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>UPOK2n6cG8Ea4L1J9fbeGcPYxKU=</dsig:DigestValue>
+        <dsig:DigestValue>iP1ffdfSNuojpWKbVUHFWR1mNRg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

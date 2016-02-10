@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/3dialericon.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("favicon.ico")]
 
 
