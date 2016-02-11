@@ -1,0 +1,20 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="Dialer.LoginWindow"
+	x:Name="Window"
+	Title="Login 3CDialer"
+	Width="360" Height="270" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+
+	<Grid x:Name="LayoutRoot" Background="#FFBEEFF7">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="115*"/>
+			<ColumnDefinition Width="239*"/>
+		</Grid.ColumnDefinitions>
+		<Label Content="Username:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="90" Height="25.96"/>
+		<Label Content="Password:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="90" Height="25.96"/>
+		<TextBox x:Name="txt_username" Grid.Column="1" HorizontalAlignment="Left" Height="25.96" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" Padding="5,3,0,0"/>
+		<PasswordBox x:Name="pwd_password" Grid.Column="1" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="219" Height="25.96" Padding="5,3,0,0"/>
+		<Button Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="130,106,0,0" VerticalAlignment="Top" Width="99" Height="30" Click="DoLogin"/>
+	</Grid>
+</Window>
