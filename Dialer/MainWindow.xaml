@@ -48,15 +48,16 @@
                                         <RowDefinition Height="187*"/>
                                     </Grid.RowDefinitions>
                                     <GroupBox Grid.Row="0" Header="Import List" FontSize="18" HorizontalAlignment="Left" Margin="3,2,0,0" VerticalAlignment="Top" Width="742" Height="104">
-                                        <Grid Margin="0,0,124,0">
+                                        <Grid Margin="0,0,-2,0">
                                             <CheckBox FontSize="13" x:Name="cb_ignoreheaders" Content="Ignore CSV headers" HorizontalAlignment="Left" Margin="10,0,0,51" IsChecked="True" Foreground="#FFEA0E0E" FontWeight="Bold" Width="195"/>
-                                            <TextBlock x:Name="tb_csvfile" Margin="204,32,-12,1" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic" HorizontalAlignment="Left" Width="414" Foreground="#FF0C9C0C"/>
+                                            <TextBlock x:Name="tb_csvfile" Margin="190,32,0,1" Padding="5,6,0,0" FontSize="16" Text="No CSV file currently selected" FontFamily="Sylfaen" FontStyle="Italic" HorizontalAlignment="Left" Width="341" Foreground="#FF0C9C0C"/>
                                             <Button x:Name="btn_import" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="170" Margin="10,28,0,0" ToolTip="click to select CSV with numbers to be dialed." Background="#FFDAEAE8" FontWeight="Bold" FontFamily="/Dialer;component/Fonts/#DaunPenh" FontSize="24" Click="importBtn_Click">
                                                 <Grid Width="153" Height="30">
                                                     <TextBlock HorizontalAlignment="right" Margin="0,3,0,0" TextWrapping="Wrap" Text="Browse List" VerticalAlignment="Top" Width="102.133" Height="25"/>
                                                     <Image Source="import.png" HorizontalAlignment="Left" Width="25" Margin="11,0,0,0" />
                                                 </Grid>
                                             </Button>
+                                            <TextBlock HorizontalAlignment="Left" Margin="503,-9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="81.06" Width="229" Foreground="Black" Background="#FFFFB3B3" FontSize="9.333"><Run Text="Steps:"/><LineBreak/><Run Text="1. Browse the CSV file to import."/><LineBreak/><Run Text="2. Specify the field arrangement e.g. If telephone column is the first one set column postion to 1."/><LineBreak/><Run Text="3. Give the list a name and select the campaign. Click Save."/></TextBlock>
                                         </Grid>
                                     </GroupBox>
                                     <DataGrid HorizontalScrollBarVisibility="Auto" Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding}" x:Name="dg_import" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False">
@@ -93,15 +94,15 @@
                                             </StackPanel>
                                         </Button>
                                         <TextBlock Grid.Column="1" TextWrapping="NoWrap" Text="Field Arrangement" Margin="2,0,292,119" FontSize="13.333" Background="#FF323232" Foreground="#FFF0CF00" Padding="5,3,0,0"/>
-                                        <DataGrid FontSize="13" ItemsSource="{Binding}" x:Name="dg_arrangement" Margin="2,25,10,0" Grid.Column="1" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False" Grid.RowSpan="2">
+                                        <DataGrid FontSize="13" ItemsSource="{Binding}" x:Name="dg_arrangement" Margin="2,25,10,10" Grid.Column="1" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserAddRows="False" CanUserSortColumns="False" Grid.RowSpan="2">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Database Field Name" Binding="{Binding fieldName}" FontWeight="Bold" IsReadOnly="True"/>
                                                 <DataGridTextColumn Header="Custom Label" Binding="{Binding custLabel}"/>
                                                 <DataGridTextColumn Header="Field Column Position" Binding="{Binding fieldPos}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Label FontSize="13" Content="List name:" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top" Width="80" Grid.Column="0" Height="36"/>
-                                        <Label FontSize="13" Content="Description:" HorizontalAlignment="Left" Margin="0,35,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.577" Width="80" Grid.Column="0" Height="30"/>
+                                        <Label FontSize="13" Content="*List name:" HorizontalAlignment="Left" Margin="0,7,0,0" VerticalAlignment="Top" Width="80" Grid.Column="0" Height="36"/>
+                                        <Label FontSize="13" Content="Description:&#xD;&#xA;(Optional)" HorizontalAlignment="Left" Margin="0,35,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.577" Width="80" Grid.Column="0" Height="55"/>
                                         <TextBox FontSize="13" x:Name="txt_listName" HorizontalAlignment="Left" Height="23" Margin="85,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" ToolTip="A name to save the list with" Grid.Column="0"/>
                                         <TextBox FontSize="13" x:Name="txt_listDesc" HorizontalAlignment="Left" Height="55" Margin="85,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" ToolTip="description of the list data (Optional)" Grid.Column="0"/>
                                         <Button x:Name="btn_save_import" FontSize="18" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="90" Height="35" Background="#FFDAEAE8" Click="ImportSaveClick" IsEnabled="False" ToolTip="Save list to database">
@@ -112,7 +113,7 @@
                                         </Button>
                                         <Button x:Name="btn_reset" Content="Reset" FontSize="18" HorizontalAlignment="Left" Margin="139,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="35" Background="#FFDAEAE8" ToolTip="Reset all fields" Click="btn_reset_Click" IsEnabled="False"/>
                                         <Button x:Name="btn_cancel" Content="Cancel" FontSize="18" HorizontalAlignment="Left" Margin="245,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="35" Background="#FFDAEAE8" ToolTip="Cancel import" Visibility="Hidden"/>
-                                        <Label FontSize="13" Content="Campaign:" HorizontalAlignment="Left" Margin="0,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,0.577" Width="80" Grid.Column="0" Height="30"/>
+                                        <Label FontSize="13" Content="*Campaign:" HorizontalAlignment="Left" Margin="0,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="80" Grid.Column="0" Height="30"/>
                                         <ComboBox x:Name="import_campaign" HorizontalAlignment="Left" Margin="85,100,0,0" VerticalAlignment="Top" Width="235"/>
                                         <Label Content="Save field labels and arrangement" HorizontalAlignment="Right" Grid.Column="1" Margin="185.5,0,40.5,0" VerticalAlignment="Top" Height="25" FontSize="12" Width="189" Background="#FF042C53" Foreground="#FF83CCFF" Padding="5,4,5,5"/>
                                     </Grid>
@@ -160,8 +161,8 @@
                                             <DataGridTextColumn Header="Text 7" Binding="{Binding Path=header12}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Button Content="Reset List" HorizontalAlignment="Left" Height="30" Margin="10,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="88" ToolTip="Resets all calls in list to new/undialed" IsEnabled="False"/>
-                                    <Button HorizontalAlignment="Left" Height="30" Margin="121,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="113" ToolTip="delete selected list" Click="Button_Click_1">
+                                    <Button Content="Reset List" HorizontalAlignment="Left" Height="30" Margin="2,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="88" ToolTip="Resets all calls in list to new/undialed" IsEnabled="False"/>
+                                    <Button HorizontalAlignment="Left" Height="30" Margin="99,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="113" ToolTip="delete selected list" Click="Button_Click_1">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Margin="0,1,10,0" Source="{DynamicResource ImageSource3}" Width="20" Height="20" />
                                             <TextBlock>Delete List</TextBlock>
@@ -175,6 +176,7 @@
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
+                                    <Button Content="Mark List as Dialed" HorizontalAlignment="Left" Height="30" Margin="223,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="148" ToolTip="Resets all calls in list to new/undialed" IsEnabled="False"/>
                                 </Grid>
                             </TabItem>
                         </TabControl>
@@ -207,7 +209,7 @@
                     <TextBox x:Name="txt_CampaignDescr" Text="{Binding SelectedCampaign.Descr}" HorizontalAlignment="Left" Height="55" Margin="532,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
                     <Button x:Name="btn_CampaignUpdate" Content="Apply Changes" HorizontalAlignment="Left" Height="30" Margin="621,338,0,0" VerticalAlignment="Top" Width="121" Click="Btn_CampaignUpdate_Click"/>
                     <Label Content="Change Team:" HorizontalAlignment="Left" Height="26" Margin="419,153,0,0" VerticalAlignment="Top" Width="100"/>
-                    <ComboBox x:Name="cb_campaignTeam" HorizontalAlignment="Left" Margin="532,153,0,0" VerticalAlignment="Top" Width="210" Height="26" SelectionChanged="cb_campaignTeam_SelectionChanged"/>
+                    <ComboBox SelectedItem="{Binding SelectedCampaign.TeamName}" x:Name="cb_campaignTeam" HorizontalAlignment="Left" Margin="532,153,0,0" VerticalAlignment="Top" Width="210" Height="26" SelectionChanged="cb_campaignTeam_SelectionChanged"/>
                     <TextBlock HorizontalAlignment="Left" Margin="419,338,0,0" TextWrapping="Wrap" Text="Click Update to Add/Update campaigns" VerticalAlignment="Top" Width="183" Height="34" Foreground="#FFB60707"/>
                     <Label Content="In Team:" HorizontalAlignment="Left" Height="26" Margin="419,115,0,0" VerticalAlignment="Top" Width="100"/>
                     <TextBox x:Name="txt_CampaignTeam" Text="{Binding SelectedCampaign.TeamName}" HorizontalAlignment="Left" Height="26" Margin="532,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210"/>
@@ -288,7 +290,7 @@
                     <Label Content="Role:" Grid.Column="1" HorizontalAlignment="Left" Margin="58,170,0,0" VerticalAlignment="Top" Width="99" Height="26"/>
                     <ComboBox x:Name="cb_roles" Grid.Column="1" HorizontalAlignment="Left" Margin="162,170,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
                     <Label Content="Change Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="46,252,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
-                    <ComboBox x:Name="cb_userCampaign" Grid.Column="1" HorizontalAlignment="Left" Margin="162,252,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
+                    <ComboBox SelectedItem="{Binding SelectedUser.Campaign}" x:Name="cb_userCampaign" Grid.Column="1" HorizontalAlignment="Left" Margin="162,252,0,0" VerticalAlignment="Top" Width="177" Height="26"/>
                     <Button x:Name="btnUpdateUsers" Content="Apply Changes" Grid.Column="1" HorizontalAlignment="Left" Margin="162,295,0,0" VerticalAlignment="Top" Width="177" Height="30" ToolTip="Save changes to DB" Click="btnUpdateUsers_Click"/>
                     <Button x:Name="btnUserDel" Content="Remove Selected" HorizontalAlignment="Left" Margin="175,427.54,0,0" VerticalAlignment="Top" Width="129" Height="30.96" Click="btnUserDel_Click"/>
                     <Label Content="Current Campaign:" Grid.Column="1" HorizontalAlignment="Left" Margin="46,213,0,0" VerticalAlignment="Top" Width="111" Height="26"/>

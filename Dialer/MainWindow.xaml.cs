@@ -505,6 +505,7 @@ namespace Dialer
                 DialerViewModel.SelectedTeam = DialerViewModel.Teams[0];
                 DialerViewModel.Teams.Remove(team);
                 MessageBox.Show("Deleted");
+                initTeamsTab();
             }
             else
             {
@@ -548,6 +549,12 @@ namespace Dialer
         private void Btn_CampaignUpdate_Click(object sender, RoutedEventArgs e)
         {
             Campaign campaign = DialerViewModel.SelectedCampaign;
+            if (cb_campaignTeam.SelectedValue == null)
+            {
+                MessageBox.Show("Select the team for the campaign.");
+                cb_campaignTeam.Focus();
+                return;
+            }
             string tName = cb_campaignTeam.SelectedValue.ToString();
             if (addingNew)
             {
@@ -565,7 +572,8 @@ namespace Dialer
             else
             {
                 database.DeleteCampaignByID(DialerViewModel.SelectedCampaign.Id);
-                database.AddCampaign(DialerViewModel.SelectedCampaign, cb_campaignTeam.SelectedValue.ToString());
+                database.AddCampaign(DialerViewModel.SelectedCampaign, tName);
+                database.MaintainUsers(DialerViewModel.SelectedCampaign.Id, database.addedCampaignId);
                 MessageBox.Show("Campaign Updated", "Campaigns");
             }
         }

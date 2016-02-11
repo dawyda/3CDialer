@@ -16,6 +16,7 @@ namespace Dialer
     class DBHandler
     {
         private MySqlConnection conn;
+        internal int addedCampaignId;
         public DBHandler(string connectionString)
         {
             try
@@ -463,6 +464,7 @@ namespace Dialer
                     Trace.WriteLine(campaign.TeamName);
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.ExecuteNonQuery();
+                    addedCampaignId = (int)cmd.LastInsertedId;
                     conn.Close();
                     return true;
                 }
@@ -599,6 +601,22 @@ namespace Dialer
             }
             conn.Close();
             return added;
+        }
+
+        internal bool MaintainUsers(string prevId, int newId)
+        {
+            if(OpenConn() || conn.State == ConnectionState.Open)
+            {
+                string query = "UPDATE users SET campaignID = " + newId + " WHERE campaignID = " + prevId + ";" +
+                    "UPDATE call_lists SET campaignID = " + newId + " WHERE campaignID = " + prevId + ";";
+                if (new MySqlCommand(query, conn).ExecuteNonQuery() > -1)
+                {
+                    conn.Close();
+                    return true;
+                }
+            }
+            conn.Close();
+            return false;
         }
     }
 }
