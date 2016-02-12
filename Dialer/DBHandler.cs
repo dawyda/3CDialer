@@ -163,6 +163,38 @@ namespace Dialer
             return false;
         }
 
+        //ADMIN LOGIN TO SERVER GUI
+        internal LoginResp AdminLogin(string username, string password)
+        {
+            if (OpenConn())
+            {
+                string query = "SELECT name FROM users "+
+                    "WHERE username = '" + username + "' AND PASSWORD = '" + Hash(password) + "' AND roleID = 2;";
+                string name = null;
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader =  cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        name = reader[0].ToString();
+                    }
+                    conn.Close();
+                    return new LoginResp () { name = name ,success = true};
+                }
+                else
+                {
+                    conn.Close();
+                    return new LoginResp () { success = false, name= null };
+                }
+            }
+            else
+            {
+                Logger.LogError("Error during admin login.");
+                return new LoginResp() { success = false, name = null };
+            }
+        }
+
         private string Hash(string input)
         {
             using (System.Security.Cryptography.SHA1Managed sha1 = new System.Security.Cryptography.SHA1Managed())
@@ -618,5 +650,10 @@ namespace Dialer
             conn.Close();
             return false;
         }
+    }
+    public class LoginResp
+    {
+        public bool success { get; set; }
+        public string name { get; set; }
     }
 }

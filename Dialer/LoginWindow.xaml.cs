@@ -17,16 +17,40 @@ namespace Dialer
 	/// </summary>
 	public partial class LoginWindow : Window
 	{
+        private DBHandler database;
 		public LoginWindow()
 		{
-			this.InitializeComponent();
-			
-			// Insert code required on object creation below this point.
+            InitializeComponent();
+			Settings settings = (Settings) new System.Xml.Serialization.XmlSerializer(typeof(Settings)).Deserialize(System.IO.File.OpenRead(@"C:\ProgramData\3CDialer\settings.xml"));
+            string connstr = "SERVER=" + settings.DBserver.IP.Value +
+                ";PORT=" + settings.DBserver.IP.port +
+                ";DATABASE=" + settings.DBserver.dbname +
+                ";UID=" + settings.DBserver.user +
+                ";PASSWORD=" + settings.DBserver.password + ";";
+            database  = new DBHandler(connstr);
+            txt_username.Focus();
 		}
 
 		private void DoLogin(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// TODO: Add event handler implementation here.
+            if(txt_username.Text == "" || pwd_password.Password == "")
+            {
+                tb_statusLogin.Text = "No blanks allowed!!!";
+                return;
+            }
+            LoginResp success = database.AdminLogin(txt_username.Text, pwd_password.Password);
+            if (!success.success)
+            {
+                tb_statusLogin.Text = "Invalid username/password.";
+                txt_username.Focus();
+            }
+            else
+            {
+                MainWindow server = new MainWindow(success.name);
+                server.Show();
+                database = null;
+                this.Close();
+            }
 		}
 	}
 }

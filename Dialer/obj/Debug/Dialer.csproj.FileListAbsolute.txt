@@ -21,3 +21,5 @@ C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.pdb
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Dialer.csprojResolveAssemblyReference.cache
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\Simple Styles.baml
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\LoginWindow.baml
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Debug\LoginWindow.g.cs

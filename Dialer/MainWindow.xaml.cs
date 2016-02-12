@@ -37,7 +37,7 @@ namespace Dialer
         private bool cancelRefresh = false;
         private ServiceController sc = null;
 
-        public MainWindow()
+        public MainWindow(String username)
         {
             InitializeComponent();
             string connstr = "SERVER=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.Value +
@@ -46,6 +46,7 @@ namespace Dialer
                 ";UID=" + DialerViewModel.SettingsCtrl.Settings.DBserver.user +
                 ";PASSWORD=" + DialerViewModel.SettingsCtrl.Settings.DBserver.password + ";";
             database  = new DBHandler(connstr);
+            this.Title = this.Title + "  Logged in as " + username;
             dgArrangementValues();
             import_campaign.Items.Add("Select Campaign for List");
             foreach(var item in database.GetCampaignsAsList())
