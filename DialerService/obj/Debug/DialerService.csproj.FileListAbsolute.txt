@@ -1,8 +1,11 @@
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe.manifest
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.application
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.exe
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.pdb
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\MySql.Data.dll
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.csprojResolveAssemblyReference.cache
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.ProjectInstaller.resources
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.csproj.GenerateResource.Cache
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.exe.manifest
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.application
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.exe
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\obj\Debug\DialerService.pdb
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\DialerService\bin\Debug\DialerService.pdb

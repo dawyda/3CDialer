@@ -57,6 +57,7 @@ namespace DialerService
             string query = "SELECT u.id,u.name, c.name AS campaign,c.script FROM users u "+
                 "INNER JOIN campaigns c  ON c.id = u.campaignid "+ 
                 "WHERE u.username = '"+ username +"' AND u.password = '"+ Hash(password) +"' LIMIT 0,1;";
+            Logger.LogActivity("Authentication: " + query);
 
             LoginResponse lr = new LoginResponse();
             lr.Method = "LoginResponse";

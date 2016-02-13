@@ -197,6 +197,10 @@ namespace Dialer
 
         private string Hash(string input)
         {
+            if (input.Length > 25)
+            {
+                return input;
+            }
             using (System.Security.Cryptography.SHA1Managed sha1 = new System.Security.Cryptography.SHA1Managed())
             {
                 var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));

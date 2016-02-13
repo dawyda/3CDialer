@@ -9,16 +9,25 @@ namespace DialerInit
 {
     class Program
     {
+        private static string menuString;
         static void Main(string[] args)
         {
+            menuString = "1. To add plugin to softphone.\n" +
+                "2. Set default settings for client.\n" +
+                "3. Set settings for server application.\n" +
+                "4. Install dialer service on this computer (make sure to have run AS ADMIN).\n" +
+                "5. To setup dialer database (Import tables).\n" +
+                "6. To uninstall the dialer service.\n"+
+                "7. To exit.\n";
+                
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("This is 3CDialer initializer wizard.");
-                Console.WriteLine("-----------------------------------------------");
-                Console.WriteLine("Enter the selection number to perfom action:");
-                Console.WriteLine("Items Menu:\n Enter: ");
-                Console.WriteLine("1. To add plugin to softphone.\n2. Set default settings for client.\n3. To exit.\n4. To setup dialer databases.");
+                Console.WriteLine("This is 3CDialer initializer wizard. We have made things easier :)");
+                Console.WriteLine("-----------------------------------------------------------------\n");
+                Console.WriteLine("Enter the item number to perfom action:");
+                Console.WriteLine("Items Menu:\nEnter:\n ");
+                Console.WriteLine(menuString);
                 Console.Write(">");
                 string input = Console.ReadLine();
                 if( input == "1"){
@@ -26,32 +35,160 @@ namespace DialerInit
                 }
                 else if (input == "2")
                 {
-                    setSettings();
+                    setClientSettings();
+                }
+                else if (input == "3")
+                {
+                    setServerSettings();
                 }
                 else if (input == "4")
                 {
-                    importTabs();
+                    installDialerService();
                 }
-                else if (input == "3")
+                else if (input == "5")
+                {
+                    importDbTables();
+                }
+                else if (input == "6")
+                {
+                    uninstallService();
+                }
+                else if (input == "7")
                 {
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("\nInput not recognized.\n");
+                    Console.WriteLine("Input not recognized. Enter number in selection only.\n");
+                    Thread.Sleep(500);
                 }
-                Thread.Sleep(1500);
             }
-            //Console.WriteLine("Press ENTER to exit...");
+            Console.WriteLine("Exiting...");
+            Thread.Sleep(700);
             //Console.ReadKey();
         }
 
-        private static void importTabs()
+        private static void uninstallService()
         {
+            Console.WriteLine("Uninstalling service...please wait...");
+            System.Diagnostics.Process.Start("cmd.exe /c \"sc delete DialerService\"");
+            Thread.Sleep(1000);
+            Console.WriteLine("Success...Done!");
+            Thread.Sleep(1500);
+        }
+
+        private static void installDialerService()
+        {
+            using (System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController("DialerService"))
+            {
+                try{
+                    if (service.Status.ToString() != null)
+                    {
+                        Console.WriteLine("Dialer Service already installed!...");
+                        Thread.Sleep(1500);
+                        return;
+                    }
+                }
+                catch(Exception)
+                {
+                }
+            }
+
+            if (!File.Exists(@"C:\ProgramData\3CDialer\settings.xml"))
+            {
+                Console.WriteLine("Set default server settings first...");
+                Thread.Sleep(2500);
+                return;
+            }
+
+            string cmdLoc = @"C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /i ";
+            System.Diagnostics.Process cmd = new System.Diagnostics.Process();
+
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.StartInfo.Arguments = "/c \""+ cmdLoc +"\" Assets\\DialerService.exe";
+
+            try
+            {
+                cmd.Start();
+                cmd.StandardInput.Flush();
+                cmd.StandardInput.Close();
+                Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+                Console.WriteLine("Command executed successfully!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Log(e.Message);
+                Console.WriteLine("Failed to install service. Make sure you are admin!");
+            }
+
+            /* execute "dir" */
+
+            //cmd.StandardInput.WriteLine("dir");
+            Thread.Sleep(1500);
+        }
+
+        private static void setServerSettings()
+        {
+            string DBIp =null;
+            string user = null;
+            string pass = null;
+            string database = null;
+            string port = null;
+            Console.WriteLine("We need you to provide the following information:\nWhat is you Database server IP address?\n>");
+            DBIp = Console.ReadLine();
+            Console.WriteLine("DB username?[Default=root]\n>");
+            user = Console.ReadLine();
+            Console.WriteLine("DB user password?\n>");
+            pass = Console.ReadLine();
+            Console.WriteLine("Database name?[Default=3cdialer]\n>");
+            database = Console.ReadLine();
+            DBIp = DBIp == "" ? "127.0.0.1" : DBIp;
+            user = user == "" ? "root" : user;
+            pass = pass == "" ? "" : pass;
+            database = database == "" ? "3cdialer" : database;
+            port = port == "" ? "3306" : port;
+            string templateStr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"+
+                        "<settings xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"+
+                          "<dbserver>"+
+                            "<ip port=\"{0}\">{1}</ip>"+
+                            "<dbname>{2}</dbname>"+
+                            "<user>{3}</user>"+
+                            "<password>{4}</password>"+
+                          "</dbserver>"+
+                          "<service bindip=\"0.0.0.0\" bindport=\"15500\" />"+
+                          "<popurl address=\"\">false</popurl>"+
+                          "<wrapup>10</wrapup>"+
+                          "<listlength>20</listlength>"+
+                        "</settings>";
+            string path = @"C:\ProgramData\3CDialer\settings.xml";
+            if (!Directory.Exists(@"C:\ProgramData\3CDialer\"))
+            {
+                try
+                {
+                    Directory.CreateDirectory(@"C:\ProgramData\3CDialer\");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Exception occured: make sure you have rights to create files/ Run app as admin");
+                }
+            }
+            File.WriteAllText(path, string.Format(templateStr, port, DBIp, database, user, pass));
+            Console.WriteLine("\nDefault server settings initialized successfully!");
+            Thread.Sleep(1000);
+        }
+
+        private static void importDbTables()
+        {
+            //add for getting host,user and pass.
             string path = @"Assets\3cdialer.sql";
             System.Diagnostics.Process p;
             try{
-                p = System.Diagnostics.Process.Start("mysqldump -u root --password= 3cdialer <" + path);
+                p = System.Diagnostics.Process.Start("mysqldump -u root --password=toor 3cdialer <" + path);
                 if (p.HasExited)
                 {
                     Console.WriteLine("Databases have been imported successfully!\n");
@@ -61,9 +198,10 @@ namespace DialerInit
             {
                 Log(e.Message);
             }
+            Thread.Sleep(1500);
         }
 
-        private static void setSettings()
+        private static void setClientSettings()
         {
             string ip;
             string port;
@@ -100,7 +238,8 @@ namespace DialerInit
             ext = ext == "" ? "100" : ext;
 
             File.WriteAllText(path, string.Format(setF,ip,port,ext));
-            Console.WriteLine("\nSettings initialized successfully!\nEnter 3 to exit...");
+            Console.WriteLine("\nSettings initialized successfully!");
+            Thread.Sleep(1000);
         }
 
         private static void setPlugin()
@@ -136,6 +275,15 @@ namespace DialerInit
 
             if(line.IndexOf(",PluginLoader") > -1){
                 Console.WriteLine("DLL has already been added. Aborting operation...");
+                try
+                {
+                    File.Copy(@"Assets\PluginLoader.dll", @"C:\ProgramData\3CXPhone for Windows\PhoneApp\PluginLoader.dll", true);
+                }
+                catch(Exception e){
+                    Console.WriteLine("X! Error occured check log file....");
+                    Thread.Sleep(1000);
+                    Log(e.Message);
+                }
                 return;
             }
             Console.WriteLine("Line found...adding DLL to load.\n-------------------------------------------------");
@@ -144,6 +292,7 @@ namespace DialerInit
             File.WriteAllText(path, text);
             File.Copy(@"Assets\PluginLoader.dll", @"C:\ProgramData\3CXPhone for Windows\PhoneApp\PluginLoader.dll",true);
             Console.WriteLine("Plugin added!\n Launch softphone first the client to use dialer.\n\n Enter 3 to exit:");
+            Thread.Sleep(1000);
         }
         private static void Log(string Msg)
         {

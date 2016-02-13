@@ -27,6 +27,15 @@ namespace Dialer
                 sr.Close();
             }
         }
+        public static void LogActivity(string msg)
+        {
+            using (StreamWriter sr = File.AppendText(@"C:\ProgramData\3CDialer\Activity.txt"))
+            {
+                sr.AutoFlush = true;
+                sr.WriteLine("{0}: {1}", DateTime.Now.ToLongTimeString(), msg);
+                sr.Close();
+            }
+        }
         public static void LogDBError(string msg)
         {
             using (StreamWriter sr = File.AppendText(@"C:\ProgramData\3CDialer\DBErrorLog.txt"))

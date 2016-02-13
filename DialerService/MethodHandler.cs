@@ -24,18 +24,22 @@ namespace DialerService
             {   //login
                 case "L":
                     response = DoLogin(strings[1]);
+                    Logger.LogActivity("recevied request to login: " + strings[1]);
                     break;
                 //list request
                 case "C":
                     response = GetCalls(strings[1]);
+                    Logger.LogActivity("recevied request to get list: " + strings[1]);
                     break;
                 //acknowledge list was received
                 case "AL":
                     response = AcknowledgeCalls(strings[1]);
+                    Logger.LogActivity("recevied request to ACK list: " + strings[1]);
                     break;
                 //update list
                 case "UL":
                     response = UpdateCall(strings[1]);
+                    Logger.LogActivity("recevied request to update call: " + strings[1]);
                     break;
                 //logout
                 case "O":
