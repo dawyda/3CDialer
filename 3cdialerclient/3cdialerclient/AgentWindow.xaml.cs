@@ -271,5 +271,11 @@ namespace _cdialerclient
         {
             serverHandler.SP_EndCall();
         }
+
+        private void menuSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Settings win = new Settings();
+            win.ShowDialog();
+        }
 	}
 }

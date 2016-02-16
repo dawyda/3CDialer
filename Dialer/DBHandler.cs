@@ -17,6 +17,7 @@ namespace Dialer
     {
         private MySqlConnection conn;
         internal int addedCampaignId;
+        internal int addedUserId = 0;
         public DBHandler(string connectionString)
         {
             try
@@ -623,9 +624,11 @@ namespace Dialer
                 {
                     string query = "INSERT INTO users (username,name,password,campaignID,roleID) SELECT '" + user.Username + "','" + user.Name + "','" + Hash(user.Password) + "'," + cid + ",r.id FROM roles AS r " +
                         "WHERE r.name = '" + user.Role + "';";
-                    int ins = new MySqlCommand(query, conn).ExecuteNonQuery();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    int ins = cmd.ExecuteNonQuery();
                     if (ins != 0)
                     {
+                        addedUserId = (int) cmd.LastInsertedId;
                         added = true;
                     }
                     else { Logger.LogDBError("User add failed : " + System.Reflection.MethodBase.GetCurrentMethod().Name); }
@@ -639,7 +642,7 @@ namespace Dialer
             return added;
         }
 
-        internal bool MaintainUsers(string prevId, int newId)
+        internal bool MaintainUserCampaigns(string prevId, int newId)
         {
             if(OpenConn() || conn.State == ConnectionState.Open)
             {
@@ -652,6 +655,52 @@ namespace Dialer
                 }
             }
             conn.Close();
+            return false;
+        }
+
+        internal bool ChangeAdminPassword(string password)
+        {
+            bool success = false;
+            if (OpenConn() || conn.State == ConnectionState.Open)
+            {
+                string query = "UPDATE users SET password = '" + Hash(password) + "' WHERE username = 'admin';";
+                if (new MySqlCommand(query, conn).ExecuteNonQuery() > -1)
+                {
+                    conn.Close();
+                    success = true;
+                }
+            }
+            return success;
+        }
+
+        internal bool maintainUsers(string previd)
+        {
+            if(OpenConn() || conn.State == ConnectionState.Open)
+            {
+                string query = "UPDATE call_2_userid SET userid = " + addedUserId + " WHERE userid = " + previd + ";";
+                if (new MySqlCommand(query, conn).ExecuteNonQuery() > -1)
+                {
+                    conn.Close();
+                    return true;
+                }
+            }
+            conn.Close();
+            return false;
+        }
+
+        internal bool isUserOnline(string id)
+        {
+            string query = "SELECT count(id) FROM sessions WHERE userid = "+ id +";";
+            if(OpenConn()){
+                MySqlDataReader reader = new MySqlCommand(query, conn).ExecuteReader();
+                int count = 0;
+                while (reader.Read())
+                {
+                    count = (int) reader[0];
+                }
+                conn.Close();
+                if (count > 0)  return true;
+            }
             return false;
         }
     }

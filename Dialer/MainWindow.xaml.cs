@@ -36,11 +36,12 @@ namespace Dialer
         private System.Timers.Timer refreshTimer;
         private bool cancelRefresh = false;
         private ServiceController sc = null;
+        string connstr = "";
 
         public MainWindow(String username)
         {
             InitializeComponent();
-            string connstr = "SERVER=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.Value +
+            connstr = "SERVER=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.Value +
                 ";PORT=" + DialerViewModel.SettingsCtrl.Settings.DBserver.IP.port +
                 ";DATABASE=" + DialerViewModel.SettingsCtrl.Settings.DBserver.dbname +
                 ";UID=" + DialerViewModel.SettingsCtrl.Settings.DBserver.user +
@@ -574,7 +575,7 @@ namespace Dialer
             {
                 database.DeleteCampaignByID(DialerViewModel.SelectedCampaign.Id);
                 database.AddCampaign(DialerViewModel.SelectedCampaign, tName);
-                database.MaintainUsers(DialerViewModel.SelectedCampaign.Id, database.addedCampaignId);
+                database.MaintainUserCampaigns(DialerViewModel.SelectedCampaign.Id, database.addedCampaignId);
                 MessageBox.Show("Campaign Updated", "Campaigns");
             }
         }
@@ -645,6 +646,7 @@ namespace Dialer
                 }
                 database.DeleteUserbyID(DialerViewModel.SelectedUser.Id);
                 database.AddUser(DialerViewModel.SelectedUser, cb_userCampaign.SelectedValue.ToString(), cb_roles.SelectedValue.ToString());
+                database.maintainUsers(DialerViewModel.SelectedUser.Id);
                 MessageBox.Show("User updated");
                 initUsersTab();
                 return;
@@ -741,6 +743,14 @@ namespace Dialer
             fs.Close();
             DialerViewModel.SettingsCtrl.Settings = sets;
             DialerViewModel.SettingsCtrl.SaveSettings();
+        }
+
+        //admin password change clicked
+        private void btn_adminChange_Click(object sender, RoutedEventArgs e)
+        {
+            AdminPasswordWindow adminwin = new AdminPasswordWindow(connstr);
+            adminwin.ShowDialog();
+            e.Handled = true;
         }
     }
 }

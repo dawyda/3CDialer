@@ -4,7 +4,10 @@
 	x:Class="_cdialerclient.AgentWindow"
 	x:Name="Window"
 	Title="AgentWindow"
-	Width="660" Height="515" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
+	Width="660" Icon="{DynamicResource ImageSource1}" Height="515" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
+    <Window.Resources>
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\DialerApp.ico"/>
+    </Window.Resources>
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -17,7 +20,9 @@
                 <MenuItem Header="_Logout" HorizontalAlignment="Left" Width="125" Click="menu_logout_Click"/>
                 <MenuItem Header="_Exit" Click="menu_exit_Click" HorizontalAlignment="Left" Width="125"/>
             </MenuItem>
-            <MenuItem Header="_Settings" Margin="0,0,5,0"/>
+            <MenuItem Header="_Tools" Margin="0,0,5,0">
+                <MenuItem Header="_Settings" HorizontalAlignment="Left" Click="menuSettings_Click"/>
+            </MenuItem>
             <MenuItem Header="_About" Margin="0,0,5,0"/>
         </Menu>
         <Grid HorizontalAlignment="Left" Height="418.341" Grid.Row="2" VerticalAlignment="Top" Width="654">
@@ -48,14 +53,14 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-				<Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Height="25.051" Grid.Row="2" Margin="166.667,7.981,0,0" Click="RefreshBtn_Click">
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="114" Height="25.051" Grid.Row="2" Margin="166.667,7.981,0,0" Click="RefreshBtn_Click">
                     <StackPanel Orientation="Horizontal" Width="104">
                         <Image Source="Refresh.ico" Margin="0,0,10,0"/>
                         <TextBlock Text="Refresh data" FontWeight="Bold" Foreground="#FF1D1D1B" FontSize="11" Width="72.783" Height="16.051"/>
                     </StackPanel>
                 </Button>
-				<TextBox x:Name="txt_notes" HorizontalAlignment="Left" Height="86.219" Margin="0,183,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Notes about the call..." VerticalAlignment="Top" Width="290.667" FontStyle="Italic" FontFamily="/_cdialerclient;component/Fonts/#Segoe UI" ToolTip="Additional notes"/>
-				<Button Content="Save Notes" HorizontalAlignment="Left" Margin="10,6.855,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="25.051" ToolTip="Press before next call"/>
+                <TextBox x:Name="txt_notes" HorizontalAlignment="Left" Height="86.219" Margin="0,183,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Notes about the call..." VerticalAlignment="Top" Width="290.667" FontStyle="Italic" FontFamily="/_cdialerclient;component/Fonts/#Segoe UI" ToolTip="Additional notes"/>
+                <Button Content="Save Notes" HorizontalAlignment="Left" Margin="10,6.855,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="25.051" ToolTip="Press before next call"/>
             </Grid>
             <Grid HorizontalAlignment="Left" Height="418.341" VerticalAlignment="Top" Width="363.333">
                 <Grid.RowDefinitions>
@@ -89,11 +94,11 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.Background>
-                		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                			<GradientStop Color="#FFFDFDFD" Offset="0"/>
-                			<GradientStop Color="#FFFDFDFD" Offset="1"/>
-                		</LinearGradientBrush>
-                	</ListView.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFFDFDFD" Offset="0"/>
+                            <GradientStop Color="#FFFDFDFD" Offset="1"/>
+                        </LinearGradientBrush>
+                    </ListView.Background>
                     <ListView.View>
                         <GridView SelectiveScrollingGrid.SelectiveScrollingOrientation="Both">
                             <GridViewColumn Header="DialCard:" Width="353">
@@ -114,21 +119,21 @@
                     </ListView.View>
                 </ListView>
                 <Button x:Name="btn_Startcalls" HorizontalAlignment="Left" Margin="183,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="61.051" Click="StartCalls">
-                	<StackPanel Orientation="Vertical">
-                		<Image VerticalAlignment="Top" Source="call-start.png" Width="35"/>
-                		<TextBlock Text="Start Calls" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
-                	</StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Image VerticalAlignment="Top" Source="call-start.png" Width="35"/>
+                        <TextBlock Text="Start Calls" FontWeight="Bold" Foreground="Green" FontSize="12.667"/>
+                    </StackPanel>
                 </Button>
                 <Button x:Name="btn_Stopcalls" HorizontalAlignment="Left" Margin="273,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71.333" Height="61.051" Click="StopCalls" IsEnabled="False">
-                	<StackPanel Orientation="Vertical">
-                		<Image VerticalAlignment="Top" Source="call-stop.png" Width="35"/>
-                		<TextBlock Text="Stop Calls" FontWeight="Bold" Foreground="#FFFB0B00" FontSize="12.667"/>
-                	</StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Image VerticalAlignment="Top" Source="call-stop.png" Width="35"/>
+                        <TextBlock Text="Stop Calls" FontWeight="Bold" Foreground="#FFFB0B00" FontSize="12.667"/>
+                    </StackPanel>
                 </Button>
             </Grid>
             <TextBlock x:Name="tb_user" Grid.Column="1" HorizontalAlignment="Left" Margin="0,419.297,0,-22.956" TextWrapping="Wrap" Text="Logged in as ADMIN" VerticalAlignment="Top" Width="290.667" Height="22" Background="#FF05345B" Foreground="#FF14F0D2" FontFamily="Verdana" FontSize="12.667" Padding="3,3,0,0"/>
         </Grid>
         <TextBlock x:Name="tb_campaign" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Campaign - Demo" VerticalAlignment="Top" Height="19" Width="654" Background="#FF252424" Foreground="White" Padding="5,0,0,0"/>
-		<TextBlock x:Name="tb_status" Text="Status: " Margin="0,418.341,291,-0.186" Grid.Row="2" Background="#FF03423F" Padding="10,1,0,0" Foreground="#FF74FFF9" FontSize="13.333" ToolTip="Status bar"/>
-	</Grid>
+        <TextBlock x:Name="tb_status" Text="Status: " Margin="0,418.341,291,-0.186" Grid.Row="2" Background="#FF03423F" Padding="10,1,0,0" Foreground="#FF74FFF9" FontSize="13.333" ToolTip="Status bar"/>
+    </Grid>
 </Window>

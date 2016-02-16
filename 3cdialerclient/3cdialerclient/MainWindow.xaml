@@ -1,24 +1,24 @@
 ﻿<Window x:Class="_cdialerclient.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Agent Login" Height="240" Width="320" ResizeMode="NoResize" Background="#FFECDABB" WindowStartupLocation="CenterScreen"
+        Title="Agent Login" Height="240" Width="320" Icon="{DynamicResource ImageSource1}" ResizeMode="CanMinimize" Background="#FFECDABB" WindowStartupLocation="CenterScreen"
         >
-	<Window.Resources>
-		<Storyboard x:Key="OnMouseEnter1"/>
-	</Window.Resources>
+    <Window.Resources>
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\DialerApp.ico"/>
+    </Window.Resources>
     <Grid>
-    	<Grid.ColumnDefinitions>
-    		<ColumnDefinition Width="89*"/>
-    		<ColumnDefinition Width="225*"/>
-    	</Grid.ColumnDefinitions>
-    	<Label Content="Username:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
-    	<Label Content="Password:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
-    	<TextBox x:Name="txt_username" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Cursor="IBeam" Padding="5,2,0,0"/>
-    	<PasswordBox x:Name="txt_password" Grid.Column="1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="205" Height="25" Padding="5,3,0,0"/>
-		<Button x:Name="btnLogin" Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Width="80" Background="#FFBBDDF5" Height="23" Click="btnLogin_Click" IsDefault="True"/>
-    	<Button x:Name="btnCancelLogin" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="135,105,0,0" VerticalAlignment="Top" Width="80" Background="#FFBCDFF7" Height="23" Click="btnCancelLogin_Click"/>
-    	<Button x:Name="btnLoginSettings" Content="Settings" Grid.Column="1" HorizontalAlignment="Left" Margin="135,181.04,0,0" VerticalAlignment="Top" Width="80" Background="White" Foreground="#FF0748D3" FontSize="10.667" Height="20" Click="ShowSettings"/>
-    	<TextBlock Grid.Column="1" x:Name="tb_error" HorizontalAlignment="Left" Margin="10,70,0,0" TextWrapping="Wrap" Text="Invalid username/password!!!" VerticalAlignment="Top" Width="205" Height="18.96" Foreground="#FFF10808" Padding="10,0,0,0" Visibility="Hidden"/>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="89*"/>
+            <ColumnDefinition Width="225*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Username:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="70" Height="25"/>
+        <TextBox x:Name="txt_username" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Cursor="IBeam" Padding="5,2,0,0"/>
+        <PasswordBox x:Name="txt_password" Grid.Column="1" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="205" Height="25" Padding="5,3,0,0"/>
+        <Button x:Name="btnLogin" Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Width="80" Background="#FFBBDDF5" Height="23" Click="btnLogin_Click" IsDefault="True"/>
+        <Button x:Name="btnCancelLogin" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="135,105,0,0" VerticalAlignment="Top" Width="80" Background="#FFBCDFF7" Height="23" Click="btnCancelLogin_Click"/>
+        <Button x:Name="btnLoginSettings" Content="Settings" Grid.Column="1" HorizontalAlignment="Left" Margin="135,181.04,0,0" VerticalAlignment="Top" Width="80" Background="White" Foreground="#FF0748D3" FontSize="10.667" Height="20" Click="ShowSettings"/>
+        <TextBlock Grid.Column="1" x:Name="tb_error" HorizontalAlignment="Left" Margin="10,70,0,0" TextWrapping="Wrap" Text="Invalid username/password!!!" VerticalAlignment="Top" Width="205" Height="18.96" Foreground="#FFF10808" Padding="10,0,0,0" Visibility="Hidden"/>
+
     </Grid>
 </Window>

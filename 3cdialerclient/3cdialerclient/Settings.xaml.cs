@@ -37,6 +37,7 @@ namespace _cdialerclient
             txt_port.Text = settings.Server.port;
             txt_retry.Text = settings.Retry.ToString();
             txt_extension.Text = settings.Extension;
+            tb_SetStatus.Text = "Note: After login some settings chnages might require you login/logout this client.";
         }
         //when user runs program for the first time
         public static void FirstRun()
