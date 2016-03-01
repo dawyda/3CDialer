@@ -1,4 +1,3 @@
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.csprojResolveAssemblyReference.cache
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\AdminPasswordWindow.baml
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\LicenseWindow.baml
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\LoginWindow.baml
@@ -13,11 +12,14 @@ C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Relea
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer_MarkupCompile.lref
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\MainWindow.baml
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.g.resources
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.Properties.Resources.resources
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.csproj.GenerateResource.Cache
-C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.exe
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.pdb
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.exe.config
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.csprojResolveAssemblyReference.cache
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.exe
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\Dialer.pdb
 C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\MySql.Data.dll
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.Properties.Resources.resources
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.csproj.GenerateResource.Cache
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\Dialer.exe
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\obj\Release\App.baml
+C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\Dialer\bin\Release\team.png

@@ -12,6 +12,29 @@ namespace DialerInit
         private static string menuString;
         static void Main(string[] args)
         {
+            if (args.Length > 0)
+            {
+                switch (args[0])
+                {
+                    case "1":
+                        setPlugin();
+                        break;
+                    case "2":
+                        setClientSettings();
+                        break;
+                    case "12":
+                        setClientSettings();
+                        setPlugin();
+                        break;
+                    case "4":
+                        installDialerService();
+                        break;
+                    default:
+                        Log("Args not defined in function list for client settings.");
+                        break;
+                }
+                return;
+            }
             menuString = "1. To add plugin to softphone.\n" +
                 "2. Set default settings for client.\n" +
                 "3. Set settings for server application.\n" +
@@ -171,6 +194,7 @@ namespace DialerInit
                 try
                 {
                     Directory.CreateDirectory(@"C:\ProgramData\3CDialer\");
+                    GrantAccess(@"C:\ProgramData\3CDialer");
                 }
                 catch (Exception)
                 {
@@ -226,6 +250,7 @@ namespace DialerInit
                 try
                 {
                     Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\3CdialerClient");
+                    GrantAccess(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\3CdialerClient");
                 }
                 catch (Exception)
                 {
@@ -297,6 +322,24 @@ namespace DialerInit
         private static void Log(string Msg)
         {
             File.WriteAllText("error.txt",Msg);
+        }
+        private static bool GrantAccess(string path)
+        {
+            bool granted = false;
+            //grant your access here.
+            try
+            {
+                DirectoryInfo info = new DirectoryInfo(path);
+                System.Security.AccessControl.DirectorySecurity drule = info.GetAccessControl();
+                drule.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.InheritanceFlags.ObjectInherit | System.Security.AccessControl.InheritanceFlags.ContainerInherit, System.Security.AccessControl.PropagationFlags.NoPropagateInherit, System.Security.AccessControl.AccessControlType.Allow));
+                info.SetAccessControl(drule);
+                return granted = true;
+            }
+            catch(Exception e)
+            {
+                Log("Failed to grant access. " + e.Message);
+            }
+            return granted;
         }
     }
 }

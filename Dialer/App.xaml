@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
-         
+
+        <BitmapImage x:Key="main-icon" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource=".\images\favicon.ico"/>
+
     </Application.Resources>
 </Application>

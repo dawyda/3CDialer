@@ -4,7 +4,7 @@
 	x:Class="Dialer.LicenseWindow"
 	x:Name="Window"
 	Title="License and Features"
-	Width="320" Height="240" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="Assets/3DialerIcon.png">
+	Width="320" Height="240" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Icon="images/3DialerIcon.png">
 
 	<Grid x:Name="LayoutRoot">
 		<Grid.Background>

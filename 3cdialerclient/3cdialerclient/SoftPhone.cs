@@ -25,6 +25,7 @@ namespace _cdialerclient
             // Data buffer for incoming data.
             byte[] bytes = new byte[4096];
             // Connect to server.
+            response = "";
             try
             {
                 Socket sender = null;

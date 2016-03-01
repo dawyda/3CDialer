@@ -183,21 +183,33 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="3DialerIcon.png" />
-    <Resource Include="about.png" />
     <Resource Include="Assets\3DialerIcon.png" />
     <BlendEmbeddedFont Include="Fonts\daunpenh.ttf">
       <IsSystemFont>True</IsSystemFont>
       <All>True</All>
       <AutoFill>True</AutoFill>
     </BlendEmbeddedFont>
-    <Resource Include="import.png" />
-    <Resource Include="list.png" />
-    <Resource Include="lists-head.png" />
-    <Resource Include="new list.png" />
-    <Resource Include="settings.png" />
-    <Resource Include="team.png" />
-    <Resource Include="user.png" />
+    <Resource Include="import.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="list.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="lists-head.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="new list.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <EmbeddedResource Include="team.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Resource Include="user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -223,6 +235,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\3DialerIcon.png" />
+    <Resource Include="images\about.png" />
+    <Resource Include="images\campaign.png" />
+    <Resource Include="images\database.png" />
+    <Resource Include="images\import.png" />
+    <Resource Include="images\list.png" />
+    <Resource Include="images\lists-head.png" />
+    <Resource Include="images\list_delete.png" />
+    <Resource Include="images\new list.png" />
+    <Resource Include="images\refresh.png" />
+    <Resource Include="images\save.png" />
+    <Resource Include="images\settings.png" />
+    <Resource Include="images\team.png" />
+    <Resource Include="images\user.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />

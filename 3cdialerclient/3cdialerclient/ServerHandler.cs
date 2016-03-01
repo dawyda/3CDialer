@@ -123,7 +123,11 @@ namespace _cdialerclient
                 }
                 if (callsvar != null)
                 {
-                    if (calls != null) calls.Clear();
+                    if (calls != null)
+                    {
+                        calls.Clear();
+                        Logger.Log("refetched list....");
+                    }
                     calls = callsvar;
                     //set current call;
                     CurrentCall = calls[0];
@@ -150,6 +154,10 @@ namespace _cdialerclient
         private Object GetObjectfromXML(string xmlString, Type t)
         {
             Object obj = null;
+            string lineSeparator = ((char)0x2028).ToString();
+            string paragraphSeparator = ((char)0x2029).ToString();
+
+            xmlString =  xmlString.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(lineSeparator, string.Empty).Replace(paragraphSeparator, string.Empty);
             try
             {
                 StringReader sw = new StringReader(xmlString);

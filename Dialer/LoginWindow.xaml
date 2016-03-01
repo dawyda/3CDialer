@@ -4,9 +4,12 @@
 	x:Class="Dialer.LoginWindow"
 	x:Name="Window"
 	Title="Login 3CDialer"
-	Width="360" Height="270" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="favicon.ico">
+	Width="360" Height="270" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="{DynamicResource ImageSource1}">
+    <Window.Resources>
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource=".\favicon.ico"/>
+    </Window.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="#FFBEEFF7">
+    <Grid x:Name="LayoutRoot" Background="#FFBEEFF7">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="115*"/>
 			<ColumnDefinition Width="239*"/>
@@ -17,6 +20,6 @@
 		<PasswordBox x:Name="pwd_password" Grid.Column="1" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="219" Height="25.96" Padding="5,3,0,0"/>
 		<Button Content="Login" Grid.Column="1" HorizontalAlignment="Left" Margin="12,113,0,0" VerticalAlignment="Top" Width="99" Height="26" Click="DoLogin" IsDefault="True"/>
 		<TextBlock x:Name="tb_statusLogin" Grid.Column="1" HorizontalAlignment="Left" Margin="10,84.96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219" Height="20" Foreground="Red" FontSize="11.333" FontStyle="Italic"/>
-        <Button Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="130,113,0,0" VerticalAlignment="Top" Width="99" Height="26"/>
+        <Button Click="Button_Click" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="130,113,0,0" VerticalAlignment="Top" Width="99" Height="26"/>
     </Grid>
 </Window>

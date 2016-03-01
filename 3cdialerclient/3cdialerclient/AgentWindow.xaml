@@ -6,7 +6,7 @@
 	Title="AgentWindow"
 	Width="660" Icon="{DynamicResource ImageSource1}" Height="515" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="#FFEEFFFD">
     <Window.Resources>
-        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Manager\Documents\Visual Studio 2012\Projects\3CDialer\3cdialerclient\3cdialerclient\DialerApp.ico"/>
+        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource=".\DialerApp.ico"/>
     </Window.Resources>
 
     <Grid x:Name="LayoutRoot">

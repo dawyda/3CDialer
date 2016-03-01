@@ -114,7 +114,15 @@ namespace Dialer
         private void LicenseStatus()
         {
             string keyName = @"HKEY_LOCAL_MACHINE\SOFTWARE\3CDialer";
-            string statText = Microsoft.Win32.Registry.GetValue(keyName, "Status", "Not Activated!").ToString() + " (" + Microsoft.Win32.Registry.GetValue(keyName, "NumUsers", 5).ToString() + " users)";
+            string statText = "Failed to get License Status.";
+            try
+            {
+                statText = Microsoft.Win32.Registry.GetValue(keyName, "Status", "Not Activated!").ToString() + " (" + Microsoft.Win32.Registry.GetValue(keyName, "NumUsers", 5).ToString() + " users)";
+            }
+            catch (Exception e)
+            {
+                Logger.LogError("Failed to get license details from registry. Info: " + e.Message + " :" +e.InnerException);
+            }
             tb_currentLic.Text = statText;
         }
 
@@ -132,7 +140,7 @@ namespace Dialer
             cb_roles.ItemsSource = database.GetRolesAsString();
             cb_userCampaign.ItemsSource = database.GetCampaignsAsList();
             cb_userCampaign.SelectedIndex = 0;
-            cb_roles.SelectedIndex = 0;
+            //cb_roles.SelectedIndex = 0;
         }
 
         private void initCampaignsTab()

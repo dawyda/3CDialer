@@ -29,9 +29,71 @@ namespace _cdialerclient
             if (!File.Exists(path))
             {
                 Settings.FirstRun();
+                //run initapp with args 12
+                RunInitApp();
             }
             serverHandler = new ServerHandler();
             txt_username.Focus();
+        }
+
+        private void RunInitApp()
+        {
+            setPlugin();
+        }
+
+        private static void setPlugin()
+        {
+            string path = @"C:\ProgramData\3CXPhone for Windows\PhoneApp\3CXWin8Phone.exe.config";
+            if (!File.Exists(path))
+            {
+                //Console.WriteLine("Error. Details:\n i. You are using v14 softphone\nii. You have not installed softphone.");
+                return;
+            }
+            string line;
+            string text = File.ReadAllText(path);
+            //Console.WriteLine("Exit softphone then press ENTER to continue...");
+            //Console.ReadKey();
+            bool linefound = false;
+
+            using (StreamReader stream = new StreamReader(path))
+            {
+                while ((line = stream.ReadLine()) != null)
+                {
+                    if (line.IndexOf("<add key=\"CRMPlugin\" value=\"CallNotifier") > -1)
+                    {
+                        linefound = true;
+                        break;
+                    }
+                }
+            }
+            if (!linefound)
+            {
+                Logger.Log("Failed to add pluging to softphone. Reinstall the softphone and try again.");
+                return;
+            }
+
+            if (line.IndexOf(",PluginLoader") > -1)
+            {
+                //Console.WriteLine("DLL has already been added. Aborting operation...");
+                try
+                {
+                    File.Copy("PluginLoader.dll", @"C:\ProgramData\3CXPhone for Windows\PhoneApp\PluginLoader.dll", true);
+                }
+                catch (Exception e)
+                {
+                    //Console.WriteLine("X! Error occured check log file....");
+                    //Thread.Sleep(1000);
+                   Logger.Log(e.Message);
+                }
+                return;
+            }
+            //Console.WriteLine("Line found...adding DLL to load.\n-------------------------------------------------");
+            string repline = line.Substring(0, (line.Length - 3)) + ",PluginLoader\"/>";
+            text = text.Replace(line, repline);
+            File.WriteAllText(path, text);
+            File.Copy(@"Assets\PluginLoader.dll", @"C:\ProgramData\3CXPhone for Windows\PhoneApp\PluginLoader.dll", true);
+            //Console.WriteLine("Plugin added!\n Launch softphone first the client to use dialer.\n\n Enter 3 to exit:");
+            //Thread.Sleep(1000);
         }
 
         private void btnLogin_Click(object sender, System.Windows.RoutedEventArgs e)

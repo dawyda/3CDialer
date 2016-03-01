@@ -24,7 +24,7 @@ namespace _cdialerclient
         private bool loggingOut = false;
         Timer timer;
         int CALL_STATUS_INTERVAL = 2; //every one second.
-        int CALL_LIST_REFRESH = 600;// every 5 minues check for changes in call list.
+        int CALL_LIST_REFRESH = 420;// every 3.5 minues check for changes in call list.
         int UPDATE_USER_STATUS = 1200; //check if user has had his campaign changed.
         Timer wrapuptimer;
 
@@ -219,6 +219,10 @@ namespace _cdialerclient
                             else
                             {
                                 //update call status at server. activities ike ringing, dialing, etc.
+                                if (status == "")
+                                {
+                                    tb_status.Text = "Connecting... If this delays check softphone status.";
+                                }
                             }
                         }
                     }
@@ -253,6 +257,8 @@ namespace _cdialerclient
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
             RefreshCalls();
+            int numCalls = serverHandler.calls == null ? 0 : serverHandler.calls.Count;
+            tb_campaign.Text = "Campaign - " + serverHandler.userCampaign + "            ( " + numCalls + " Calls Loaded. )";
             RefreshUserStatus();
             SetDialCard();
         }
@@ -269,6 +275,13 @@ namespace _cdialerclient
 
         private void btn_EndCall_Click(object sender, RoutedEventArgs e)
         {
+            string[] stringArray = { "starting", "ended", "" };
+            int pos = Array.IndexOf(stringArray,prevStatus.ToLower());
+            if (pos > -1)
+            {
+                e.Handled = true;
+                return;
+            }
             serverHandler.SP_EndCall();
         }
 

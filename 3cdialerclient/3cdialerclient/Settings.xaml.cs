@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.AccessControl;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +38,7 @@ namespace _cdialerclient
             txt_port.Text = settings.Server.port;
             txt_retry.Text = settings.Retry.ToString();
             txt_extension.Text = settings.Extension;
-            tb_SetStatus.Text = "Note: After login some settings chnages might require you login/logout this client.";
+            tb_SetStatus.Text = "Note: After login some settings changes might require you login/logout this client.";
         }
         //when user runs program for the first time
         public static void FirstRun()
@@ -46,6 +47,11 @@ namespace _cdialerclient
             {
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\3CdialerClient";
                 Directory.CreateDirectory(path);
+                //set folder permissions to everyone.
+                //DirectoryInfo info = new DirectoryInfo(path);
+                //DirectorySecurity drule = info.GetAccessControl();
+                //drule.AddAccessRule(new FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.NoPropagateInherit, AccessControlType.Allow));
+                //info.SetAccessControl(drule);
                 //create file and enter the default settings;
                 FileStream fs = File.Create(path + "\\settings.xml");
                 XmlSerializer xs = new XmlSerializer(typeof(ClientSettings));
@@ -57,7 +63,14 @@ namespace _cdialerclient
             }
             catch (Exception e)
             {
-                System.Diagnostics.Trace.WriteLine("Failed to write default settings.\nTry running as admin.\nExtra info\n" + e.Message,"3CDialer Client Init Error");
+                try
+                {
+                    using (StreamWriter sr = File.AppendText("RunLog.txt"))
+                    {
+                        sr.WriteLine("Failed to write default settings.\nTry running as admin.\nExtra info:\n" + e.Message, "3CDialer Client Init Error");
+                    }
+                }
+                catch { }
             }
         }
 
