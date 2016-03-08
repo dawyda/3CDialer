@@ -115,8 +115,27 @@ namespace Dialer
         {
             string keyName = @"HKEY_LOCAL_MACHINE\SOFTWARE\3CDialer";
             string statText = "Failed to get License Status.";
+            string DEMO_FILE_PATH = Environment.CurrentDirectory + @"\dlic.txt";
             try
             {
+                //check if demo and if grace period is over - if over software should show popup and limit users to 1.
+                if (File.Exists(DEMO_FILE_PATH))
+                {
+                    DateTime activationDate;
+                    DateTime today = DateTime.Now;
+                    activationDate = DateTime.Parse(File.ReadAllText(DEMO_FILE_PATH));
+                    TimeSpan days = today - activationDate;
+                    if (days.Days > 30)
+                    {
+                        //grace period exceeded.
+                        Registry.SetValue(keyName, "NumUsers", 1);
+                        MessageBox.Show("Trial period Exceeded! Limited to one user only...","Activate License!");
+                    }
+                    else if (days.Days > 24)
+                    {
+                        MessageBox.Show("You have less than " + (30 - days.Days) + " days left before your trial expires!", "Activate License!",MessageBoxButton.OK,MessageBoxImage.Information);
+                    }
+                }
                 statText = Microsoft.Win32.Registry.GetValue(keyName, "Status", "Not Activated!").ToString() + " (" + Microsoft.Win32.Registry.GetValue(keyName, "NumUsers", 5).ToString() + " users)";
             }
             catch (Exception e)

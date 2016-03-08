@@ -57,7 +57,17 @@ namespace DialerService
             try
             {
                 listener.Bind(localEndPoint);
-                listener.Listen(5);
+                //set socket listen backlog to registry value.
+                int users = 1;
+                try
+                {
+                    users = (int) Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\3CDialer", "NumUsers", 5);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError("Failed to get license users for socket backlog! : " + ex.Message + ex.InnerException);
+                }
+                listener.Listen(users);
                 while (true)
                 {
                     allDone.Reset();
